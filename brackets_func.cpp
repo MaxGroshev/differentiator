@@ -35,22 +35,25 @@ double tree_eval (tree_t* pine, tree_node_t* tree_node)
 
 int write_brackets (tree_t* pine, tree_node_t* tree_node)
 {
-    //FILE* brackets_seq = fopen ("brackets_seq.txt", "w");
     fprintf (pine->html_logs, "(");
+
+
+    if (tree_node->left != NULL)
+    {
+        write_brackets (pine, tree_node->left);
+    }
+
     if      (tree_node->node_type == TYPE_NUM) fprintf (pine->html_logs, "%d", tree_node->value);
     else if (tree_node->value     == OP_ADD)   fprintf (pine->html_logs, "+");
     else if (tree_node->value     == OP_SUB)   fprintf (pine->html_logs, "-");
     else if (tree_node->value     == OP_MUL)   fprintf (pine->html_logs, "*");
     else if (tree_node->value     == OP_DIV)   fprintf (pine->html_logs, "/");
 
-    if (tree_node->left != NULL)
-    {
-        write_brackets (pine, tree_node->left);
-    }
     if (tree_node->right != NULL)
     {
         write_brackets (pine, tree_node->right);
     }
+
     fprintf (pine->html_logs, ")");
     return 0;
 }
