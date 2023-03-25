@@ -8,15 +8,16 @@
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-typedef int tree_type;
+typedef int tree_data_type;
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 struct tree_node_t
 {
-    tree_type    value;
-    tree_node_t* right;
-    tree_node_t* left;
+    int            node_type;
+    tree_data_type value;
+    tree_node_t*   right;
+    tree_node_t*   left;
 };
 
 struct tree_t
@@ -26,10 +27,24 @@ struct tree_t
     FILE*   html_logs;
 };
 
+enum NODE_TYPE
+{
+    TYPE_NUM = 1,
+    TYPE_OP  = 2,
+};
+
+enum OPER_TYPE
+{
+    OP_ADD = 1,
+    OP_SUB = 2,
+    OP_MUL = 3,
+    OP_DIV = 4,
+};
+
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-tree_node_t* constructor (tree_t* pine, tree_type value);
-tree_node_t* tree_create (tree_t* pine, tree_type value, tree_node_t* l_child = NULL, tree_node_t* r_child = NULL);
+tree_node_t* constructor (tree_t* pine, int node_type, tree_data_type value);
+tree_node_t* tree_create (tree_t* pine, int node_type, tree_data_type value, tree_node_t* l_child = NULL, tree_node_t* r_child = NULL);
 
 tree_node_t* tree_link_l (tree_t* pine, tree_node_t* parent, tree_node_t* child);
 tree_node_t* tree_link_r (tree_t* pine, tree_node_t* parent, tree_node_t* child);

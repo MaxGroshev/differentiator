@@ -7,9 +7,8 @@ void graph_dump (tree_t* pine)
     dump_graph_t graph_dump_set  = {};
     graph_dump_set.info.size = pine->size;
     graph_dump_set.info.head = &pine->root->value;
-    init_graph (graphviz, &graph_dump_set);
-
-    tree_print (graphviz, &graph_dump_set, pine->root);
+    init_graph   (graphviz, &graph_dump_set);
+    tree_print   (graphviz, &graph_dump_set, pine->root);
 
     run_graphviz (graphviz, pine->html_logs, &graph_dump_set);
     fclose       (graphviz);
@@ -17,7 +16,18 @@ void graph_dump (tree_t* pine)
 
 tree_node_t* tree_print (FILE* graphviz, dump_graph_t* graph_dump_set, tree_node_t* parent)
 {
-    make_node (graphviz, graph_dump_set, &parent->value, *graph_dump_set->nodes, &parent->right->value, &parent->left->value, parent->value);
+    if (parent->node_type == TYPE_NUM)
+    {
+        graph_dump_set->nodes->fillcolor = "#FF8C69";
+        graph_dump_set->nodes->label     = "TYPE_NUM";
+        make_node (graphviz, graph_dump_set, &parent->value, *graph_dump_set->nodes, &parent->right->value, &parent->left->value, parent->value);
+    }
+    else if (parent->node_type == TYPE_OP)
+    {
+        graph_dump_set->nodes->fillcolor = "#77DD77";
+        graph_dump_set->nodes->label     = "TYPE_OP";
+        make_node (graphviz, graph_dump_set, &parent->value, *graph_dump_set->nodes, &parent->right->value, &parent->left->value, parent->value);
+    }
 
     if (parent->left != NULL)
     {

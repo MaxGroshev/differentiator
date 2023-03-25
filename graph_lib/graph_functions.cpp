@@ -31,8 +31,8 @@ void make_node (FILE* graphviz, dump_graph_t* graph_dump_set, int* node_address,
 {
     if (graph_dump_set->node_capacity <= graph_dump_set->node_size + 1) resize_struct (graph_dump_set);
 
-    fprintf (graphviz, "node%p [shape = \"%s\", fillcolor = \"%s\", style = \"%s\", fontcolor = \"%s\", fontname = \"%s\", color = \"%s\", label = \"{cell = %p\\n %s| {value = %d |left = %p |right = %p}}\"]\n",
-                node_address, nodes.shape,  nodes.fillcolor,    nodes.style,    nodes.fontcolor,    nodes.fontname,    nodes.color,  node_address, nodes.label ,         value,     left,      right      );
+    fprintf (graphviz, "node%p [shape = \"%s\", fillcolor = \"%s\", style = \"%s\", fontcolor = \"%s\", fontname = \"%s\", color = \"%s\", label = \"{%s\\n (%p)| {%d |left = %p |right = %p}}\"]\n",
+                node_address, nodes.shape,  nodes.fillcolor,    nodes.style,    nodes.fontcolor,    nodes.fontname,    nodes.color,   nodes.label , node_address, value,     left,      right      );
     graph_dump_set->node_size++;
 }
 
