@@ -22,8 +22,8 @@ struct tree_node_t
 
 struct tree_t
 {
-    tree_node_t* root;
-    size_t       size;
+    tree_node_t* root = NULL;
+    size_t       size = 0;
     FILE*   html_logs;
 };
 
@@ -37,10 +37,10 @@ enum NODE_TYPE
 
 enum OPER_TYPE
 {
-    OP_ADD = 1,
-    OP_SUB = 2,
-    OP_MUL = 3,
-    OP_DIV = 4,
+    OP_ADD = 43,
+    OP_SUB = 45,
+    OP_MUL = 42,
+    OP_DIV = 47,
 };
 
 enum TREE_CODE_OF_PRINT
@@ -59,7 +59,7 @@ enum TREE_CODE_OF_PRINT
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-tree_node_t* constructor (tree_t* pine, int node_type, tree_data_type value);
+tree_t*      constructor (tree_t* pine);
 tree_node_t* tree_create (tree_t* pine, int node_type, tree_data_type value, tree_node_t* l_child = NULL, tree_node_t* r_child = NULL);
 
 tree_node_t* tree_link_l (tree_t* pine, tree_node_t* parent, tree_node_t* child);

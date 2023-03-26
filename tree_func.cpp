@@ -1,18 +1,16 @@
 #include "tree.h"
 
-tree_node_t* constructor (tree_t* pine, int node_type, tree_data_type value)
+tree_t* constructor (tree_t* pine)
 {
-    MY_ASSERT (pine != NULL);
+    MY_ASSERT (pine!= NULL);
 
-    pine->size = 1;
-    pine->root = (tree_node_t*) calloc (pine->size, sizeof (tree_node_t));
+    pine->size = 0;
+    pine->root = NULL;
     pine->html_logs = fopen ("./dump_info/tree_dump.html", "w");
-    MY_ASSERT (pine->root != NULL && pine->html_logs != NULL);
+    MY_ASSERT (pine->html_logs != NULL);
     write_html_logs (T_TREE_SUC_CREATED, pine);
 
-    pine->root->value     = value;
-    pine->root->node_type = node_type;
-    return pine->root;
+    return pine;
 }
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -25,10 +23,11 @@ tree_node_t* tree_create (tree_t* pine, int node_type, tree_data_type value, tre
     pine->size++;
     tmp_node->value     = value;
     tmp_node->node_type = node_type;
-
+    if (pine->size == 0) pine->root = tmp_node;
     if (pine->root == l_child || pine->root == r_child) pine->root = tmp_node;
     if (l_child != NULL) tree_link_l (pine, tmp_node, l_child);
     if (r_child != NULL) tree_link_r (pine, tmp_node, r_child);
+    MY_ASSERT   (tmp_node != NULL);
 
     write_html_logs (T_NODE_SUC_CREATED, pine, tmp_node);
     return  tmp_node;
@@ -138,7 +137,7 @@ tree_node_t* tree_remove  (tree_t* pine, tree_node_t* node)
 tree_node_t* tree_delete (tree_t* pine, tree_node_t* tree_root)
 {
     MY_ASSERT (tree_root != NULL);
-    //printf ("%d\n", tree_root->value);
+
     if (tree_root->left != NULL)
     {
         tree_delete (pine, tree_root->left);

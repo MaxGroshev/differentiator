@@ -3,6 +3,7 @@
 double tree_eval (tree_t* pine, tree_node_t* tree_node)
 {
     MY_ASSERT (pine != NULL && tree_node != NULL)
+    printf ("Yes");
     if (tree_node->node_type == TYPE_NUM)
     {
         return tree_node->value;
@@ -11,7 +12,7 @@ double tree_eval (tree_t* pine, tree_node_t* tree_node)
     switch (tree_node->value)
     {
         case OP_ADD:
-           return tree_eval (pine, tree_node->left) + tree_eval (pine, tree_node->right);
+            return tree_eval (pine, tree_node->left) + tree_eval (pine, tree_node->right);
 
         case OP_SUB:
             return tree_eval (pine, tree_node->left) - tree_eval (pine, tree_node->right);
@@ -28,7 +29,7 @@ double tree_eval (tree_t* pine, tree_node_t* tree_node)
             }
             return tree_eval (pine, tree_node->left) / tree_eval (pine, tree_node->right);
     }
-    return 0;
+    //return 0;
 }
 
 //------------------------------------------------------------------------------------------------------------------------------------------
@@ -55,4 +56,71 @@ int write_brackets (tree_t* pine, tree_node_t* tree_node)
 
     fprintf (pine->html_logs, ")");
     return 0;
+}
+
+tree_node_t* read_brackets (FILE* read_br, tree_t* pine, tree_node_t* tmp_node)
+{
+    char c = '0';
+    fscanf (read_br, " %c", &c);
+
+    if (c == '+')
+    {
+        tree_node_t* tmp_node  = tree_create (pine, TYPE_OP, OP_ADD);
+        tree_node_t* tmp_left  = read_brackets (read_br, pine);
+        tree_node_t* tmp_right = read_brackets (read_br, pine);
+        tree_link_l (pine, tmp_node, tmp_left);
+        tree_link_r (pine, tmp_node, tmp_right);
+
+        return tmp_node;
+    }
+    else if (c == '-')
+    {
+        tree_node_t* tmp_node  = tree_create (pine, TYPE_OP, OP_SUB);
+        tree_node_t* tmp_left  = read_brackets (read_br, pine);
+        tree_node_t* tmp_right = read_brackets (read_br, pine);
+        tree_link_l (pine, tmp_node, tmp_left);
+        tree_link_r (pine, tmp_node, tmp_right);
+
+        return tmp_node;
+    }
+    else if (c == '*')
+    {
+        tree_node_t* tmp_node  = tree_create (pine, TYPE_OP, OP_MUL);
+        tree_node_t* tmp_left  = read_brackets (read_br, pine);
+        tree_node_t* tmp_right = read_brackets (read_br, pine);
+        tree_link_l (pine, tmp_node, tmp_left);
+        tree_link_r (pine, tmp_node, tmp_right);
+
+        return tmp_node;
+    }
+    else if (c == '/')
+    {
+        tree_node_t* tmp_node  = tree_create (pine, TYPE_OP, OP_DIV);
+        tree_node_t* tmp_left  = read_brackets (read_br, pine);
+        tree_node_t* tmp_right = read_brackets (read_br, pine);
+        tree_link_l (pine, tmp_node, tmp_left);
+        tree_link_r (pine, tmp_node, tmp_right);
+
+        return tmp_node;
+    }
+    else if (c == '(')
+    {
+        tree_node_t* tmp_node = read_brackets (read_br, pine, tmp_node);
+    }
+    else if (c == ')')
+    {
+        tree_node_t* tmp_node = read_brackets (read_br, pine);
+        return tmp_node;
+    }
+    else
+    {
+        int pos = ftell (read_br);
+        fseek (read_br, pos - 1, SEEK_SET);
+
+        int value = 0;
+        fscanf (read_br, "%d", &value);
+
+        tree_node_t* tmp_node = tree_create (pine, TYPE_NUM, value);
+        return tmp_node;
+    }
 }

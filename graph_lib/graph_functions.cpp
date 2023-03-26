@@ -27,11 +27,20 @@ void init_graph (FILE* graphviz, dump_graph_t* graph_dump_set)
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-void make_node (FILE* graphviz, dump_graph_t* graph_dump_set, int* node_address, struct node_t nodes, int* right, int* left, int value)
+void make_int_node (FILE* graphviz, dump_graph_t* graph_dump_set, int* node_address, struct node_t nodes, int* right, int* left, int value)
 {
     if (graph_dump_set->node_capacity <= graph_dump_set->node_size + 1) resize_struct (graph_dump_set);
 
     fprintf (graphviz, "node%p [shape = \"%s\", fillcolor = \"%s\", style = \"%s\", fontcolor = \"%s\", fontname = \"%s\", color = \"%s\", label = \"{%s\\n (%p)| {%d |left = %p |right = %p}}\"]\n",
+                node_address, nodes.shape,  nodes.fillcolor,    nodes.style,    nodes.fontcolor,    nodes.fontname,    nodes.color,   nodes.label , node_address, value,     left,      right      );
+    graph_dump_set->node_size++;
+}
+
+void make_char_node (FILE* graphviz, dump_graph_t* graph_dump_set, int* node_address, struct node_t nodes, int* right, int* left, char value)
+{
+    if (graph_dump_set->node_capacity <= graph_dump_set->node_size + 1) resize_struct (graph_dump_set);
+
+    fprintf (graphviz, "node%p [shape = \"%s\", fillcolor = \"%s\", style = \"%s\", fontcolor = \"%s\", fontname = \"%s\", color = \"%s\", label = \"{%s\\n (%p)| {%c |left = %p |right = %p}}\"]\n",
                 node_address, nodes.shape,  nodes.fillcolor,    nodes.style,    nodes.fontcolor,    nodes.fontname,    nodes.color,   nodes.label , node_address, value,     left,      right      );
     graph_dump_set->node_size++;
 }

@@ -42,7 +42,7 @@ struct dump_graph_t
 {
     const char*         orientation = "";
     const char*         splines = "true";
-    struct node_t*      nodes;
+    struct node_t* nodes;
     struct edge_t*      edges;
     struct data_stat_t  info;
     int                 print_log = 0;
@@ -55,7 +55,9 @@ struct dump_graph_t
 //--------------------------------------------------------------------------------------------------------------------------
 
 void init_graph      (FILE* graphviz, dump_graph_t* graph_dump_set);
-void make_node       (FILE* graphviz, dump_graph_t* graph_dump_set, int* node_address, struct node_t nodes, int* right, int* left, int value);
+
+void make_int_node   (FILE* graphviz, dump_graph_t* graph_dump_set, int* node_address, struct node_t nodes, int* right, int* left, int value);
+void make_char_node  (FILE* graphviz, dump_graph_t* graph_dump_set, int* node_address, struct node_t nodes, int* right, int* left, char value);
 void make_edge       (FILE* graphviz, dump_graph_t* graph_dump_set, int* node_from, int* node_to, struct edge_t edges);
 void resize_struct   (dump_graph_t* graph_dump_set);
 void print_def_info  (FILE* graphviz, dump_graph_t* graph_dump_set);

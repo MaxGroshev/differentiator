@@ -2,6 +2,7 @@
 
 void write_html_logs (int code_of_print, tree_t* pine,  tree_node_t* node)
 {
+    MY_ASSERT (pine != NULL);
     switch (code_of_print)
     {
         case T_NODE_SUC_CREATED:
@@ -35,7 +36,7 @@ void write_html_logs (int code_of_print, tree_t* pine,  tree_node_t* node)
             break;
 
         case T_TREE_SUC_CREATED:
-            fprintf   (pine->html_logs, "<pre>\n\n<font color = #8DB6CD size=6>Tree was successfully created root (%p)</font>\n\n", pine->root);
+            fprintf   (pine->html_logs, "<pre>\n\n<font color = #8DB6CD size=6>Tree was successfully created root (%p)</font>\n\n", &pine->root->value);
             break;
     }
 }

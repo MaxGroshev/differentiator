@@ -20,13 +20,13 @@ tree_node_t* tree_print (FILE* graphviz, dump_graph_t* graph_dump_set, tree_node
     {
         graph_dump_set->nodes->fillcolor = "#FF8C69";
         graph_dump_set->nodes->label     = "TYPE_NUM";
-        make_node (graphviz, graph_dump_set, &parent->value, *graph_dump_set->nodes, &parent->right->value, &parent->left->value, parent->value);
+        make_int_node (graphviz, graph_dump_set, &parent->value, *graph_dump_set->nodes, &parent->right->value, &parent->left->value, parent->value);
     }
     else if (parent->node_type == TYPE_OP)
     {
         graph_dump_set->nodes->fillcolor = "#77DD77";
         graph_dump_set->nodes->label     = "TYPE_OP";
-        make_node (graphviz, graph_dump_set, &parent->value, *graph_dump_set->nodes, &parent->right->value, &parent->left->value, parent->value);
+        make_char_node (graphviz, graph_dump_set, &parent->value, *graph_dump_set->nodes, &parent->right->value, &parent->left->value, parent->value);
     }
 
     if (parent->left != NULL)
