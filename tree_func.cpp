@@ -8,7 +8,7 @@ tree_node_t* constructor (tree_t* pine, int node_type, tree_data_type value)
     pine->root = (tree_node_t*) calloc (pine->size, sizeof (tree_node_t));
     pine->html_logs = fopen ("./dump_info/tree_dump.html", "w");
     MY_ASSERT (pine->root != NULL && pine->html_logs != NULL);
-    fprintf   (pine->html_logs, "<pre>\n\n<font color = #8DB6CD size=6>Tree was successfully created root (%p)</font>\n\n", pine->root);
+    write_html_logs (T_TREE_SUC_CREATED, pine);
 
     pine->root->value     = value;
     pine->root->node_type = node_type;
@@ -30,7 +30,7 @@ tree_node_t* tree_create (tree_t* pine, int node_type, tree_data_type value, tre
     if (l_child != NULL) tree_link_l (pine, tmp_node, l_child);
     if (r_child != NULL) tree_link_r (pine, tmp_node, r_child);
 
-    fprintf (pine->html_logs, "<font color = #70DB53 size=4>Created node: address (%p) | value  (%d)</font>\n\n", tmp_node, tmp_node->value);
+    write_html_logs (T_NODE_SUC_CREATED, pine, tmp_node);
     return  tmp_node;
 }
 
@@ -42,16 +42,15 @@ tree_node_t* tree_link_l (tree_t* pine, tree_node_t* parent, tree_node_t* child)
 
     if (parent->node_type == TYPE_NUM)
     {
-        fprintf (pine->html_logs, "<font color = red size=4>Node with type of num has child(ren): address (%p) | value  (%d)</font>\n", &parent->value, parent->value);
+        write_html_logs (T_TYPE_NUM_HAS_CHILD, pine, parent);
     }
     if (parent->left == NULL)
     {
         parent->left  = child;
-        fprintf (pine->html_logs, "<font color = #6018CF size=4>Created edge: parent address (%p) | value (%d); left  (%p) | value (%d)</font>\n\n",
-                                                                              parent,            parent->value, child, child->value);
+        write_html_logs (T_L_EDGE_SUC_CREATED, pine, parent);
         return parent->left;
     }
-    fprintf (stderr, "Impossible to add node to not terminal\n");
+    write_html_logs (T_FAIL_OF_CREATING_EDGE, pine);
     return NULL;
 }
 
@@ -61,16 +60,15 @@ tree_node_t* tree_link_r (tree_t* pine, tree_node_t* parent, tree_node_t* child)
 
     if (parent->node_type == TYPE_NUM)
     {
-        fprintf (pine->html_logs, "<font color = red size=4>Node with type of num has child(ren): address (%p) | value  (%d)</font>\n", &parent->value, parent->value);
+        write_html_logs (T_TYPE_NUM_HAS_CHILD, pine, parent);
     }
     if (parent->right == NULL)
     {
         parent->right = child;
-        fprintf (pine->html_logs, "<font color = #6018CF size=4>Created edge: parent address (%p) | value (%d); right  (%p) | value (%d)</font>\n\n",
-                                                                              parent,            parent->value, child, child->value);
+        write_html_logs (T_R_EDGE_SUC_CREATED, pine, parent);
         return parent->right;
     }
-    fprintf (stderr, "Impossible to add node to not terminal\n");
+    write_html_logs (T_FAIL_OF_CREATING_EDGE, pine);
     return NULL;
 }
 
@@ -133,7 +131,7 @@ tree_node_t* tree_remove  (tree_t* pine, tree_node_t* node)
         ret_node->left = NULL;
     }
     pine->size--;
-    fprintf (pine->html_logs, "<font color = oranged size=4>Node was removed: address (%p) </font>\n\n", node);
+    write_html_logs (T_NODE_SUC_DELETED , pine, node);
     return node;
 }
 
@@ -151,10 +149,10 @@ tree_node_t* tree_delete (tree_t* pine, tree_node_t* tree_root)
     }
     free (tree_root);
 
-    fprintf (pine->html_logs, "<font color = #E6643D size=4>Node was deleted: address (%p) </font>\n\n", &tree_root->value);
+    write_html_logs (T_NODE_SUC_DELETED , pine, tree_root);
     if (tree_root == pine->root)
     {
-        fprintf (pine->html_logs, "<font color = #8DB6CD size=6>Tree was cleared and deleted </font>\n\n");
+        write_html_logs (T_TREE_WAS_CLEARED, pine);
         fclose  (pine->html_logs);
     }
 
