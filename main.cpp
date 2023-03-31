@@ -5,19 +5,15 @@ int main ()
 {
     struct tree_t pine = {};
     constructor  (&pine);
-    FILE* read_br = fopen ("brackets_seq.txt", "r");
-    read_brackets (read_br, &pine);
-    fclose (read_br);
+    FILE* br_read = fopen ("brackets_seq.txt", "r");
+    read_brackets (br_read, &pine);
+    fclose (br_read);
 
-//     double res = tree_eval (&pine, pine.root);
-//     printf ("%lg", res);
-//
-    //write_brackets (&pine, pine.root);
-    //int res = tree_eval (&pine, pine.root);
-    //printf ("\n%d", res);
+    double res = tree_eval (&pine, pine.root);
+    printf ("%lg", res);
 
+    write_brackets (&pine, pine.root);
     graph_dump  (&pine);
-
 
     tree_delete (&pine, pine.root);
 }

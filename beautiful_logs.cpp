@@ -1,6 +1,7 @@
 #include "tree.h"
+#include "brackets_func.h"
 
-void write_html_logs (int code_of_print, tree_t* pine,  tree_node_t* node)
+void write_tree_logs (int code_of_print, tree_t* pine,  tree_node_t* node)
 {
     MY_ASSERT (pine != NULL);
     switch (code_of_print)
@@ -38,5 +39,21 @@ void write_html_logs (int code_of_print, tree_t* pine,  tree_node_t* node)
         case T_TREE_SUC_CREATED:
             fprintf   (pine->html_logs, "<pre>\n\n<font color = #8DB6CD size=6>Tree was successfully created root (%p)</font>\n\n", &pine->root->value);
             break;
+    }
+}
+
+void write_brackets_logs (int code_of_print, tree_t* pine, int position_in_file)
+{
+    switch (code_of_print)
+    {
+        case BR_NO_BRACKET_AT_THE_BEGINNING:
+            fprintf (pine->html_logs, "<pre>\n\n<font color = red size=5>No bracket at the beginning: position in file (%d)</font>\n\n", position_in_file);
+            fprintf (stderr, "Running of program was terminated-check logs\n");
+            exit (-1);
+
+        case BR_ERROR_OF_INPUT_BRACKETS_SEQ:
+            fprintf (pine->html_logs, "<pre>\n\n<font color = red size=5>Error of input of seq: position in file (%d)</font>\n\n", position_in_file);
+            fprintf (stderr, "Running of program was terminated-check logs\n");
+            exit (-2);
     }
 }

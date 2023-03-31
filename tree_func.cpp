@@ -8,7 +8,7 @@ tree_t* constructor (tree_t* pine)
     pine->root = NULL;
     pine->html_logs = fopen ("./dump_info/tree_dump.html", "w");
     MY_ASSERT (pine->html_logs != NULL);
-    write_html_logs (T_TREE_SUC_CREATED, pine);
+    write_tree_logs (T_TREE_SUC_CREATED, pine);
 
     return pine;
 }
@@ -29,7 +29,7 @@ tree_node_t* tree_create (tree_t* pine, int node_type, tree_data_type value, tre
     if (r_child != NULL) tree_link_r (pine, tmp_node, r_child);
     MY_ASSERT   (tmp_node != NULL);
 
-    write_html_logs (T_NODE_SUC_CREATED, pine, tmp_node);
+    write_tree_logs (T_NODE_SUC_CREATED, pine, tmp_node);
     return  tmp_node;
 }
 
@@ -39,14 +39,14 @@ tree_node_t* tree_link_l (tree_t* pine, tree_node_t* parent, tree_node_t* child)
 {
     MY_ASSERT (parent != NULL && child != NULL);
 
-    if (parent->node_type == TYPE_NUM) write_html_logs (T_TYPE_NUM_HAS_CHILD, pine, parent);
+    if (parent->node_type == TYPE_NUM) write_tree_logs (T_TYPE_NUM_HAS_CHILD, pine, parent);
     else if (parent->left == NULL)
     {
         parent->left  = child;
-        write_html_logs (T_L_EDGE_SUC_CREATED, pine, parent);
+        write_tree_logs (T_L_EDGE_SUC_CREATED, pine, parent);
         return parent->left;
     }
-    write_html_logs (T_FAIL_OF_CREATING_EDGE, pine);
+    write_tree_logs (T_FAIL_OF_CREATING_EDGE, pine);
     return NULL;
 }
 
@@ -54,14 +54,14 @@ tree_node_t* tree_link_r (tree_t* pine, tree_node_t* parent, tree_node_t* child)
 {
     MY_ASSERT (parent != NULL && child != NULL);
 
-    if (parent->node_type == TYPE_NUM) write_html_logs (T_TYPE_NUM_HAS_CHILD, pine, parent);
+    if (parent->node_type == TYPE_NUM) write_tree_logs (T_TYPE_NUM_HAS_CHILD, pine, parent);
     else if (parent->right == NULL)
     {
         parent->right = child;
-        write_html_logs (T_R_EDGE_SUC_CREATED, pine, parent);
+        write_tree_logs (T_R_EDGE_SUC_CREATED, pine, parent);
         return parent->right;
     }
-    write_html_logs (T_FAIL_OF_CREATING_EDGE, pine);
+    write_tree_logs (T_FAIL_OF_CREATING_EDGE, pine);
     return NULL;
 }
 
@@ -123,7 +123,7 @@ tree_node_t* tree_remove  (tree_t* pine, tree_node_t* node)
         ret_node->left = NULL;
     }
     pine->size--;
-    write_html_logs (T_NODE_SUC_DELETED , pine, node);
+    write_tree_logs (T_NODE_SUC_DELETED , pine, node);
     return node;
 }
 
@@ -140,10 +140,10 @@ tree_node_t* tree_delete (tree_t* pine, tree_node_t* tree_root)
     }
     free (tree_root);
 
-    write_html_logs (T_NODE_SUC_DELETED , pine, tree_root);
+    write_tree_logs (T_NODE_SUC_DELETED , pine, tree_root);
     if (tree_root == pine->root)
     {
-        write_html_logs (T_TREE_WAS_CLEARED, pine);
+        write_tree_logs (T_TREE_WAS_CLEARED, pine);
         fclose  (pine->html_logs);
     }
 
