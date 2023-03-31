@@ -39,11 +39,8 @@ tree_node_t* tree_link_l (tree_t* pine, tree_node_t* parent, tree_node_t* child)
 {
     MY_ASSERT (parent != NULL && child != NULL);
 
-    if (parent->node_type == TYPE_NUM)
-    {
-        write_html_logs (T_TYPE_NUM_HAS_CHILD, pine, parent);
-    }
-    if (parent->left == NULL)
+    if (parent->node_type == TYPE_NUM) write_html_logs (T_TYPE_NUM_HAS_CHILD, pine, parent);
+    else if (parent->left == NULL)
     {
         parent->left  = child;
         write_html_logs (T_L_EDGE_SUC_CREATED, pine, parent);
@@ -57,11 +54,8 @@ tree_node_t* tree_link_r (tree_t* pine, tree_node_t* parent, tree_node_t* child)
 {
     MY_ASSERT (parent != NULL && child != NULL);
 
-    if (parent->node_type == TYPE_NUM)
-    {
-        write_html_logs (T_TYPE_NUM_HAS_CHILD, pine, parent);
-    }
-    if (parent->right == NULL)
+    if (parent->node_type == TYPE_NUM) write_html_logs (T_TYPE_NUM_HAS_CHILD, pine, parent);
+    else if (parent->right == NULL)
     {
         parent->right = child;
         write_html_logs (T_R_EDGE_SUC_CREATED, pine, parent);
@@ -75,7 +69,6 @@ tree_node_t* tree_link_r (tree_t* pine, tree_node_t* parent, tree_node_t* child)
 
 tree_node_t* tree_search (tree_node_t* tree_root, tree_node_t* node)
 {
-
     printf ("here\n");
     MY_ASSERT (tree_root != NULL)
     if (tree_root->left != NULL)
@@ -136,8 +129,7 @@ tree_node_t* tree_remove  (tree_t* pine, tree_node_t* node)
 
 tree_node_t* tree_delete (tree_t* pine, tree_node_t* tree_root)
 {
-    MY_ASSERT (tree_root != NULL);
-
+    if (tree_root == NULL) return NULL;
     if (tree_root->left != NULL)
     {
         tree_delete (pine, tree_root->left);
@@ -157,3 +149,7 @@ tree_node_t* tree_delete (tree_t* pine, tree_node_t* tree_root)
 
     return NULL;
 }
+
+
+
+

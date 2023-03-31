@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <signal.h>
+#include <unistd.h>
 #include "./graph_lib/graphviz.h"
 #include "my_ASSERT.h"
 
@@ -55,6 +57,7 @@ enum TREE_CODE_OF_PRINT
     T_NODE_SUC_DELETED      =  5,
     T_TREE_WAS_CLEARED      =  6,
     T_TYPE_NUM_HAS_CHILD    = -3,
+    T_DIVISION_BY_ZERO      = -4,
 };
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -71,5 +74,6 @@ void         graph_dump      (tree_t* pine);
 tree_node_t* tree_print      (FILE* graphviz, dump_graph_t* graph_dump_set, tree_node_t* parent);
 void         write_html_logs (int code_of_print, tree_t* pine = NULL, tree_node_t* node = NULL);
 
-
 tree_node_t* tree_delete (tree_t* pine, tree_node_t* tree_root);
+
+void         signal_handler (int signal);
