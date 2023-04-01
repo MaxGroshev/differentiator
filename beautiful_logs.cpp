@@ -1,4 +1,3 @@
-#include "tree.h"
 #include "brackets_func.h"
 
 void write_tree_logs (int code_of_print, tree_t* pine,  tree_node_t* node)

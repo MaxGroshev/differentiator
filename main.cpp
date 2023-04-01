@@ -1,11 +1,10 @@
-#include "tree.h"
 #include "brackets_func.h"
 
 int main ()
 {
     struct tree_t pine = {};
     constructor  (&pine);
-    FILE* br_read = fopen ("brackets_seq.txt", "r");
+    FILE* br_read = fopen ("./test_files/brackets_seq.txt", "r");
     read_brackets (br_read, &pine);
     fclose (br_read);
 

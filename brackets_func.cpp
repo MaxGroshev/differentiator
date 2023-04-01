@@ -99,7 +99,7 @@ tree_node_t* read_brackets (FILE* br_read, tree_t* pine, tree_node_t* tmp_node)
             tree_link_r (pine, tmp_parent, tmp_node);
             return tmp_parent;
         }
-        else if (br_elem == '-')
+        else if (br_elem == '/')
         {
             tree_node_t* tmp_parent  = tree_create (pine, TYPE_OP, OP_DIV, tmp_node);
             tree_node_t* tmp_node    = read_brackets (br_read, pine);
