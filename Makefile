@@ -1,11 +1,13 @@
 TARGET = differ
 CC     = gcc
-CFLAGS = -c -std=c++11
+CFLAGS = -c -std=c++17
 
 GR_DIR    = ./tree/graph_lib/
+LOGS_DIR  = ./logs/
 TREE_DIR  = ./tree/
 PREF_OBJ  = ./obj/
 PREF_STAT = ./dump_info/
+
 
 
 #Graphviz files
@@ -17,14 +19,16 @@ OBJ_TREE = $(patsubst $(PREF_OBJ)%.cpp, %.o, $(TREE_SRC))
 #Common files
 SRC    = $(wildcard *.cpp )                            #include of all files with .cpp
 OBJ    = $(patsubst %.cpp, $(PREF_OBJ)%.o, $(SRC))     #turn .cpp into .o
-
+#Logs files
+LOGS_SRC = $(wildcard $(LOGS_DIR)*.cpp)
+OBJ_LOGS = $(patsubst $(PREF_OBJ)%.cpp, %.o, $(LOGS_SRC))
 
 
 
 all:     $(TARGET)
 
-$(TARGET):  $(OBJ) $(OBJ_TREE) $(OBJ_LIB)
-	$(CC) -o $(TARGET) $(OBJ) $(OBJ_TREE) $(OBJ_LIB)
+$(TARGET):  $(OBJ) $(OBJ_TREE) $(OBJ_LIB) $(OBJ_LOGS)
+	$(CC) -o $(TARGET) $(OBJ) $(OBJ_TREE) $(OBJ_LIB) $(OBJ_LOGS)
 
 $(PREF_OBJ)%.o : %.cpp
 	$(CC) $(CFLAGS) $< -o $@

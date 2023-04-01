@@ -7,14 +7,16 @@ void graph_dump (tree_t* pine)
     dump_graph_t graph_dump_set  = {};
     graph_dump_set.info.size = pine->size;
     graph_dump_set.info.head = &pine->root->value;
+    graph_dump_set.info.save_pic_to = "../logs/logs_pic/";
     init_graph   (graphviz, &graph_dump_set);
     tree_print   (graphviz, &graph_dump_set, pine->root);
 
-    run_graphviz (graphviz, pine->html_logs, &graph_dump_set);
+    run_graphviz (graphviz, &graph_dump_set);
+    pic_log      ("Here is the print of your tree", "../dump_info/tree_dump.png");
     fclose       (graphviz);
 }
 
-tree_node_t* tree_print (FILE* graphviz, dump_graph_t* graph_dump_set, tree_node_t* parent)
+int tree_print (FILE* graphviz, dump_graph_t* graph_dump_set, tree_node_t* parent)
 {
     if (parent->node_type == TYPE_NUM)
     {
@@ -22,11 +24,17 @@ tree_node_t* tree_print (FILE* graphviz, dump_graph_t* graph_dump_set, tree_node
         graph_dump_set->nodes->label     = "TYPE_NUM";
         make_int_node (graphviz, graph_dump_set, &parent->value, *graph_dump_set->nodes, &parent->right->value, &parent->left->value, parent->value);
     }
-    else if (parent->node_type == TYPE_OP)
+    else if (parent->node_type == TYPE_VAR)
+    {
+        graph_dump_set->nodes->fillcolor = "#7FC7FF";
+        graph_dump_set->nodes->label     = "TYPE_VAR";
+        make_char_node (graphviz, graph_dump_set, &parent->value, *graph_dump_set->nodes, &parent->right->value, &parent->left->value, parent->node_type);
+    }
+    else
     {
         graph_dump_set->nodes->fillcolor = "#77DD77";
         graph_dump_set->nodes->label     = "TYPE_OP";
-        make_char_node (graphviz, graph_dump_set, &parent->value, *graph_dump_set->nodes, &parent->right->value, &parent->left->value, parent->value);
+        make_char_node (graphviz, graph_dump_set, &parent->value, *graph_dump_set->nodes, &parent->right->value, &parent->left->value, parent->node_type);
     }
 
     if (parent->left != NULL)
@@ -39,4 +47,5 @@ tree_node_t* tree_print (FILE* graphviz, dump_graph_t* graph_dump_set, tree_node
         make_edge  (graphviz, graph_dump_set, &parent->value, &parent->right->value, *graph_dump_set->edges);
         tree_print (graphviz, graph_dump_set, parent->right);
     }
+    return 0;
 }

@@ -107,14 +107,18 @@ void resize_struct (dump_graph_t* graph_dump_set)
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-void run_graphviz  (FILE* graphviz, FILE* html_logs, dump_graph_t* graph_dump_set)
+void run_graphviz  (FILE* graphviz, dump_graph_t* graph_dump_set)
 {
     fprintf (graphviz, "}\n");
     free    (graph_dump_set->nodes);
     free    (graph_dump_set->edges);
-
-    fprintf (html_logs, "\n\n\n<font color = ""#8DB6CD"" size=""6"">Here is the print of your tree</font>\n");
+    // if (graph_dump_set->info.save_pic_to != NULL)
+    // {
+    //     system  ("make graphviz");
+    // }
+    //fprintf (LOG_FILE, "\n\n\n<font color = ""#8DB6CD"" size=""6"">Here is the print of your tree</font>\n");
     //system  ("dot ./dump_info/tree_dump.dot -T png -o ./dump_info/tree_dump.png");
     //system  ("xdg-open ./dump_info/list_dump.pdf");
-    fprintf (html_logs, "<img src = ""tree_dump.png"" width=""800"" height=""350"">\n");
+    //fprintf (LOG_FILE, "<img src = ""tree_dump.png"" width=""800"" height=""350"">\n");
+    //fclose (LOG_FILE);
 }

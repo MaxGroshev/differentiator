@@ -6,6 +6,7 @@
 #include <signal.h>
 #include <unistd.h>
 #include "./graph_lib/graphviz.h"
+#include "../logs/log_file.h"
 #include "my_ASSERT.h"
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -26,7 +27,7 @@ struct tree_t
 {
     tree_node_t* root = NULL;
     size_t       size = 0;
-    FILE*   html_logs;
+    FILE*        LOG_FILE;
 };
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -34,15 +35,16 @@ struct tree_t
 enum NODE_TYPE
 {
     TYPE_NUM = 1,
-    TYPE_OP  = 2,
-};
-
-enum OPER_TYPE
-{
+    TYPE_VAR = 120,
     OP_ADD = 43,
     OP_SUB = 45,
     OP_MUL = 42,
     OP_DIV = 47,
+    OP_SIN = 50,
+    OP_COS = 51,
+    OP_POW = 52,
+    OP_LN  = 53,
+    OP_SQR = 54,
 };
 
 enum TREE_CODE_OF_PRINT
@@ -63,7 +65,9 @@ enum TREE_CODE_OF_PRINT
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 tree_t*      constructor (tree_t* pine);
-tree_node_t* tree_create (tree_t* pine, int node_type, tree_data_type value, tree_node_t* l_child = NULL, tree_node_t* r_child = NULL);
+tree_node_t* tree_new_num_node (tree_t* pine, tree_data_type value);
+tree_node_t* tree_new_var_node (tree_t* pine, int node_type);
+tree_node_t* tree_new_op_node  (tree_t* pine, int node_type, tree_node_t* l_child = NULL, tree_node_t* r_child = NULL);
 
 tree_node_t* tree_link_l (tree_t* pine, tree_node_t* parent, tree_node_t* child);
 tree_node_t* tree_link_r (tree_t* pine, tree_node_t* parent, tree_node_t* child);
@@ -71,7 +75,7 @@ tree_node_t* tree_remove (tree_t* pine, tree_node_t* node);
 tree_node_t* tree_search (tree_node_t* tree_root, tree_node_t* node);
 
 void         graph_dump      (tree_t* pine);
-tree_node_t* tree_print      (FILE* graphviz, dump_graph_t* graph_dump_set, tree_node_t* parent);
+int tree_print      (FILE* graphviz, dump_graph_t* graph_dump_set, tree_node_t* parent);
 void         write_tree_logs (int code_of_print, tree_t* pine = NULL, tree_node_t* node = NULL);
 
 tree_node_t* tree_delete (tree_t* pine, tree_node_t* tree_root);

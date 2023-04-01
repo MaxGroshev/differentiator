@@ -6,8 +6,6 @@ tree_t* constructor (tree_t* pine)
 
     pine->size = 0;
     pine->root = NULL;
-    pine->html_logs = fopen ("dump_info/tree_dump.html", "w");
-    MY_ASSERT (pine->html_logs != NULL);
     write_tree_logs (T_TREE_SUC_CREATED, pine);
 
     return pine;
@@ -15,21 +13,48 @@ tree_t* constructor (tree_t* pine)
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-tree_node_t* tree_create (tree_t* pine, int node_type, tree_data_type value, tree_node_t* l_child, tree_node_t* r_child)
+tree_node_t* tree_new_num_node (tree_t* pine, tree_data_type value)
 {
     tree_node_t* tmp_node = (tree_node_t*) calloc (1, sizeof (tree_node_t));
     MY_ASSERT   (tmp_node != NULL);
 
-    pine->size++;
+
     tmp_node->value     = value;
+    tmp_node->node_type = TYPE_NUM;
+
+    if (pine->size == 0) pine->root = tmp_node;
+    pine->size++;
+    write_tree_logs (T_NODE_SUC_CREATED, pine, tmp_node);
+    return  tmp_node;
+}
+
+tree_node_t* tree_new_var_node (tree_t* pine, int node_type)
+{
+    tree_node_t* tmp_node = (tree_node_t*) calloc (1, sizeof (tree_node_t));
+    MY_ASSERT   (tmp_node != NULL);
+
+    tmp_node->node_type = TYPE_VAR;
+    if (pine->size == 0) pine->root = tmp_node;
+    pine->size++;
+
+    write_tree_logs (T_NODE_SUC_CREATED, pine, tmp_node);
+    return  tmp_node;
+}
+
+tree_node_t* tree_new_op_node (tree_t* pine, int node_type, tree_node_t* l_child, tree_node_t* r_child)
+{
+    tree_node_t* tmp_node = (tree_node_t*) calloc (1, sizeof (tree_node_t));
+    MY_ASSERT   (tmp_node != NULL);
+    pine->size++;
+
     tmp_node->node_type = node_type;
+    write_tree_logs (T_NODE_SUC_CREATED, pine, tmp_node);
     if (pine->size == 0) pine->root = tmp_node;
     if (pine->root == l_child || pine->root == r_child) pine->root = tmp_node;
     if (l_child != NULL) tree_link_l (pine, tmp_node, l_child);
     if (r_child != NULL) tree_link_r (pine, tmp_node, r_child);
     MY_ASSERT   (tmp_node != NULL);
 
-    write_tree_logs (T_NODE_SUC_CREATED, pine, tmp_node);
     return  tmp_node;
 }
 
@@ -53,10 +78,10 @@ tree_node_t* tree_link_l (tree_t* pine, tree_node_t* parent, tree_node_t* child)
 tree_node_t* tree_link_r (tree_t* pine, tree_node_t* parent, tree_node_t* child)
 {
     MY_ASSERT (parent != NULL && child != NULL);
-
     if (parent->node_type == TYPE_NUM) write_tree_logs (T_TYPE_NUM_HAS_CHILD, pine, parent);
     else if (parent->right == NULL)
     {
+
         parent->right = child;
         write_tree_logs (T_R_EDGE_SUC_CREATED, pine, parent);
         return parent->right;
@@ -144,7 +169,6 @@ tree_node_t* tree_delete (tree_t* pine, tree_node_t* tree_root)
     if (tree_root == pine->root)
     {
         write_tree_logs (T_TREE_WAS_CLEARED, pine);
-        fclose  (pine->html_logs);
     }
 
     return NULL;

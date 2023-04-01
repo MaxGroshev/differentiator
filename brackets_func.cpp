@@ -9,7 +9,7 @@ double tree_eval (tree_t* pine, tree_node_t* tree_node)
         return tree_node->value;
     }
 
-    switch (tree_node->value)
+    switch (tree_node->node_type)
     {
         case OP_ADD:
             return tree_eval (pine, tree_node->left) + tree_eval (pine, tree_node->right);
@@ -29,31 +29,33 @@ double tree_eval (tree_t* pine, tree_node_t* tree_node)
             }
             return tree_eval (pine, tree_node->left) / tree_eval (pine, tree_node->right);
     }
+    return -1;
 }
 
 //------------------------------------------------------------------------------------------------------------------------------------------
 
-int write_brackets (tree_t* pine, tree_node_t* tree_node)
+int write_brackets (FILE* br_write, tree_node_t* tree_node)
 {
-    MY_ASSERT (pine != NULL && tree_node != NULL)
+    MY_ASSERT (tree_node != NULL)
 
-    fprintf (pine->html_logs, "(");
-    if      (tree_node->node_type == TYPE_NUM) fprintf (pine->html_logs, "%d", tree_node->value);
-    else if (tree_node->value     == OP_ADD)   fprintf (pine->html_logs, "+");
-    else if (tree_node->value     == OP_SUB)   fprintf (pine->html_logs, "-");
-    else if (tree_node->value     == OP_MUL)   fprintf (pine->html_logs, "*");
-    else if (tree_node->value     == OP_DIV)   fprintf (pine->html_logs, "/");
+    fprintf (br_write, "(");
+    if      (tree_node->node_type == TYPE_NUM) fprintf (br_write, "%d", tree_node->value);
+    else if (tree_node->node_type == TYPE_VAR) fprintf (br_write, "x");
+    else if (tree_node->node_type == OP_ADD)   fprintf (br_write, "+");
+    else if (tree_node->node_type == OP_SUB)   fprintf (br_write, "-");
+    else if (tree_node->node_type == OP_MUL)   fprintf (br_write, "*");
+    else if (tree_node->node_type == OP_DIV)   fprintf (br_write, "/");
 
     if (tree_node->left != NULL)
     {
-        write_brackets (pine, tree_node->left);
+        write_brackets (br_write, tree_node->left);
     }
     if (tree_node->right != NULL)
     {
-        write_brackets (pine, tree_node->right);
+        write_brackets (br_write, tree_node->right);
     }
 
-    fprintf (pine->html_logs, ")");
+    fprintf (br_write, ")");
     return 0;
 }
 
@@ -68,7 +70,7 @@ tree_node_t* read_brackets (FILE* br_read, tree_t* pine, tree_node_t* tmp_node)
         int ret_val = fscanf (br_read, " %d", &value);
         if (ret_val != 0)
         {
-            tree_node_t* tmp_node = tree_create (pine, TYPE_NUM, value);
+            tree_node_t* tmp_node = tree_new_num_node (pine, value);
             br_elem = fgetc (br_read);
             if (br_elem == ')') return tmp_node;
         }
@@ -80,28 +82,28 @@ tree_node_t* read_brackets (FILE* br_read, tree_t* pine, tree_node_t* tmp_node)
 
         if (br_elem == '+')
         {
-            tree_node_t* tmp_parent  = tree_create (pine, TYPE_OP, OP_ADD, tmp_node);
+            tree_node_t* tmp_parent  = tree_new_op_node (pine, OP_ADD, tmp_node);
             tree_node_t* tmp_node    = read_brackets (br_read, pine);
             tree_link_r (pine, tmp_parent, tmp_node);
             return tmp_parent;
         }
         else if (br_elem == '-')
         {
-            tree_node_t* tmp_parent  = tree_create (pine, TYPE_OP, OP_SUB, tmp_node);
+            tree_node_t* tmp_parent  = tree_new_op_node (pine, OP_SUB, tmp_node);
             tree_node_t* tmp_node    = read_brackets (br_read, pine);
             tree_link_r (pine, tmp_parent, tmp_node);
             return tmp_parent;
         }
         else if (br_elem == '*')
         {
-            tree_node_t* tmp_parent  = tree_create (pine, TYPE_OP, OP_MUL, tmp_node);
+            tree_node_t* tmp_parent  = tree_new_op_node (pine, OP_MUL, tmp_node);
             tree_node_t* tmp_node    = read_brackets (br_read, pine);
             tree_link_r (pine, tmp_parent, tmp_node);
             return tmp_parent;
         }
         else if (br_elem == '/')
         {
-            tree_node_t* tmp_parent  = tree_create (pine, TYPE_OP, OP_DIV, tmp_node);
+            tree_node_t* tmp_parent  = tree_new_op_node (pine, OP_DIV, tmp_node);
             tree_node_t* tmp_node    = read_brackets (br_read, pine);
             tree_link_r (pine, tmp_parent, tmp_node);
             return tmp_parent;
@@ -115,4 +117,5 @@ tree_node_t* read_brackets (FILE* br_read, tree_t* pine, tree_node_t* tmp_node)
     {
         write_brackets_logs (BR_NO_BRACKET_AT_THE_BEGINNING, pine, ftell (br_read));
     }
+    return NULL;
 }
