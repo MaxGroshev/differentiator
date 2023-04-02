@@ -43,7 +43,7 @@ struct dump_graph_t
 {
     const char*         orientation = "";
     const char*         splines = "true";
-    struct node_t* nodes;
+    struct node_t*      nodes;
     struct edge_t*      edges;
     struct data_stat_t  info;
     int                 print_log = 0;

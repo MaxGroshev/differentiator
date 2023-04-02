@@ -27,7 +27,6 @@ struct tree_t
 {
     tree_node_t* root = NULL;
     size_t       size = 0;
-    FILE*        LOG_FILE;
 };
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -40,9 +39,9 @@ enum NODE_TYPE
     OP_SUB = 45,
     OP_MUL = 42,
     OP_DIV = 47,
+    OP_POW = 94,
     OP_SIN = 50,
     OP_COS = 51,
-    OP_POW = 52,
     OP_LN  = 53,
     OP_SQR = 54,
 };
@@ -75,7 +74,7 @@ tree_node_t* tree_remove (tree_t* pine, tree_node_t* node);
 tree_node_t* tree_search (tree_node_t* tree_root, tree_node_t* node);
 
 void         graph_dump      (tree_t* pine);
-int tree_print      (FILE* graphviz, dump_graph_t* graph_dump_set, tree_node_t* parent);
+int          tree_print      (FILE* graphviz, dump_graph_t* graph_dump_set, tree_node_t* parent);
 void         write_tree_logs (int code_of_print, tree_t* pine = NULL, tree_node_t* node = NULL);
 
 tree_node_t* tree_delete (tree_t* pine, tree_node_t* tree_root);
