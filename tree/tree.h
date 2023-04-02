@@ -42,21 +42,26 @@ enum NODE_TYPE
     OP_POW = 94,
     OP_SIN = 50,
     OP_COS = 51,
-    OP_LN  = 53,
+    OP_LN  = 52,
     OP_SQR = 54,
+    OP_EXP = 55,
+    OP_LOG = 56,
+    OP_TG  = 57,
+    OP_CTG = 58,
 };
 
 enum TREE_CODE_OF_PRINT
 {
     T_TREE_SUC_CREATED      =  0,
     T_NODE_SUC_CREATED      =  1,
-    T_FAIL_OF_CREATING_NODE = -1,
     T_L_EDGE_SUC_CREATED    =  2,
     T_R_EDGE_SUC_CREATED    =  3,
-    T_FAIL_OF_CREATING_EDGE = -2,
     T_TREE_PRINT            =  4,
     T_NODE_SUC_DELETED      =  5,
     T_TREE_WAS_CLEARED      =  6,
+
+    T_FAIL_OF_CREATING_NODE = -1,
+    T_FAIL_OF_CREATING_EDGE = -2,
     T_TYPE_NUM_HAS_CHILD    = -3,
     T_DIVISION_BY_ZERO      = -4,
 };

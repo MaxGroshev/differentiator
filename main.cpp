@@ -15,14 +15,15 @@ int main ()
     // double res = tree_eval (&pine, pine.root);
     // printf ("%lg", res);
 
-    tree_node_t* left_node  = tree_new_op_node (&pine, OP_ADD, tree_new_var_node (&pine, TYPE_VAR), tree_new_num_node (&pine, 4));
-    tree_node_t* right_node = tree_new_op_node (&pine, OP_SUB, tree_new_var_node (&pine, TYPE_VAR), tree_new_num_node (&pine, 6));
-    tree_new_op_node (&pine, OP_DIV, left_node, right_node);
+    tree_node_t* right_node  = tree_new_op_node (&pine, OP_MUL, tree_new_var_node (&pine, TYPE_VAR), tree_new_num_node (&pine, 4));
+    //tree_node_t* left_node   = tree_new_op_node (&pine, OP_SUB, tree_new_num_node (&pine, 5), tree_new_num_node (&pine, 2));
+    // tree_new_op_node (&pine, OP_DIV, left_node, right_node);
+    tree_node_t* node  = tree_new_op_node (&pine, OP_CTG, NULL, right_node);
 
-    dif (&dif_pine, pine.root);
+    dif_node (&dif_pine, pine.root);
 
     FILE* br_write = fopen ("./test_files/write_br_seq.txt", "w");
-    write_brackets (br_write, pine.root);
+    //write_brackets (br_write, pine.root);
     fclose (br_write);
 
 
