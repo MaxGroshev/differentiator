@@ -26,6 +26,7 @@ tree_node_t* dif_node (tree_t* dif_pine, const tree_node_t* tree_node)
             tree_node_t* numer = tree_sub_node (dif_pine, tree_mul_node (dif_pine, dif_node (dif_pine, tree_node->left),  copy_node (dif_pine, tree_node->right)),
                                                           tree_mul_node (dif_pine, dif_node (dif_pine, tree_node->right), copy_node (dif_pine, tree_node->left)));
             tree_node_t* denom = tree_pow_node (dif_pine, copy_node (dif_pine, tree_node->right), tree_new_num_node (dif_pine, 2));
+
             return tree_div_node (dif_pine, numer, denom);
         }
         case OP_LN:
@@ -98,6 +99,24 @@ tree_node_t* copy_node (tree_t* dif_pine, const tree_node_t* tree_node)
 
         case OP_DIV:
             return tree_div_node (dif_pine, copy_node (dif_pine, tree_node->left), copy_node (dif_pine, tree_node->right));
+
+        case OP_POW:
+            return tree_pow_node (dif_pine, copy_node (dif_pine, tree_node->left), copy_node (dif_pine, tree_node->right));
+
+        case OP_LN:
+            return tree_ln_node  (dif_pine, copy_node (dif_pine, tree_node->right));
+
+        case OP_SIN:
+            return tree_sin_node (dif_pine, copy_node (dif_pine, tree_node->right));
+
+        case OP_COS:
+            return tree_cos_node (dif_pine, copy_node (dif_pine, tree_node->right));
+
+        case OP_TG:
+            return tree_tg_node (dif_pine, copy_node (dif_pine, tree_node->right));
+
+        case OP_CTG:
+            return tree_ctg_node (dif_pine, copy_node (dif_pine, tree_node->right));
     }
     return NULL;
 }

@@ -73,14 +73,14 @@ tree_node_t* tree_new_num_node (tree_t* pine, tree_data_type value);
 tree_node_t* tree_new_var_node (tree_t* pine, int node_type);
 tree_node_t* tree_new_op_node  (tree_t* pine, int node_type, tree_node_t* l_child = NULL, tree_node_t* r_child = NULL);
 
-tree_node_t* tree_link_l (tree_t* pine, tree_node_t* parent, tree_node_t* child);
-tree_node_t* tree_link_r (tree_t* pine, tree_node_t* parent, tree_node_t* child);
+tree_node_t* tree_link_l (tree_node_t* parent, tree_node_t* child);
+tree_node_t* tree_link_r (tree_node_t* parent, tree_node_t* child);
 tree_node_t* tree_remove (tree_t* pine, tree_node_t* node);
 tree_node_t* tree_search (tree_node_t* tree_root, tree_node_t* node);
 
 void         graph_dump      (tree_t* pine);
 int          tree_print      (FILE* graphviz, dump_graph_t* graph_dump_set, tree_node_t* parent);
-void         write_tree_logs (int code_of_print, tree_t* pine = NULL, tree_node_t* node = NULL);
+void         write_tree_logs (int code_of_print, tree_node_t* node = NULL);
 
 tree_node_t* tree_delete (tree_t* pine, tree_node_t* tree_root);
 

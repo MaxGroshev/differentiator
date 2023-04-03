@@ -15,5 +15,5 @@ double       tree_eval      (tree_t* pine, tree_node_t* tree_node);
 int          write_brackets (FILE* br_write, tree_node_t* tree_node);
 tree_node_t* read_brackets  (FILE* br_read, tree_t* pine, tree_node_t* tmp_node = NULL);
 
-void         write_brackets_logs (int code_of_print, tree_t* pine, int position_in_file);
+void         write_brackets_logs (int code_of_print, int position_in_file);
 
