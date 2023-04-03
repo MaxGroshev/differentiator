@@ -3,7 +3,7 @@ digraph
 rankdir = ""
 splines = "true"
 
-node_stat [margin = "0.3*0.3", style = "filled", shape = "record", fillcolor = "#8DB6CD" label = " size = 15 | root point = 0x4a4db84"]
+node_stat [margin = "0.3*0.3", style = "filled", shape = "record", fillcolor = "#8DB6CD" label = " size = 0 | root point = 0x4a4db84"]
 {rank = source; node_stat}
 
 node0x4a4db84 [shape = "Mrecord", fillcolor = "#77DD77", style = "filled", fontcolor = "#31032A", fontname = "Calibri", color = "white", label = "{TYPE_OP\n (0x4a4db84)| {/ |left = 0x4a4da04 |right = 0x4a4db24}}"]

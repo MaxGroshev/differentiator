@@ -13,43 +13,37 @@ tree_t* constructor (tree_t* pine)
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-tree_node_t* tree_new_num_node (tree_t* pine, tree_data_type value)
+tree_node_t* tree_new_num_node (tree_data_type value)
 {
     tree_node_t* tmp_node = (tree_node_t*) calloc (1, sizeof (tree_node_t));
     MY_ASSERT   (tmp_node != NULL);
 
     tmp_node->value     = value;
     tmp_node->node_type = TYPE_NUM;
-
-    if (pine->size == 0) pine->root = tmp_node;
-    pine->size++;
     write_tree_logs (T_NODE_SUC_CREATED, tmp_node);
+
     return  tmp_node;
 }
 
-tree_node_t* tree_new_var_node (tree_t* pine, int node_type)
+tree_node_t* tree_new_var_node (int node_type)
 {
     tree_node_t* tmp_node = (tree_node_t*) calloc (1, sizeof (tree_node_t));
     MY_ASSERT   (tmp_node != NULL);
 
     tmp_node->node_type = TYPE_VAR;
-    if (pine->size == 0) pine->root = tmp_node;
-    pine->size++;
-
     write_tree_logs (T_NODE_SUC_CREATED, tmp_node);
+
     return  tmp_node;
 }
 
-tree_node_t* tree_new_op_node (tree_t* pine, int node_type, tree_node_t* l_child, tree_node_t* r_child)
+tree_node_t* tree_new_op_node (int node_type, tree_node_t* l_child, tree_node_t* r_child)
 {
     tree_node_t* tmp_node = (tree_node_t*) calloc (1, sizeof (tree_node_t));
     MY_ASSERT   (tmp_node != NULL);
-    pine->size++;
 
     tmp_node->node_type = node_type;
     write_tree_logs (T_NODE_SUC_CREATED, tmp_node);
-    if (pine->size == 0) pine->root = tmp_node;
-    if (pine->root == l_child || pine->root == r_child) pine->root = tmp_node;
+
     if (l_child != NULL) tree_link_l (tmp_node, l_child);
     if (r_child != NULL) tree_link_r (tmp_node, r_child);
     MY_ASSERT   (tmp_node != NULL);
@@ -91,84 +85,84 @@ tree_node_t* tree_link_r (tree_node_t* parent, tree_node_t* child)
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-tree_node_t* tree_search (tree_node_t* tree_root, tree_node_t* node)
-{
-    printf ("here\n");
-    MY_ASSERT (tree_root != NULL)
-    if (tree_root->left != NULL)
-    {
-        //printf ("here\n");
-        if (tree_root->left == node || tree_root->right == node)
-        {
-            printf ("O---K\n");
-            return tree_root;
-        }
-        //MY_ASSERT (tree_root->left != NULL)
-        tree_node_t* tree_root = tree_search (tree_root->left, node);
-        printf ("returned\n");
-
-        if (tree_root->left == node || tree_root->right == node)
-        {
-            return tree_root;
-        }
-    }
-    // if (tree_root->right != NULL)
-    // {
-    //     if (tree_root->left == node || tree_root->right == node)
-    //     {
-    //         printf ("O---K\n");
-    //         return tree_root;
-    //     }
-    //     tree_node_t* tree_root = tree_search (tree_root->right, node);
-    //     if (tree_root->left == node || tree_root->right == node)
-    //     {
-    //         return tree_root;
-    //     }
-    // }
-    return NULL;
-}
+// tree_node_t* tree_search (tree_node_t* tree_root, tree_node_t* node)
+// {
+//     printf ("here\n");
+//     MY_ASSERT (tree_root != NULL)
+//     if (tree_root->left != NULL)
+//     {
+//         printf ("here\n");
+//         if (tree_root->left == node || tree_root->right == node)
+//         {
+//             printf ("O---K\n");
+//             return tree_root;
+//         }
+//         MY_ASSERT (tree_root->left != NULL)
+//         tree_node_t* tree_root = tree_search (tree_root->left, node);
+//         printf ("returned\n");
+//
+//         if (tree_root->left == node || tree_root->right == node)
+//         {
+//             return tree_root;
+//         }
+//     }
+//     if (tree_root->right != NULL)
+//     {
+//         if (tree_root->left == node || tree_root->right == node)
+//         {
+//             printf ("O---K\n");
+//             return tree_root;
+//         }
+//         tree_node_t* tree_root = tree_search (tree_root->right, node);
+//         if (tree_root->left == node || tree_root->right == node)
+//         {
+//             return tree_root;
+//         }
+//     }
+//     return NULL;
+// }
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-tree_node_t* tree_remove  (tree_t* pine, tree_node_t* node)
+// tree_node_t* tree_remove  (tree_node_t* node)
+// {
+//     MY_ASSERT (node != NULL);
+//     tree_node_t* ret_node = tree_search (pine->root, node);
+//     MY_ASSERT (ret_node != NULL);
+//
+//     if (ret_node->right == node)
+//     {
+//         free (ret_node->right);
+//         ret_node->right = NULL;
+//     }
+//     else if (ret_node->left == node)
+//     {
+//         free (ret_node->left);
+//         ret_node->left = NULL;
+//     }
+//     pine->size--;
+//     write_tree_logs (T_NODE_SUC_DELETED, node);
+//     return node;
+// }
+
+tree_node_t* tree_delete (tree_node_t* tree_node)
 {
-    MY_ASSERT (node != NULL);
-    tree_node_t* ret_node = tree_search (pine->root, node);
-    MY_ASSERT (ret_node != NULL);
+    if (tree_node == NULL) return NULL;
+    if (tree_node->left != NULL)
+    {
+        tree_delete (tree_node->left);
+    }
+    if (tree_node->right != NULL)
+    {
+        tree_delete (tree_node->right);
+    }
+    free (tree_node);
 
-    if (ret_node->right == node)
-    {
-        free (ret_node->right);
-        ret_node->right = NULL;
-    }
-    else if (ret_node->left == node)
-    {
-        free (ret_node->left);
-        ret_node->left = NULL;
-    }
-    pine->size--;
-    write_tree_logs (T_NODE_SUC_DELETED, node);
-    return node;
-}
-
-tree_node_t* tree_delete (tree_t* pine, tree_node_t* tree_root)
-{
-    if (tree_root == NULL) return NULL;
-    if (tree_root->left != NULL)
-    {
-        tree_delete (pine, tree_root->left);
-    }
-    if (tree_root->right != NULL)
-    {
-        tree_delete (pine, tree_root->right);
-    }
-    free (tree_root);
-
-    write_tree_logs (T_NODE_SUC_DELETED, tree_root);
-    if (tree_root == pine->root)
-    {
-        write_tree_logs (T_TREE_WAS_CLEARED);
-    }
+    write_tree_logs (T_NODE_SUC_DELETED, tree_node);
+    // if (tree_node == pine->root)
+    // {
+    //     write_tree_logs (T_TREE_WAS_CLEARED);
+    // }
 
     return NULL;
 }
