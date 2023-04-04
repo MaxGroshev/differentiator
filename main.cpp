@@ -27,8 +27,9 @@ int main ()
     write_brackets (br_write, dif_pine.root);
     fclose         (br_write);
 
-    graph_dump  (&pine);
-    graph_dump  (&dif_pine);
+    graph_dump (&pine);
+    graph_dump (&dif_pine);
+
 
     tree_delete (pine.root);
     tree_delete (dif_pine.root);

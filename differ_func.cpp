@@ -24,7 +24,7 @@ tree_node_t* dif_node (const tree_node_t* tree_node)
         case OP_DIV:
         {
             tree_node_t* numer = tree_sub_node (tree_mul_node (dif_node (tree_node->left),  copy_node (tree_node->right)),
-                                                          tree_mul_node (dif_node (tree_node->right), copy_node (tree_node->left)));
+                                                tree_mul_node (dif_node (tree_node->right), copy_node (tree_node->left)));
             tree_node_t* denom = tree_pow_node (copy_node (tree_node->right), tree_new_num_node (2));
 
             return tree_div_node (numer, denom);

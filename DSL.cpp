@@ -49,3 +49,4 @@ tree_node_t* tree_ctg_node (tree_node_t* right_node)
 {
     return tree_new_op_node (OP_SIN, NULL, right_node);
 }
+

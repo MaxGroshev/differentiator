@@ -79,7 +79,7 @@ tree_node_t* tree_remove (tree_t* pine, tree_node_t* node);
 tree_node_t* tree_search (tree_node_t* tree_root, tree_node_t* node);
 
 void         graph_dump      (tree_t* pine);
-int          tree_print      (FILE* graphviz, dump_graph_t* graph_dump_set, tree_node_t* parent);
+int          tree_print      (dump_graph_t* graph_dump_set, tree_node_t* parent);
 void         write_tree_logs (int code_of_print, tree_node_t* node = NULL);
 
 tree_node_t* tree_delete (tree_node_t* tree_node);

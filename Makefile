@@ -11,14 +11,14 @@ PREF_STAT = ./dump_info/
 
 
 #Graphviz files
-GR_LIB = $(wildcard $(GR_DIR)*.cpp)
-OBJ_LIB= $(patsubst $(PREF_OBJ)%.cpp, %.o, $(GR_LIB))
+GR_LIB   = $(wildcard $(GR_DIR)*.cpp)
+OBJ_LIB  = $(patsubst $(PREF_OBJ)%.cpp, %.o, $(GR_LIB))
 #Tree files
 TREE_SRC = $(wildcard $(TREE_DIR)*.cpp)
 OBJ_TREE = $(patsubst $(PREF_OBJ)%.cpp, %.o, $(TREE_SRC))
 #Common files
-SRC    = $(wildcard *.cpp )                            #include of all files with .cpp
-OBJ    = $(patsubst %.cpp, $(PREF_OBJ)%.o, $(SRC))     #turn .cpp into .o
+SRC      = $(wildcard *.cpp )                            #include of all files with .cpp
+OBJ      = $(patsubst %.cpp, $(PREF_OBJ)%.o, $(SRC))     #turn .cpp into .o
 #Logs files
 LOGS_SRC = $(wildcard $(LOGS_DIR)*.cpp)
 OBJ_LOGS = $(patsubst $(PREF_OBJ)%.cpp, %.o, $(LOGS_SRC))

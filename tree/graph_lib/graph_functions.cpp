@@ -1,8 +1,10 @@
 #include "graphviz.h"
 
-void init_graph (FILE* graphviz, dump_graph_t* graph_dump_set)
+void init_graph (dump_graph_t* graph_dump_set, const char* dot_dir)
 {
+    graphviz = fopen (dot_dir,  "w");
     MY_ASSERT (graphviz != NULL)
+
     graph_dump_set->edge_capacity = 10;
     graph_dump_set->node_capacity = 10;
     graph_dump_set->node_size     = 0;
@@ -22,12 +24,12 @@ void init_graph (FILE* graphviz, dump_graph_t* graph_dump_set)
         graph_dump_set->edges[i] = init_struct_edge;
     }
 
-    print_def_info (graphviz, graph_dump_set);
+    print_def_info (graph_dump_set);
 }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-void print_int_node (FILE* graphviz, dump_graph_t* graph_dump_set, int* node_address, struct node_t nodes, int* right, int* left, int value)
+void print_int_node (dump_graph_t* graph_dump_set, int* node_address, struct node_t nodes, int* right, int* left, int value)
 {
     if (graph_dump_set->node_capacity <= graph_dump_set->node_size + 1) resize_struct (graph_dump_set);
 
@@ -36,7 +38,7 @@ void print_int_node (FILE* graphviz, dump_graph_t* graph_dump_set, int* node_add
     graph_dump_set->node_size++;
 }
 
-void print_char_node (FILE* graphviz, dump_graph_t* graph_dump_set, int* node_address, struct node_t nodes, int* right, int* left, char value)
+void print_char_node (dump_graph_t* graph_dump_set, int* node_address, struct node_t nodes, int* right, int* left, char value)
 {
     if (graph_dump_set->node_capacity <= graph_dump_set->node_size + 1) resize_struct (graph_dump_set);
 
@@ -45,7 +47,7 @@ void print_char_node (FILE* graphviz, dump_graph_t* graph_dump_set, int* node_ad
     graph_dump_set->node_size++;
 }
 
-void print_str_node (FILE* graphviz, dump_graph_t* graph_dump_set, int* node_address, struct node_t nodes, int* right, int* left, const char* value)
+void print_str_node (dump_graph_t* graph_dump_set, int* node_address, struct node_t nodes, int* right, int* left, const char* value)
 {
     if (graph_dump_set->node_capacity <= graph_dump_set->node_size + 1) resize_struct (graph_dump_set);
 
@@ -56,7 +58,7 @@ void print_str_node (FILE* graphviz, dump_graph_t* graph_dump_set, int* node_add
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-void make_edge (FILE* graphviz, dump_graph_t* graph_dump_set, int* node_from, int* node_to, struct edge_t edges)
+void make_edge (dump_graph_t* graph_dump_set, int* node_from, int* node_to, struct edge_t edges)
 {
     if (graph_dump_set->edge_capacity <= graph_dump_set->edge_size + 1) resize_struct (graph_dump_set);
 
@@ -67,7 +69,7 @@ void make_edge (FILE* graphviz, dump_graph_t* graph_dump_set, int* node_from, in
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-void print_def_info (FILE* graphviz, dump_graph_t* graph_dump_set)
+void print_def_info (dump_graph_t* graph_dump_set)
 {
     fprintf (graphviz, "digraph   \n{\n");
     fprintf (graphviz, "rankdir = \"%s\"\n",   graph_dump_set->orientation);
@@ -98,7 +100,7 @@ void resize_struct (dump_graph_t* graph_dump_set)
         }
     }
 
-    else if (graph_dump_set->node_capacity <= graph_dump_set->node_size + 1)
+    if (graph_dump_set->node_capacity <= graph_dump_set->node_size + 1)
     {
         size_t prev_capacity = graph_dump_set->node_capacity;
         graph_dump_set->node_capacity *= 2;
@@ -116,18 +118,35 @@ void resize_struct (dump_graph_t* graph_dump_set)
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-void run_graphviz  (FILE* graphviz, dump_graph_t* graph_dump_set)
+int run_graphviz  (dump_graph_t* graph_dump_set, const char* dot_dir, const char* pic_dir)
 {
+    MY_ASSERT (dot_dir != NULL && pic_dir != NULL)
+    static int num_of_print = 0;
+    num_of_print++;
+
     fprintf (graphviz, "}\n");
     free    (graph_dump_set->nodes);
     free    (graph_dump_set->edges);
-    // if (graph_dump_set->info.save_pic_to != NULL)
-    // {
-    //     system  ("make graphviz");
-    // }
-    //fprintf (LOG_FILE, "\n\n\n<font color = ""#8DB6CD"" size=""6"">Here is the print of your tree</font>\n");
-    //system  ("dot ./dump_info/tree_dump.dot -T png -o ./dump_info/tree_dump.png");
-    //system  ("xdg-open ./dump_info/list_dump.pdf");
-    //fprintf (LOG_FILE, "<img src = ""tree_dump.png"" width=""800"" height=""350"">\n");
-    //fclose (LOG_FILE);
+    fclose  (graphviz);
+
+    const int buf_size = (strlen (dot_dir) + strlen (pic_dir) + 64) * sizeof (char);
+    char buf [buf_size];
+
+    sprintf (buf, "dot %s -T png -o %s/tree_d%d.png", dot_dir, pic_dir, num_of_print);
+    call_system (buf);
+
+    sprintf (buf, ".%s/tree_d%d.png", pic_dir, num_of_print);
+    pic_log ("Here is the print of your tree", buf);
+
+    return 0;
+}
+
+void call_system (const char* command)
+{
+    int dupper = 0;
+    dupper = (2);
+    close (2);
+    system (command);
+    dup2 (dupper, 2);
+    close (dupper);
 }
