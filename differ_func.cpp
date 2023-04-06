@@ -7,6 +7,9 @@ tree_node_t* dif_node (const tree_node_t* tree_node)
         case TYPE_NUM:
             return tree_new_num_node (0);
 
+        case CONST_EXP:
+            return tree_new_num_node (0);
+
         case TYPE_VAR:
             return tree_new_num_node (1);
 
@@ -19,7 +22,7 @@ tree_node_t* dif_node (const tree_node_t* tree_node)
         case OP_MUL:
         {
             return tree_add_node (tree_mul_node (dif_node (tree_node->left),  copy_node (tree_node->right)),
-                                            tree_mul_node (dif_node (tree_node->right), copy_node (tree_node->left)));
+                                  tree_mul_node (dif_node (tree_node->right), copy_node (tree_node->left)));
         }
         case OP_DIV:
         {
@@ -71,7 +74,26 @@ tree_node_t* dif_node (const tree_node_t* tree_node)
 
             return tree_mul_node (dif_node (tree_node->right), ex_der);
         }
+        case OP_POW:
+        {
+            if (tree_node->right->node_type == TYPE_NUM && tree_node->left->node_type == TYPE_NUM) return tree_new_num_node (0);
+            else if (tree_node->right->node_type == TYPE_NUM)
+            {
+                tree_node_t* power = tree_pow_node (copy_node (tree_node->left), tree_sub_node (copy_node (tree_node->right), tree_new_num_node (1)));
+                return tree_mul_node (copy_node (tree_node->right), tree_mul_node (dif_node (tree_node->left), power));
+            }
+            else
+            {
+                tree_node_t* exp = tree_pow_node (tree_new_num_node (CONST_EXP), tree_mul_node (copy_node (tree_node->right),
+                                                                                 tree_ln_node  (copy_node (tree_node->left))));
+
+                tree_node_t* in_der = tree_add_node (tree_mul_node (dif_node (tree_node->right), tree_ln_node (copy_node (tree_node->left))),
+                                      tree_mul_node (dif_node (tree_ln_node (copy_node (tree_node->left))), copy_node (tree_node->right)));
+                return tree_mul_node (exp, in_der);
+            }
+        }
     }
+    write_tree_logs (T_UNSUPPORTED_OPER);
     return NULL;
 }
 
@@ -81,6 +103,9 @@ tree_node_t* copy_node (const tree_node_t* tree_node)
     switch (tree_node->node_type)
     {
         case TYPE_NUM:
+            return tree_new_num_node (tree_node->value);
+
+        case CONST_EXP:
             return tree_new_num_node (tree_node->value);
 
         case TYPE_VAR:
@@ -111,10 +136,11 @@ tree_node_t* copy_node (const tree_node_t* tree_node)
             return tree_cos_node (copy_node (tree_node->right));
 
         case OP_TG:
-            return tree_tg_node (copy_node (tree_node->right));
+            return tree_tg_node  (copy_node (tree_node->right));
 
         case OP_CTG:
             return tree_ctg_node (copy_node (tree_node->right));
     }
+    printf ("not here");
     return NULL;
 }

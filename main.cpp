@@ -16,8 +16,10 @@ int main ()
     // double res = tree_eval (&pine, pine.root);
     // printf ("%lg", res);
 
-    pine.root = tree_new_op_node (OP_SIN, NULL, tree_new_var_node (TYPE_VAR));
-    pine.root = tree_new_op_node (OP_DIV, pine.root, tree_new_var_node (TYPE_VAR));
+    //pine.root = tree_new_num_node (CONST_EXP);
+    //printf ("%d\n", pine.root->node_type);
+    pine.root = tree_new_op_node (OP_POW, tree_new_var_node (TYPE_VAR), tree_new_var_node (TYPE_VAR));
+    //pine.root = tree_new_op_node (OP_DIV, pine.root, tree_new_var_node (TYPE_VAR));
     //tree_new_op_node (&pine, OP_DIV, left_node, right_node);
     //tree_node_t* node  = tree_new_op_node (&pine, OP_CTG, NULL, right_node);
 

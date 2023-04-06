@@ -15,17 +15,19 @@ void graph_dump (tree_t* pine)
 
 int tree_print (dump_graph_t* graph_dump_set, tree_node_t* parent)
 {
+    MY_ASSERT (parent != NULL);
+
     if (parent->node_type == TYPE_NUM)
     {
         graph_dump_set->nodes->fillcolor = "#FF8C69";
         graph_dump_set->nodes->label     = "TYPE_NUM";
-        print_int_node (graph_dump_set, &parent->value, *graph_dump_set->nodes, &parent->right->value, &parent->left->value, parent->value);
+        print_int_node (TREE_DUMP_SET, parent->value);
     }
     else if (parent->node_type == TYPE_VAR)
     {
         graph_dump_set->nodes->fillcolor = "#7FC7FF";
         graph_dump_set->nodes->label     = "TYPE_VAR";
-        print_char_node (graph_dump_set, &parent->value, *graph_dump_set->nodes, &parent->right->value, &parent->left->value, parent->node_type);
+        print_char_node (TREE_DUMP_SET, parent->node_type);
     }
     else
     {
@@ -35,40 +37,45 @@ int tree_print (dump_graph_t* graph_dump_set, tree_node_t* parent)
         switch (parent->node_type)
         {
             case OP_ADD:
-                print_char_node (graph_dump_set, &parent->value, *graph_dump_set->nodes, &parent->right->value, &parent->left->value, OP_ADD);
+                print_char_node (TREE_DUMP_SET, OP_ADD);
                 break;
             case OP_SUB:
-                print_char_node (graph_dump_set, &parent->value, *graph_dump_set->nodes, &parent->right->value, &parent->left->value, OP_SUB);
+                print_char_node (TREE_DUMP_SET, OP_SUB);
                 break;
             case OP_MUL:
-                print_char_node (graph_dump_set, &parent->value, *graph_dump_set->nodes, &parent->right->value, &parent->left->value, OP_MUL);
+                print_char_node (TREE_DUMP_SET, OP_MUL);
                 break;
             case OP_DIV:
-                print_char_node (graph_dump_set, &parent->value, *graph_dump_set->nodes, &parent->right->value, &parent->left->value, OP_DIV);
+                print_char_node (TREE_DUMP_SET, OP_DIV);
                 break;
             case OP_POW:
-                print_char_node (graph_dump_set, &parent->value, *graph_dump_set->nodes, &parent->right->value, &parent->left->value, OP_POW);
+                print_char_node (TREE_DUMP_SET, OP_POW);
+                break;
+            case CONST_EXP:
+                graph_dump_set->nodes->fillcolor = "#FF8C69";
+                graph_dump_set->nodes->label     = "CONST_VAL";
+                print_str_node  (TREE_DUMP_SET, "e");
                 break;
             case OP_SQR:
-                print_str_node  (graph_dump_set, &parent->value, *graph_dump_set->nodes, &parent->right->value, &parent->left->value, "sqr");
+                print_str_node  (TREE_DUMP_SET, "sqr");
                 break;
             case OP_LN:
-                print_str_node  (graph_dump_set, &parent->value, *graph_dump_set->nodes, &parent->right->value, &parent->left->value, "ln");
+                print_str_node  (TREE_DUMP_SET, "ln");
                 break;
             case OP_LOG:
-                print_str_node  (graph_dump_set, &parent->value, *graph_dump_set->nodes, &parent->right->value, &parent->left->value, "log");
+                print_str_node  (TREE_DUMP_SET, "log");
                 break;
             case OP_SIN:
-                print_str_node  (graph_dump_set, &parent->value, *graph_dump_set->nodes, &parent->right->value, &parent->left->value, "sin");
+                print_str_node  (TREE_DUMP_SET, "sin");
                 break;
             case OP_COS:
-                print_str_node  (graph_dump_set, &parent->value, *graph_dump_set->nodes, &parent->right->value, &parent->left->value, "cos");
+                print_str_node  (TREE_DUMP_SET, "cos");
                 break;
             case OP_TG:
-                print_str_node  (graph_dump_set, &parent->value, *graph_dump_set->nodes, &parent->right->value, &parent->left->value, "tg");
+                print_str_node  (TREE_DUMP_SET, "tg");
                 break;
             case OP_CTG:
-                print_str_node  (graph_dump_set, &parent->value, *graph_dump_set->nodes, &parent->right->value, &parent->left->value, "ctg");
+                print_str_node  (TREE_DUMP_SET, "ctg");
                 break;
         }
     }

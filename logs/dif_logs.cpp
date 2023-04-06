@@ -22,12 +22,12 @@ void write_tree_logs (int code_of_print, tree_node_t* node)
 
         case T_L_EDGE_SUC_CREATED:
             fprintf (LOG_FILE, "<font color = #6018CF size=5>Created edge: parent address (%p) | value (%d); left  (%p) | value (%d)</font>\n\n",
-                                                                                          &node->value,   node->value, &node->left->value, node->value);
+                                                                             &node->value,   node->node_type, &node->left->value, node->node_type);
             break;
 
         case T_R_EDGE_SUC_CREATED:
             fprintf (LOG_FILE, "<font color = #6018CF size=5>Created edge: parent address (%p) | value (%d); right  (%p) | value (%d)</font>\n\n",
-                                                                                    &node->value,     node->value,  &node->right->value, node->value);
+                                                                             &node->value,     node->value,  &node->right->value, node->value);
             break;
 
         case T_TYPE_NUM_HAS_CHILD:
@@ -47,9 +47,16 @@ void write_tree_logs (int code_of_print, tree_node_t* node)
             break;
 
         case T_TREE_SUC_CREATED:
-            fprintf   (LOG_FILE, "\n\n<font color = #8DB6CD size=6>Tree was successfully created root </font>\n\n");
+            fprintf (LOG_FILE, "\n\n<font color = #8DB6CD size=6>Tree was successfully created root </font>\n\n");
             break;
-    }
+
+        case T_INT_POWERED:
+            fprintf (LOG_FILE, "\n\n<font color = #8DB6CD size=6> Value of the node was int powered </font>\n\n");
+
+        case T_UNSUPPORTED_OPER:
+            fprintf (LOG_FILE, "\n\n<font color = #8DB6CD size=6> Here is unsupported oper </font>\n\n");
+            fprintf (stderr, "Error, check logs\n");
+        }
 }
 
 void write_brackets_logs (int code_of_print, int position_in_file)
@@ -71,8 +78,8 @@ void write_brackets_logs (int code_of_print, int position_in_file)
 
 int pic_log (const char* label, const char* name_of_pic)
 {
-    fprintf (LOG_FILE, "\n\n<font color = #8DB6CD size=6>%s</font>\n\n", label);
-    fprintf (LOG_FILE, "<img src = %s width=""800"" height=""350"">\n", name_of_pic);
+    fprintf (LOG_FILE, "\n\n<font color = #8DB6CD size = 6>%s</font>\n\n", label);
+    fprintf (LOG_FILE, "<img src = %s width = ""800"" height = ""350"">\n", name_of_pic);
     return 0;
 }
 

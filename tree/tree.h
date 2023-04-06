@@ -11,6 +11,10 @@
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+#define TREE_DUMP_SET graph_dump_set, &parent->value, *graph_dump_set->nodes, &parent->right->value, &parent->left->value \
+
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 typedef int tree_data_type;
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -35,19 +39,19 @@ enum NODE_TYPE
 {
     TYPE_NUM = 1,
     TYPE_VAR = 120,
-    OP_ADD = 43,
-    OP_SUB = 45,
-    OP_MUL = 42,
-    OP_DIV = 47,
-    OP_POW = 94,
-    OP_SIN = 50,
-    OP_COS = 51,
-    OP_LN  = 52,
-    OP_SQR = 54,
-    OP_EXP = 55,
-    OP_LOG = 56,
-    OP_TG  = 57,
-    OP_CTG = 58,
+    OP_ADD  = 43,
+    OP_SUB  = 45,
+    OP_MUL  = 42,
+    OP_DIV  = 47,
+    OP_POW  = 94,
+    OP_SIN  = 50,
+    OP_COS  = 51,
+    OP_LN   = 52,
+    OP_SQR  = 54,
+    CONST_EXP = 101,
+    OP_LOG  = 56,
+    OP_TG   = 57,
+    OP_CTG  = 58,
 };
 
 enum TREE_CODE_OF_PRINT
@@ -59,19 +63,21 @@ enum TREE_CODE_OF_PRINT
     T_TREE_PRINT            =  4,
     T_NODE_SUC_DELETED      =  5,
     T_TREE_WAS_CLEARED      =  6,
+    T_INT_POWERED           =  7,
 
     T_FAIL_OF_CREATING_NODE = -1,
     T_FAIL_OF_CREATING_EDGE = -2,
     T_TYPE_NUM_HAS_CHILD    = -3,
     T_DIVISION_BY_ZERO      = -4,
+    T_UNSUPPORTED_OPER      = -5,
 };
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-tree_t*      constructor       (tree_t* pine);
-tree_node_t* tree_new_num_node (tree_data_type value);
-tree_node_t* tree_new_var_node (int node_type);
-tree_node_t* tree_new_op_node  (int node_type, tree_node_t* l_child = NULL, tree_node_t* r_child = NULL);
+tree_t*      constructor        (tree_t* pine);
+tree_node_t* tree_new_num_node  (tree_data_type value);
+tree_node_t* tree_new_var_node  (int node_type);
+tree_node_t* tree_new_op_node   (int node_type, tree_node_t* l_child = NULL, tree_node_t* r_child = NULL);
 
 tree_node_t* tree_link_l (tree_node_t* parent, tree_node_t* child);
 tree_node_t* tree_link_r (tree_node_t* parent, tree_node_t* child);

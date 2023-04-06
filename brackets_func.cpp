@@ -34,6 +34,7 @@ double tree_eval (tree_node_t* tree_node)
         case OP_POW:
         {
             fprintf (stderr, "was made int power\n");
+            write_tree_logs (T_INT_POWERED);
             int bas = tree_eval (tree_node->left);
             int deg = tree_eval (tree_node->right);
             if ((bas == 1) || (deg == 0)) return 1;
@@ -71,6 +72,7 @@ int write_brackets (FILE* br_write, tree_node_t* tree_node)
     }
 
     if      (tree_node->node_type == TYPE_NUM) fprintf (br_write, "%d", tree_node->value);
+    else if (tree_node->node_type == CONST_EXP)  fprintf (br_write, "e");
     else if (tree_node->node_type == TYPE_VAR) fprintf (br_write, "x");
     else if (tree_node->node_type == OP_ADD)   fprintf (br_write, "+");
     else if (tree_node->node_type == OP_SUB)   fprintf (br_write, "-");
@@ -155,7 +157,7 @@ tree_node_t* read_brackets (FILE* br_read, tree_node_t* tmp_node)
         }
         else if (strcmp (buf, "ctg") == 0)
         {
-             printf ("hey\n");
+            printf ("hey\n");
             tree_node_t* tmp_parent  = tree_new_op_node (OP_CTG, tmp_node);
             tree_node_t* tmp_node    = read_brackets (br_read);
             tree_link_r (tmp_parent, tmp_node);
