@@ -87,8 +87,9 @@ tree_node_t* dif_node (const tree_node_t* tree_node)
                 tree_node_t* exp = tree_pow_node (tree_new_num_node (CONST_EXP), tree_mul_node (copy_node (tree_node->right),
                                                                                  tree_ln_node  (copy_node (tree_node->left))));
 
+                tree_node_t* ln_dif = tree_mul_node (tree_div_node (tree_new_num_node (1), copy_node (tree_node->left)), dif_node (tree_node->left) );
                 tree_node_t* in_der = tree_add_node (tree_mul_node (dif_node (tree_node->right), tree_ln_node (copy_node (tree_node->left))),
-                                      tree_mul_node (dif_node (tree_ln_node (copy_node (tree_node->left))), copy_node (tree_node->right)));
+                                      tree_mul_node (ln_dif, copy_node (tree_node->right)));
                 return tree_mul_node (exp, in_der);
             }
         }
