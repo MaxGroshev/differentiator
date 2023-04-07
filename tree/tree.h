@@ -11,7 +11,10 @@
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-#define TREE_DUMP_SET graph_dump_set, &parent->value, *graph_dump_set->nodes, &parent->right->value, &parent->left->value \
+#define TREE_DUMP_SET       graph_dump_set, &parent->value, *graph_dump_set->nodes, &parent->right->value, &parent->left->value
+
+#define TREE_GRAPH_DOT_DIR "./tree/graph_lib/tree_dump.dot"
+#define TREE_LOGS_PNG_DIR  "./logs/log_pics"
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -79,15 +82,15 @@ tree_node_t* tree_new_num_node  (tree_data_type value);
 tree_node_t* tree_new_var_node  (int node_type);
 tree_node_t* tree_new_op_node   (int node_type, tree_node_t* l_child = NULL, tree_node_t* r_child = NULL);
 
-tree_node_t* tree_link_l (tree_node_t* parent, tree_node_t* child);
-tree_node_t* tree_link_r (tree_node_t* parent, tree_node_t* child);
-tree_node_t* tree_remove (tree_t* pine, tree_node_t* node);
-tree_node_t* tree_search (tree_node_t* tree_root, tree_node_t* node);
+tree_node_t* tree_link_l        (tree_node_t* parent, tree_node_t* child);
+tree_node_t* tree_link_r        (tree_node_t* parent, tree_node_t* child);
+tree_node_t* tree_remove        (tree_t* pine, tree_node_t* node);
+tree_node_t* tree_search        (tree_node_t* tree_root, tree_node_t* node);
 
-void         graph_dump      (tree_t* pine);
-int          tree_print      (dump_graph_t* graph_dump_set, tree_node_t* parent);
-void         write_tree_logs (int code_of_print, tree_node_t* node = NULL);
+void         graph_dump         (tree_t* pine);
+int          tree_print         (dump_graph_t* graph_dump_set, tree_node_t* parent);
+void         write_tree_logs    (int code_of_print, tree_node_t* node = NULL);
 
-tree_node_t* tree_delete (tree_node_t* tree_node);
+tree_node_t* tree_delete        (tree_node_t* tree_node);
 
-void         signal_handler (int signal);
+void         signal_handler     (int signal);

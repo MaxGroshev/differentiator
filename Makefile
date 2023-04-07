@@ -4,10 +4,10 @@ CFLAGS = -c -std=c++17
 
 GR_DIR    = ./tree/graph_lib/
 LOGS_DIR  = ./logs/
+LATEX_DIR = ./LaTeX/
 TREE_DIR  = ./tree/
 PREF_OBJ  = ./obj/
-PREF_STAT = ./dump_info/
-
+PREF_STAT = ./logs/log_pics/
 
 
 #Graphviz files
@@ -22,12 +22,15 @@ OBJ      = $(patsubst %.cpp, $(PREF_OBJ)%.o, $(SRC))     #turn .cpp into .o
 #Logs files
 LOGS_SRC = $(wildcard $(LOGS_DIR)*.cpp)
 OBJ_LOGS = $(patsubst $(PREF_OBJ)%.cpp, %.o, $(LOGS_SRC))
+#LaTeX files
+LATEX_SRC = $(wildcard $(LATEX_DIR)*.cpp)
+OBJ_LATEX = $(patsubst $(PREF_OBJ)%.cpp, %.o, $(LATEX_SRC))
 
 
 all:     $(TARGET)
 
-$(TARGET):  $(OBJ) $(OBJ_TREE) $(OBJ_LIB) $(OBJ_LOGS)
-	$(CC) -o $(TARGET) $(OBJ) $(OBJ_TREE) $(OBJ_LIB) $(OBJ_LOGS)
+$(TARGET):  $(OBJ) $(OBJ_TREE) $(OBJ_LIB) $(OBJ_LOGS) $(OBJ_LATEX)
+	$(CC) -o $(TARGET) $(OBJ) $(OBJ_TREE) $(OBJ_LIB) $(OBJ_LOGS) $(OBJ_LATEX)
 
 $(PREF_OBJ)%.o : %.cpp
 	$(CC) $(CFLAGS) $< -o $@
@@ -36,8 +39,8 @@ valgrind:
 	valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes ./$(TARGET)
 
 graphviz:
-	dot $(PREF_STAT)tree_dump.dot -T pdf -o $(PREF_STAT)tree_dump.pdf
-	dot $(PREF_STAT)tree_dump.dot -T png -o $(PREF_STAT)tree_dump.png
+	dot $(GR_DIR)tree_dump.dot -T pdf -o $(PREF_STAT)tree_dump.pdf
+	dot $(GR_DIR)tree_dump.dot -T png -o $(PREF_STAT)tree_dump.png
 
 .PHONY : clean
 clean:

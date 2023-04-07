@@ -7,10 +7,10 @@ void graph_dump (tree_t* pine)
     dump_graph_t graph_dump_set = {};
     graph_dump_set.info.size = pine->size;
     graph_dump_set.info.head = &pine->root->value;
-    init_graph (&graph_dump_set, "dump_info/tree_dump.dot");
+    init_graph (&graph_dump_set, TREE_GRAPH_DOT_DIR);
     tree_print (&graph_dump_set, pine->root);
 
-    run_graphviz (&graph_dump_set, "./dump_info/tree_dump.dot", "./logs/log_pics");
+    run_graphviz (&graph_dump_set, TREE_GRAPH_DOT_DIR, TREE_LOGS_PNG_DIR);
 }
 
 int tree_print (dump_graph_t* graph_dump_set, tree_node_t* parent)
