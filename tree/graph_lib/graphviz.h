@@ -9,6 +9,7 @@
 
 //---------------------------------------------------------------------------------------------------------
 
+static FILE* graphviz = NULL;
 
 //---------------------------------------------------------------------------------------------------------
 
@@ -68,6 +69,6 @@ void print_str_node  (dump_graph_t* graph_dump_set, int* node_address, struct no
 void make_edge       (dump_graph_t* graph_dump_set, int* node_from, int* node_to, struct edge_t edges);
 void resize_struct   (dump_graph_t* graph_dump_set);
 void print_def_info  (dump_graph_t* graph_dump_set);
-int run_graphviz     (dump_graph_t* graph_dump_set, const char* dot_dir, const char* pic_dir);
+int  run_graphviz    (dump_graph_t* graph_dump_set, const char* dot_dir, const char* pic_dir);
 void call_system     (const char* command);
 

@@ -1,4 +1,5 @@
 TARGET = differ
+MAKE_TEX = ./LaTeX/Makefile
 CC     = gcc
 CFLAGS = -c -std=c++17
 
@@ -35,6 +36,9 @@ $(TARGET):  $(OBJ) $(OBJ_TREE) $(OBJ_LIB) $(OBJ_LOGS) $(OBJ_LATEX)
 $(PREF_OBJ)%.o : %.cpp
 	$(CC) $(CFLAGS) $< -o $@
 
+latex_t:
+	pdflatex LaTeX/differ.tex pdf -o ./LaTeX/differ.pdf
+
 valgrind:
 	valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes ./$(TARGET)
 
@@ -44,4 +48,4 @@ graphviz:
 
 .PHONY : clean
 clean:
-	rm -rf $(PREF_OBJ)*.o $(TARGET)
+	rm -rf $(PREF_OBJ)*.o $(TARGET) *.aux *.log

@@ -15,6 +15,8 @@
 
 #define TREE_GRAPH_DOT_DIR "./tree/graph_lib/tree_dump.dot"
 #define TREE_LOGS_PNG_DIR  "./logs/log_pics"
+#define TREE_LOGS_HTML_DIR "./logs/log_file.html"
+#define TREE_LOGS_TEX_DIR  "./LaTeX/differ.tex"
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

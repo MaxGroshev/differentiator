@@ -1,7 +1,9 @@
 #pragma once
+#include "./LaTeX/latex.h"
 #include "./tree/tree.h"
 #include "logs/log_file.h"
 #include "brackets_func.h"
+
 #include "DSL.h"
 
 //---------------------------------------------------------------------------------------------------------

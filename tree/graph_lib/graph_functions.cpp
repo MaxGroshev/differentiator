@@ -1,5 +1,4 @@
 #include "graphviz.h"
-static FILE* graphviz = NULL;
 
 void init_graph (dump_graph_t* graph_dump_set, const char* dot_dir)
 {
