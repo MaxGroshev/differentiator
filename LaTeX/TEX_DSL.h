@@ -1,5 +1,5 @@
 #define TEX_START_EQU "\\begin{equation*}\n    "
-#define TEX_END_EQU   "\n\\end{equation*}\n\n"
+#define TEX_ENEQU   "\n\\end{equation*}\n\n"
 
 //----------------------------------------------------------------------------------------------------------------------------------------
 

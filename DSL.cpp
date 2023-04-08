@@ -1,51 +1,66 @@
 #include "DSL.h"
 
-tree_node_t* tree_add_node (tree_node_t* left_node, tree_node_t* right_node)
+tree_node_t* New_num (tree_data_type value)
+{
+    return tree_new_num_node (value);
+}
+
+tree_node_t* New_const (tree_data_type value)
+{
+    return tree_new_const_node (value);
+}
+
+tree_node_t* New_var (int node_type)
+{
+    return tree_new_var_node (node_type);
+}
+
+tree_node_t* Add (tree_node_t* left_node, tree_node_t* right_node)
 {
     return tree_new_op_node (OP_ADD, left_node, right_node);
 }
 
-tree_node_t* tree_sub_node (tree_node_t* left_node, tree_node_t* right_node)
+tree_node_t* Sub (tree_node_t* left_node, tree_node_t* right_node)
 {
     return tree_new_op_node (OP_SUB, left_node, right_node);
 }
 
-tree_node_t* tree_mul_node (tree_node_t* left_node, tree_node_t* right_node)
+tree_node_t* Mul (tree_node_t* left_node, tree_node_t* right_node)
 {
     return tree_new_op_node (OP_MUL, left_node, right_node);
 }
 
-tree_node_t* tree_div_node (tree_node_t* left_node, tree_node_t* right_node)
+tree_node_t* Div (tree_node_t* left_node, tree_node_t* right_node)
 {
     return tree_new_op_node (OP_DIV, left_node, right_node);
 }
 
-tree_node_t* tree_pow_node (tree_node_t* left_node, tree_node_t* right_node)
+tree_node_t* Pow (tree_node_t* left_node, tree_node_t* right_node)
 {
     return tree_new_op_node (OP_POW, left_node, right_node);
 }
 
-tree_node_t* tree_ln_node (tree_node_t* right_node)
+tree_node_t* Ln (tree_node_t* right_node)
 {
     return tree_new_op_node (OP_LN, NULL, right_node);
 }
 
-tree_node_t* tree_cos_node (tree_node_t* right_node)
+tree_node_t* Cos (tree_node_t* right_node)
 {
     return tree_new_op_node (OP_COS, NULL, right_node);
 }
 
-tree_node_t* tree_sin_node (tree_node_t* right_node)
+tree_node_t* Sin (tree_node_t* right_node)
 {
     return tree_new_op_node (OP_SIN, NULL, right_node);
 }
 
-tree_node_t* tree_tg_node (tree_node_t* right_node)
+tree_node_t* Tg (tree_node_t* right_node)
 {
     return tree_new_op_node (OP_SIN, NULL, right_node);
 }
 
-tree_node_t* tree_ctg_node (tree_node_t* right_node)
+tree_node_t* Ctg (tree_node_t* right_node)
 {
     return tree_new_op_node (OP_SIN, NULL, right_node);
 }

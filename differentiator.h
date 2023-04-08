@@ -9,4 +9,4 @@
 
 tree_node_t* dif_node   (const tree_node_t* tree_node = NULL);
 tree_node_t* copy_node  (const tree_node_t* tree_node = NULL);
-tree_node_t* simpl_node (tree_node_t* tree_node = NULL);
+tree_node_t* simpl_node (tree_t* pine, tree_node_t* tree_node = NULL);

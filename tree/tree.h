@@ -11,7 +11,7 @@
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-#define TREE_DUMP_SET       graph_dump_set, &parent->value, *graph_dump_set->nodes, &parent->right->value, &parent->left->value
+#define TREE_DUMP_SET      graph_dump_set, &parent->value, *graph_dump_set->nodes, &parent->right->value, &parent->left->value
 
 #define TREE_GRAPH_DOT_DIR "./tree/graph_lib/tree_dump.dot"
 #define TREE_LOGS_PNG_DIR  "./logs/log_pics"
@@ -42,7 +42,7 @@ struct tree_t
 
 enum NODE_TYPE
 {
-    TYPE_NUM = 1,
+    TYPE_NUM = 10,
     TYPE_VAR = 120,
     OP_ADD  = 43,
     OP_SUB  = 45,
@@ -81,6 +81,7 @@ enum TREE_CODE_OF_PRINT
 
 tree_t*      constructor        (tree_t* pine);
 tree_node_t* tree_new_num_node  (tree_data_type value);
+tree_node_t* tree_new_const_node(tree_data_type value);
 tree_node_t* tree_new_var_node  (int node_type);
 tree_node_t* tree_new_op_node   (int node_type, tree_node_t* l_child = NULL, tree_node_t* r_child = NULL);
 

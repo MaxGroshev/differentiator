@@ -160,7 +160,7 @@ int write_latex_log (tree_node_t* tree_node, int equ_type, const char* text)
             break;
     }
 
-    if (rec_level == 0) fprintf (LATEX_FILE, TEX_END_EQU);
+    if (rec_level == 0) fprintf (LATEX_FILE, TEX_ENEQU);
     return 0;
 }
 

@@ -1,16 +1,28 @@
 #pragma once
 #include "differentiator.h"
 
-tree_node_t* tree_add_node (tree_node_t* left_node, tree_node_t* right_node);
-tree_node_t* tree_sub_node (tree_node_t* left_node, tree_node_t* right_node);
-tree_node_t* tree_mul_node (tree_node_t* left_node, tree_node_t* right_node);
-tree_node_t* tree_div_node (tree_node_t* left_node, tree_node_t* right_node);
-tree_node_t* tree_pow_node (tree_node_t* left_node, tree_node_t* right_node);
-tree_node_t* tree_ln_node  (tree_node_t* right_node);
-tree_node_t* tree_sin_node (tree_node_t* right_node);
-tree_node_t* tree_cos_node (tree_node_t* right_node);
-tree_node_t* tree_tg_node  (tree_node_t* right_node);
-tree_node_t* tree_ctg_node (tree_node_t* right_node);
+//-------------------------------------------------------------------------------------------------------------------------------
+
+#define Copy_l copy_node (tree_node->left)
+#define Copy_r copy_node (tree_node->right)
+#define Dif_l  dif_node  (tree_node->left)
+#define Dif_r  dif_node  (tree_node->right)
+
+//-------------------------------------------------------------------------------------------------------------------------------
+
+tree_node_t* Add (tree_node_t* left_node, tree_node_t* right_node);
+tree_node_t* Sub (tree_node_t* left_node, tree_node_t* right_node);
+tree_node_t* Mul (tree_node_t* left_node, tree_node_t* right_node);
+tree_node_t* Div (tree_node_t* left_node, tree_node_t* right_node);
+tree_node_t* Pow (tree_node_t* left_node, tree_node_t* right_node);
+tree_node_t* Ln  (tree_node_t* right_node);
+tree_node_t* Sin (tree_node_t* right_node);
+tree_node_t* Cos (tree_node_t* right_node);
+tree_node_t* Tg  (tree_node_t* right_node);
+tree_node_t* Ctg (tree_node_t* right_node);
+tree_node_t* New_num   (tree_data_type value);
+tree_node_t* New_var   (int node_type);
+tree_node_t* New_const (int value);
 
 //-------------------------------------------------------------------------------------------------------------------------------
 

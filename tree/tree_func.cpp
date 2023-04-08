@@ -20,6 +20,18 @@ tree_node_t* tree_new_num_node (tree_data_type value)
 
     tmp_node->value     = value;
     tmp_node->node_type = TYPE_NUM;
+    write_tree_logs (T_NODE_SUC_CREATED, tmp_node);
+
+    return  tmp_node;
+}
+
+tree_node_t* tree_new_const_node (tree_data_type value)
+{
+    tree_node_t* tmp_node = (tree_node_t*) calloc (1, sizeof (tree_node_t));
+    MY_ASSERT   (tmp_node != NULL);
+
+    tmp_node->value     = value;
+    tmp_node->node_type = TYPE_NUM;
     if (tmp_node->value == CONST_EXP) tmp_node->node_type = CONST_EXP;
     write_tree_logs (T_NODE_SUC_CREATED, tmp_node);
 
