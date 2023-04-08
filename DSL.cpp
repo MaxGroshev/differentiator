@@ -50,3 +50,12 @@ tree_node_t* tree_ctg_node (tree_node_t* right_node)
     return tree_new_op_node (OP_SIN, NULL, right_node);
 }
 
+//------------------------------------------------------------------------------------------------------------------------------------------
+
+int is_arithm_op (tree_node_t* tree_node)
+{
+    if (tree_node == NULL) return 0; //?!
+    else if (tree_node->node_type == OP_ADD || tree_node->node_type == OP_SUB || tree_node->node_type == OP_MUL ||
+        tree_node->node_type == OP_DIV || tree_node->node_type == OP_POW) return 1;
+    return 0;
+}

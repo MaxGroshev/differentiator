@@ -12,5 +12,7 @@ tree_node_t* tree_cos_node (tree_node_t* right_node);
 tree_node_t* tree_tg_node  (tree_node_t* right_node);
 tree_node_t* tree_ctg_node (tree_node_t* right_node);
 
+//-------------------------------------------------------------------------------------------------------------------------------
 
+int is_arithm_op (tree_node_t* tree_node);
 

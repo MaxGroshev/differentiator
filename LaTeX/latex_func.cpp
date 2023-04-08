@@ -53,6 +53,10 @@ int write_latex_log (tree_node_t* tree_node, int equ_type, const char* text)
             case TEX_DIF_IN_POINT:
                 fprintf (LATEX_FILE, "\\section{I found you exactly here}");
                 break;
+
+            case TEX_SIMPLIFIED:
+                fprintf (LATEX_FILE, "\\section{So, Turbo-Mega ochev}");
+                break;
         }
         if (text != NULL) fprintf (LATEX_FILE, "%s", text);
         fprintf (LATEX_FILE, TEX_START_EQU);
@@ -156,22 +160,7 @@ int write_latex_log (tree_node_t* tree_node, int equ_type, const char* text)
             break;
     }
 
-    // if (tree_node->left != NULL)
-    // {
-    //     rec_level++;
-    //     write_latex_log (tree_node->left);
-    //     rec_level--;
-    // }
-    // if (tree_node->right != NULL)
-    // {
-    //     //fprintf (LATEX_FILE, "}");
-    //     rec_level++;
-    //     write_latex_log (tree_node->right);
-    //     rec_level--;
-    // }
-
     if (rec_level == 0) fprintf (LATEX_FILE, TEX_END_EQU);
-    //fprintf (LATEX_FILE, "}");
     return 0;
 }
 

@@ -55,8 +55,8 @@ tree_node_t* dif_node (const tree_node_t* tree_node)
         {
             if (tree_node->right->node_type == TYPE_NUM) return tree_new_num_node (0);
 
-            tree_node_t* abs = tree_mul_node (dif_node (tree_node->right), tree_sin_node (copy_node (tree_node->right)));
-            return tree_mul_node (tree_new_num_node (-1), abs);
+            tree_node_t* ex_der = tree_mul_node (tree_new_num_node (-1), tree_sin_node (copy_node (tree_node->right)));
+            return tree_mul_node (ex_der, dif_node (tree_node->right));
         }
         case OP_TG:
         {
@@ -144,4 +144,52 @@ tree_node_t* copy_node (const tree_node_t* tree_node)
     }
     printf ("not here");
     return NULL;
+}
+
+tree_node_t* simpl_node (tree_node_t* tree_node)
+{
+    int change_flag = 0;
+
+    // if ((tree_node->node_type == OP_ADD || tree_node->node_type == OP_SUB) && (tree_node->right->value == 0 || tree_node->value == 0))
+    // {
+    //     if (tree_node->right->value == 0)
+    //     {
+    //         tree_delete (tree_node->right);
+    //         tree_node->right = NULL;
+    //     }
+    //     else
+    //     {
+    //         tree_delete (tree_node->left);
+    //         tree_node->left = NULL;
+    //     }
+    //     change_flag = 1;
+    // }
+    if (is_arithm_op (tree_node->left) && tree_node->left->right->node_type == TYPE_NUM && tree_node->left->left->node_type == TYPE_NUM)
+    {
+        int value = tree_eval (tree_node->left);
+        tree_delete (tree_node->left);
+        tree_node->left = NULL;
+        tree_link_l (tree_node, tree_new_num_node (value));
+        change_flag = 1;
+    }
+
+    if (is_arithm_op (tree_node->right) && tree_node->right->right->node_type == TYPE_NUM && tree_node->right->left->node_type == TYPE_NUM)
+    {
+        int value = tree_eval (tree_node->right);
+        tree_delete (tree_node->right);
+        tree_node->right = NULL;
+        tree_link_r (tree_node, tree_new_num_node (value));
+        change_flag = 1;
+    }
+
+    if (tree_node->left != NULL)
+    {
+        simpl_node (tree_node->left);
+    }
+    if (tree_node->right != NULL)
+    {
+        simpl_node (tree_node->right);
+    }
+
+    return tree_node;
 }
