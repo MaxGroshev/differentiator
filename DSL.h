@@ -5,8 +5,8 @@
 
 #define Copy_l copy_node (tree_node->left)
 #define Copy_r copy_node (tree_node->right)
-#define Dif_l  dif_node  (tree_node->left)
-#define Dif_r  dif_node  (tree_node->right)
+#define Dif_l  dif_node  (tree_node->left,  dif_var)
+#define Dif_r  dif_node  (tree_node->right, dif_var)
 
 //-------------------------------------------------------------------------------------------------------------------------------
 
@@ -21,7 +21,7 @@ tree_node_t* Cos (tree_node_t* right_node);
 tree_node_t* Tg  (tree_node_t* right_node);
 tree_node_t* Ctg (tree_node_t* right_node);
 tree_node_t* New_num   (tree_data_type value);
-tree_node_t* New_var   (int node_type);
+tree_node_t* New_var   (int node_type, char var_name);
 tree_node_t* New_const (int value);
 
 //-------------------------------------------------------------------------------------------------------------------------------

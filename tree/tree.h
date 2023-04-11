@@ -82,7 +82,7 @@ enum TREE_CODE_OF_PRINT
 tree_t*      constructor        (tree_t* pine);
 tree_node_t* tree_new_num_node  (tree_data_type value);
 tree_node_t* tree_new_const_node(tree_data_type value);
-tree_node_t* tree_new_var_node  (int node_type);
+tree_node_t* tree_new_var_node  (int node_type, char var_name = 'x');
 tree_node_t* tree_new_op_node   (int node_type, tree_node_t* l_child = NULL, tree_node_t* r_child = NULL);
 
 tree_node_t* tree_link_l        (tree_node_t* parent, tree_node_t* child);

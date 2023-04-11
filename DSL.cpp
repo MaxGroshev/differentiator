@@ -10,9 +10,9 @@ tree_node_t* New_const (tree_data_type value)
     return tree_new_const_node (value);
 }
 
-tree_node_t* New_var (int node_type)
+tree_node_t* New_var (int node_type, char var_name)
 {
-    return tree_new_var_node (node_type);
+    return tree_new_var_node (node_type, var_name);
 }
 
 tree_node_t* Add (tree_node_t* left_node, tree_node_t* right_node)

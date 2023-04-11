@@ -9,21 +9,20 @@ int main ()
     constructor  (&pine);
     constructor  (&dif_pine);
 
-    pine.root = Pow (New_var (TYPE_VAR), New_var (TYPE_VAR));
-    pine.root = Pow (pine.root, Add (New_var (TYPE_VAR), Cos (New_var (TYPE_VAR))));
+    //pine.root = Add (New_var (TYPE_VAR), Cos (Mul (New_num (-1), New_var (TYPE_VAR))));
+    pine.root = Add (New_var (TYPE_VAR, 'y'), Pow (New_var (TYPE_VAR, 'x'), New_num (-1)));
     write_latex_log (pine.root, TEX_FUNCTION);
     graph_dump (&pine);
 
-    dif_pine.root = dif_node (pine.root);
+    dif_pine.root = dif_node (pine.root , 'x');
     write_latex_log (dif_pine.root, TEX_DIF);
     graph_dump (&dif_pine);
-
+    dif_pine.root = simpl_node (&dif_pine, dif_pine.root, 'y');
     FILE* br_write = fopen ("./test_files/write_br_seq.txt", "w");
     write_brackets (br_write, dif_pine.root);
     fclose         (br_write);
+    write_latex_log (dif_pine.root, TEX_RES);
 
-    dif_pine.root = simpl_node (&pine, dif_pine.root);
-    write_latex_log (dif_pine.root, TEX_SIMPLIFIED);
     graph_dump (&dif_pine);
 
     tree_delete (pine.root);

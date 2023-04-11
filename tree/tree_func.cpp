@@ -38,12 +38,13 @@ tree_node_t* tree_new_const_node (tree_data_type value)
     return  tmp_node;
 }
 
-tree_node_t* tree_new_var_node (int node_type)
+tree_node_t* tree_new_var_node (int node_type, char var_name)
 {
     tree_node_t* tmp_node = (tree_node_t*) calloc (1, sizeof (tree_node_t));
     MY_ASSERT   (tmp_node != NULL);
 
     tmp_node->node_type = TYPE_VAR;
+    tmp_node->value     = var_name;
     write_tree_logs (T_NODE_SUC_CREATED, tmp_node);
 
     return  tmp_node;
@@ -98,42 +99,42 @@ tree_node_t* tree_link_r (tree_node_t* parent, tree_node_t* child)
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-// tree_node_t* tree_search (tree_node_t* tree_root, tree_node_t* node)
-// {
-//     printf ("here\n");
-//     MY_ASSERT (tree_root != NULL)
-//     if (tree_root->left != NULL)
-//     {
-//         printf ("here\n");
-//         if (tree_root->left == node || tree_root->right == node)
-//         {
-//             printf ("O---K\n");
-//             return tree_root;
-//         }
-//         MY_ASSERT (tree_root->left != NULL)
-//         tree_node_t* tree_root = tree_search (tree_root->left, node);
-//         printf ("returned\n");
-//
-//         if (tree_root->left == node || tree_root->right == node)
-//         {
-//             return tree_root;
-//         }
-//     }
-//     if (tree_root->right != NULL)
-//     {
-//         if (tree_root->left == node || tree_root->right == node)
-//         {
-//             printf ("O---K\n");
-//             return tree_root;
-//         }
-//         tree_node_t* tree_root = tree_search (tree_root->right, node);
-//         if (tree_root->left == node || tree_root->right == node)
-//         {
-//             return tree_root;
-//         }
-//     }
-//     return NULL;
-// }
+tree_node_t* tree_search (tree_node_t* tree_root, tree_node_t* node)
+{
+    printf ("here\n");
+    MY_ASSERT (tree_root != NULL)
+    if (tree_root->left != NULL)
+    {
+        printf ("here\n");
+        if (tree_root->left == node || tree_root->right == node)
+        {
+            printf ("O---K\n");
+            return tree_root;
+        }
+        MY_ASSERT (tree_root->left != NULL)
+        tree_node_t* tree_root = tree_search (tree_root->left, node);
+        printf ("returned\n");
+
+        if (tree_root->left == node || tree_root->right == node)
+        {
+            return tree_root;
+        }
+    }
+    if (tree_root->right != NULL)
+    {
+        if (tree_root->left == node || tree_root->right == node)
+        {
+            printf ("O---K\n");
+            return tree_root;
+        }
+        tree_node_t* tree_root = tree_search (tree_root->right, node);
+        if (tree_root->left == node || tree_root->right == node)
+        {
+            return tree_root;
+        }
+    }
+    return NULL;
+}
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

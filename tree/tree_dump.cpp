@@ -27,7 +27,7 @@ int tree_print (dump_graph_t* graph_dump_set, tree_node_t* parent)
     {
         graph_dump_set->nodes->fillcolor = "#7FC7FF";
         graph_dump_set->nodes->label     = "TYPE_VAR";
-        print_char_node (TREE_DUMP_SET, parent->node_type);
+        print_char_node (TREE_DUMP_SET, parent->value);
     }
     else
     {

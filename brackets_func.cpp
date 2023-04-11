@@ -62,15 +62,17 @@ double tree_eval (tree_node_t* tree_node)
 
 int write_brackets (FILE* br_write, tree_node_t* tree_node)
 {
-    MY_ASSERT (tree_node != NULL)
+    MY_ASSERT (tree_node != NULL && br_write != NULL)
 
     fprintf (br_write, "(");
-
-
+    if (tree_node->left != NULL)
+    {
+        write_brackets (br_write, tree_node->left);
+    }
 
     if      (tree_node->node_type == TYPE_NUM) fprintf (br_write, "%d", tree_node->value);
-    else if (tree_node->node_type == CONST_EXP)  fprintf (br_write, "e");
-    else if (tree_node->node_type == TYPE_VAR) fprintf (br_write, "x");
+    else if (tree_node->node_type == CONST_EXP)fprintf (br_write, "e");
+    else if (tree_node->node_type == TYPE_VAR) fprintf (br_write, "%c", tree_node->value);
     else if (tree_node->node_type == OP_ADD)   fprintf (br_write, "+");
     else if (tree_node->node_type == OP_SUB)   fprintf (br_write, "-");
     else if (tree_node->node_type == OP_MUL)   fprintf (br_write, "*");
@@ -82,11 +84,6 @@ int write_brackets (FILE* br_write, tree_node_t* tree_node)
     else if (tree_node->node_type == OP_COS)   fprintf (br_write, "cos");
     else if (tree_node->node_type == OP_TG)    fprintf (br_write, "tg");
     else if (tree_node->node_type == OP_CTG)   fprintf (br_write, "ctg");
-
-    if (tree_node->left != NULL)
-    {
-        write_brackets (br_write, tree_node->left);
-    }
 
     if (tree_node->right != NULL)
     {

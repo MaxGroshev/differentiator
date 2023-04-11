@@ -1,6 +1,6 @@
 #include "differentiator.h"
 
-tree_node_t* dif_node (const tree_node_t* tree_node)
+tree_node_t* dif_node (const tree_node_t* tree_node, char dif_var)
 {
     switch (tree_node->node_type)
     {
@@ -11,7 +11,8 @@ tree_node_t* dif_node (const tree_node_t* tree_node)
             return New_num (0);
 
         case TYPE_VAR:
-            return New_num (1);
+            if (dif_var == tree_node->value) return New_num (1);
+            return New_num (0);
 
         case OP_ADD:
             return Add (Dif_l, Dif_r);
@@ -90,7 +91,7 @@ tree_node_t* copy_node (const tree_node_t* tree_node)
             return New_num (tree_node->value);
 
         case TYPE_VAR:
-            return New_var (tree_node->node_type);
+            return New_var (tree_node->node_type, tree_node->value);
 
         case OP_ADD:
             return Add (Copy_l, Copy_r);
@@ -125,87 +126,88 @@ tree_node_t* copy_node (const tree_node_t* tree_node)
     return NULL;
 }
 
-tree_node_t* simpl_node (tree_t* pine, tree_node_t* tree_node)
+tree_node_t* simpl_node (tree_t* pine, tree_node_t* tree_node, char dif_var)
 {
-    int change_flag = 0;
-    static int rec_level = 0;
+    static int change_flag = 0;
+    static int rec_level   = 0;
+   // printf ("hey\n");
 
-    // if ((tree_node->node_type == OP_ADD || tree_node->node_type == OP_SUB) && (tree_node->right->value == 0 || tree_node->value == 0))
-    // {
-    //     if (tree_node->right->value == 0)
-    //     {
-    //         tree_delete (tree_node->right);
-    //         tree_node->right = NULL;
-    //     }
-    //     else
-    //     {
-    //         tree_delete (tree_node->left);
-    //         tree_node->left = NULL;
-    //     }
-    //     change_flag = 1;
-    // }
-    if (is_arithm_op (tree_node) && tree_node->right->node_type == TYPE_NUM && tree_node->left->node_type == TYPE_NUM)
+    if (is_arithm_op (tree_node) && (pine->root != tree_node || rec_level != 0))
     {
-        int value = tree_eval (tree_node);
-        tree_delete (tree_node);
-        return New_num (value);
-    }
-    if (is_arithm_op (tree_node) && tree_node->right->node_type == TYPE_NUM && tree_node->left->node_type == TYPE_NUM)
-    {
-        int value = tree_eval (tree_node);
-        tree_delete (tree_node);
-        return New_num (value);
-    }
-    if (tree_node->node_type == OP_MUL)
-    {
-        if ((tree_node->left->node_type == TYPE_NUM  && tree_node->left->value ==  0) ||
-            ( tree_node->right->node_type == TYPE_NUM && tree_node->right->value == 0))
+        printf ("hey\n");
+        if (tree_node->right->node_type == TYPE_NUM && tree_node->left->node_type == TYPE_NUM)
         {
+            change_flag = 1;
+            int value = tree_eval (tree_node);
             tree_delete (tree_node);
-            return New_num (0); //TODO eval calculate and make one macros
+            return New_num (value);
         }
-        else if (tree_node->left->node_type == TYPE_NUM  && tree_node->left->value == 1)
+        if (tree_node->node_type == OP_MUL)
         {
-            tree_node_t* tmp_node = Copy_r;
-            tree_delete (tree_node);
-            return tmp_node;
-        }
-        else if (tree_node->right->node_type == TYPE_NUM  && tree_node->right->value == 1)
-        {
-            tree_node_t* tmp_node = Copy_l;
-            tree_delete (tree_node);
-            return tmp_node;
-        }
-    }
-    if (tree_node->node_type == OP_ADD)
-    {
-        if (is_arithm_op (tree_node->right))
-        {
-            printf ("%p\n", &tree_node->right->value);
-            if (tree_node->right->left->value < 0)
+            if ((tree_node->left->node_type == TYPE_NUM  && tree_node->left->value ==  0) ||
+                ( tree_node->right->node_type == TYPE_NUM && tree_node->right->value == 0))
             {
-                printf ("HELLO\n");
-                tree_node_t* tmp_num_node   = New_num (-tree_node->right->left->value);
-                tree_node_t* tmp_func_node1 = copy_node (tree_node->right->right);
-                tree_node_t* tmp_r_side = tree_new_op_node (tree_node->right->node_type, tmp_num_node, tmp_func_node1);
-                tree_delete (tree_node->right);
-                tree_node->right = NULL;
-
-                tree_node_t* tmp_func_node2 = copy_node (tree_node->left);
+                change_flag = 1;
                 tree_delete (tree_node);
-                return tree_new_op_node (OP_SUB, tmp_func_node2, tmp_r_side);
+                return New_num (0);      //TODO eval calculate and make one macros
             }
+            else if (tree_node->left->node_type == TYPE_NUM  && tree_node->left->value == 1)
+            {
+                change_flag = 1;
+                tree_node_t* tmp_node = Copy_r;
+                tree_delete (tree_node);
+                return tmp_node;
+            }
+            else if (tree_node->right->node_type == TYPE_NUM  && tree_node->right->value == 1)
+            {
+                change_flag = 1;
+                tree_node_t* tmp_node = Copy_l;
+                tree_delete (tree_node);
+                return tmp_node;
+            }
+        }
+        if (tree_node->node_type == OP_ADD)
+        {
+            if (is_arithm_op (tree_node->right))
+            {
+                if (tree_node->right->left->value < 0)
+                {
+                    change_flag = 1;
+                    tree_node_t* tmp_num_node   = New_num (-tree_node->right->left->value);
+                    tree_node_t* tmp_func_node1 = copy_node (tree_node->right->right);
+                    tree_node_t* tmp_r_side     = tree_new_op_node (tree_node->right->node_type, tmp_num_node, tmp_func_node1);
+                    tree_delete (tree_node->right);
+                    tree_node->right = NULL;
+
+                    tree_node_t* tmp_func_node2 = copy_node (tree_node->left);
+                    tree_delete (tree_node);
+                    return tree_new_op_node (OP_SUB, tmp_func_node2, tmp_r_side);
+                }
+//                 if (tree_node->right->right->value < 0)
+//                 {
+//                     change_flag = 1;
+//                     tree_node_t* tmp_num_node   = New_num   (-tree_node->right->right->value);
+//                     tree_node_t* tmp_func_node1 = copy_node (tree_node->right->left);
+//                     tree_node_t* tmp_r_side     = tree_new_op_node (tree_node->right->node_type, tmp_num_node, tmp_func_node1);
+//                     tree_delete (tree_node->right);
+//                     tree_node->right = NULL;
+//
+//                     tree_node_t* tmp_func_node2 = copy_node (tree_node->left);
+//                     tree_delete (tree_node);
+//                     return tree_new_op_node (OP_SUB, tmp_func_node2, tmp_r_side);
+//                 }
+            }
+            //else if (is_arithm_op (tree_node->right))
         }
     }
 
     if (tree_node->left != NULL)
     {
         rec_level++;
-        tree_node_t* ret_node = simpl_node (pine, tree_node->left);
+        tree_node_t* ret_node = simpl_node (pine, tree_node->left, dif_var);
         rec_level--;
         if (tree_node->left != ret_node)
         {
-            change_flag = 1;
             tree_node->left = NULL;
             tree_link_l (tree_node, ret_node);
         }
@@ -213,21 +215,41 @@ tree_node_t* simpl_node (tree_t* pine, tree_node_t* tree_node)
     if (tree_node->right != NULL)
     {
         rec_level++;
-        tree_node_t* ret_node = simpl_node (pine, tree_node->right);
+        tree_node_t* ret_node = simpl_node (pine, tree_node->right, dif_var);
         rec_level--;
         if (tree_node->right != ret_node)
         {
-            change_flag = 1;
             tree_node->right = NULL;
             tree_link_r (tree_node, ret_node);
         }
     }
-
-    // printf ("%d %d\n", rec_level, change_flag);
+    printf ("%d %d\n", rec_level, change_flag);
     if (rec_level == 0 && change_flag == 1)
     {
-        rec_level = 0;
-        return simpl_node (pine, pine->root);
+        MY_ASSERT (pine != NULL)
+        printf ("else one time\n");
+        rec_level   = 0;
+        change_flag = 0;
+        graph_dump (pine);
+        write_latex_log  (pine->root, TEX_SIMPLIFIED, "\n Wait a second and it will be even better\n");
+        return simpl_node (pine, pine->root, dif_var);
     }
+
+
     return tree_node;
 }
+
+// if ((tree_node->node_type == OP_ADD || tree_node->node_type == OP_SUB) && (tree_node->right->value == 0 || tree_node->value == 0))
+// {
+//     if (tree_node->right->value == 0)
+//     {
+//         tree_delete (tree_node->right);
+//         tree_node->right = NULL;
+//     }
+//     else
+//     {
+//         tree_delete (tree_node->left);
+//         tree_node->left = NULL;
+//     }
+//     change_flag = 1;
+// }

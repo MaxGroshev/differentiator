@@ -57,6 +57,11 @@ int write_latex_log (tree_node_t* tree_node, int equ_type, const char* text)
             case TEX_SIMPLIFIED:
                 fprintf (LATEX_FILE, "\\section{So, Turbo-Mega ochev}");
                 break;
+
+            case TEX_RES:
+                fprintf (LATEX_FILE, "\\section{The final trivial transition}");
+                break;
+
         }
         if (text != NULL) fprintf (LATEX_FILE, "%s", text);
         fprintf (LATEX_FILE, TEX_START_EQU);
@@ -79,7 +84,7 @@ int write_latex_log (tree_node_t* tree_node, int equ_type, const char* text)
 
         case TYPE_VAR:
             fprintf (LATEX_FILE, "{");
-            fprintf (LATEX_FILE, "x");
+            fprintf (LATEX_FILE, "%c", tree_node->value);
             fprintf (LATEX_FILE, "}");
             break;
 
