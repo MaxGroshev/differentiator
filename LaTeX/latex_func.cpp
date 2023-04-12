@@ -33,40 +33,44 @@ int read_pattern (const char* pat_dir)
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------
 
-int write_latex_log (tree_node_t* tree_node, int equ_type, const char* text)
+int write_latex_log (tree_node_t* tree_node, int equ_type, char dif_var, const char* text)
 {
     MY_ASSERT (tree_node != NULL)
 
     static int rec_level = 0;
     if (rec_level == 0)
     {
+        if (text != NULL) fprintf (LATEX_FILE, "%s", text);
         switch (equ_type)
         {
             case TEX_FUNCTION:
                 fprintf (LATEX_FILE, "\\section{I am here to find you and I will...}");
+                fprintf (LATEX_FILE, TEX_START_EQU);
+                fprintf (LATEX_FILE, "f = ");
                 break;
 
             case TEX_DIF:
                 fprintf (LATEX_FILE, "\\section{I did it... But at what cost}");
+                fprintf (LATEX_FILE, TEX_START_DIF);
                 break;
 
             case TEX_DIF_IN_POINT:
                 fprintf (LATEX_FILE, "\\section{I found you exactly here}");
+                fprintf (LATEX_FILE, TEX_START_DIF);
                 break;
 
             case TEX_SIMPLIFIED:
                 fprintf (LATEX_FILE, "\\section{So, Turbo-Mega ochev}");
+                fprintf (LATEX_FILE, TEX_START_DIF);
                 break;
 
             case TEX_RES:
                 fprintf (LATEX_FILE, "\\section{The final trivial transition}");
+                fprintf (LATEX_FILE, TEX_START_DIF);
                 break;
 
         }
-        if (text != NULL) fprintf (LATEX_FILE, "%s", text);
-        fprintf (LATEX_FILE, TEX_START_EQU);
     }
-
 
     switch (tree_node->node_type)
     {
@@ -165,7 +169,7 @@ int write_latex_log (tree_node_t* tree_node, int equ_type, const char* text)
             break;
     }
 
-    if (rec_level == 0) fprintf (LATEX_FILE, TEX_ENEQU);
+    if (rec_level == 0) fprintf (LATEX_FILE, TEX_ENDEQU);
     return 0;
 }
 

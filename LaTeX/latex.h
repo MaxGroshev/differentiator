@@ -35,5 +35,5 @@ struct stat;
 
 int latex_init      (const char* tex_dir, int pattern);
 int read_pattern    (const char* pat_dir);
-int write_latex_log (tree_node_t* tree_node, int equ_type = 0, const char* text = NULL);
+int write_latex_log (tree_node_t* tree_node, int equ_type = 0, char dif_var = '-', const char* text = NULL);
 int latex_distr     ();

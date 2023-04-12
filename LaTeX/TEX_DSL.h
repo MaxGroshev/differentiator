@@ -1,5 +1,6 @@
-#define TEX_START_EQU "\\begin{equation*}\n    "
-#define TEX_ENEQU   "\n\\end{equation*}\n\n"
+#define TEX_START_EQU  "\\begin{equation*}\n    "
+#define TEX_ENDEQU     "\n\\end{equation*}\n\n"
+#define TEX_START_DIF  "\\begin{equation*}\n    \\frac{d}{d%c} = ", dif_var
 
 //----------------------------------------------------------------------------------------------------------------------------------------
 

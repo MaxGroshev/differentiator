@@ -130,9 +130,9 @@ tree_node_t* simpl_node (tree_t* pine, tree_node_t* tree_node, char dif_var)
 {
     static int change_flag = 0;
     static int rec_level   = 0;
-   // printf ("hey\n");
+    //printf ("hey\n");
 
-    if (is_arithm_op (tree_node) && (pine->root != tree_node || rec_level != 0))
+    if (is_arithm_op (tree_node))
     {
         printf ("hey\n");
         if (tree_node->right->node_type == TYPE_NUM && tree_node->left->node_type == TYPE_NUM)
@@ -231,7 +231,7 @@ tree_node_t* simpl_node (tree_t* pine, tree_node_t* tree_node, char dif_var)
         rec_level   = 0;
         change_flag = 0;
         graph_dump (pine);
-        write_latex_log  (pine->root, TEX_SIMPLIFIED, "\n Wait a second and it will be even better\n");
+        write_latex_log  (pine->root, TEX_SIMPLIFIED, dif_var,"\n Wait a second and it will be even better\n");
         return simpl_node (pine, pine->root, dif_var);
     }
 
