@@ -20,7 +20,7 @@ int main ()
     dif_pine.root = dif_node (pine.root , 'x');
     write_latex_log (dif_pine.root, TEX_DIF, 'x');
     graph_dump (&dif_pine);
-    dif_pine.root = simpl_func (&dif_pine, dif_pine.root, 'x');
+    dif_pine.root = simpl_node (dif_pine.root, 'x');
     FILE* br_write = fopen ("./test_files/write_br_seq.txt", "w");
     write_brackets  (br_write, dif_pine.root);
     fclose          (br_write);
