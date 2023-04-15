@@ -11,23 +11,34 @@ int log_init (const char* log_file_name)
     return 0;
 }
 
-void write_tree_logs (int code_of_print, tree_node_t* node)
+void write_tree_logs (int code_of_print, tree_node_t* node, const char* file_name, const char* func_name, int num_of_line)
 {
     MY_ASSERT (LOG_FILE != NULL);
     switch (code_of_print)
     {
         case T_NODE_SUC_CREATED:
-            fprintf (LOG_FILE, "<font color = #70DB53 size=5>Created node: address (%p) | value  (%d)</font>\n\n", &node->value, node->node_type);
+            if (node->node_type == TYPE_VAR)
+            {
+                fprintf (LOG_FILE, "<font color = #7FC7FF size=5>Created TYPE_VAR node: address (%p) | var    (%c)</font>\n", &node->value, node->node_type);
+            }
+            else if (node->node_type == TYPE_NUM)
+            {
+                fprintf (LOG_FILE, "<font color = #FF8C69 size=5>Created TYPE_NUM node: address (%p) | value  (%d)</font>\n", &node->value, node->value);
+            }
+            else
+            {
+                fprintf (LOG_FILE, "<font color = #77DD77 size=5>Created TYPE_OP  node: address (%p) | op_code (%d)</font>\n", &node->value, node->node_type);
+            }
             break;
 
         case T_L_EDGE_SUC_CREATED:
-            fprintf (LOG_FILE, "<font color = #6018CF size=5>Created edge: parent address (%p) | value (%d); left  (%p) | value (%d)</font>\n\n",
-                                                                             &node->value,   node->node_type, &node->left->value, node->node_type);
+            fprintf (LOG_FILE, "<font color = #6018CF size=5>Created edge: parent address (%p)   | op_code (%d); left  (%p)  | op_code (%d)</font>\n",
+                                                                             &node->value,   node->node_type, &node->left->value, node->left->node_type);
             break;
 
         case T_R_EDGE_SUC_CREATED:
-            fprintf (LOG_FILE, "<font color = #6018CF size=5>Created edge: parent address (%p) | value (%d); right  (%p) | value (%d)</font>\n\n",
-                                                                             &node->value,     node->value,  &node->right->value, node->value);
+            fprintf (LOG_FILE, "<font color = #6018CF size=5>Created edge: parent address (%p)   | op_code (%d); right  (%p) | op_code (%d)</font>\n",
+                                                                             &node->value,     node->node_type,  &node->right->value, node->right->node_type);
             break;
 
         case T_TYPE_NUM_HAS_CHILD:
@@ -35,48 +46,26 @@ void write_tree_logs (int code_of_print, tree_node_t* node)
             break;
 
         case T_NODE_SUC_DELETED:
-            fprintf (LOG_FILE, "<font color = orange size=5>Node was removed: address (%p) </font>\n\n", &node->value);
+            fprintf (LOG_FILE, "<font color = orange size=5>Node was removed: address (%p) </font>\n", &node->value);
             break;
-
-        case T_TREE_WAS_CLEARED:
-            fprintf (LOG_FILE, "<font color = #8DB6CD size=6>Tree was cleared and deleted </font>\n\n");
-            break;
-
-        case T_FAIL_OF_CREATING_EDGE:
-            fprintf (LOG_FILE, "<font color = #red size=6>ERROR of in creating edge</font>\n");
-            break;
-
-        case T_TREE_SUC_CREATED:
-            fprintf (LOG_FILE, "\n\n<font color = #8DB6CD size=6>Tree was successfully created root </font>\n\n");
-            break;
-
-        case T_INT_POWERED:
-            fprintf (LOG_FILE, "\n\n<font color = #8DB6CD size=6> Value of the node was int powered </font>\n\n");
 
         case T_UNSUPPORTED_OPER:
-            fprintf (LOG_FILE, "\n\n<font color = #8DB6CD size=6> Here is unsupported oper </font>\n\n");
+            fprintf (LOG_FILE, "<font color = #8DB6CD size=6> Here is unsupported oper </font>\n\n");
             fprintf (stderr, "Error, check logs\n");
-        }
-}
+            break;
 
-void write_brackets_logs (int code_of_print, int position_in_file)
-{
-    MY_ASSERT (LOG_FILE != NULL);
-    switch (code_of_print)
-    {
-        case BR_NO_BRACKET_AT_THE_BEGINNING:
-            fprintf (LOG_FILE, "<pre>\n\n<font color = red size=5>No bracket at the beginning: position in file (%d)</font>\n\n", position_in_file);
-            fprintf (stderr, "Running of program was terminated-check logs\n");
-            exit (-1);
-
-        case BR_ERROR_OF_INPUT_BRACKETS_SEQ:
-            fprintf (LOG_FILE, "<pre>\n\n<font color = red size=5>Error of input of seq: position in file (%d)</font>\n\n", position_in_file);
-            fprintf (stderr, "Running of program was terminated-check logs\n");
-            exit (-2);
+        case S_START_OF_BR_SEQ:
+            fprintf (LOG_FILE, "<font color = #e9ff70 size=5>I have found opening bracket in %s: %s: %d </font>\n", file_name, func_name, num_of_line);
     }
 }
 
-//void write_sent_logs ();
+void write_extra_logs (const char* fmt,...)
+{
+    va_list args;
+    va_start(args, fmt);
+    vfprintf(LOG_FILE, fmt, args);
+    va_end(args);
+}
 
 int pic_log (const char* label, const char* name_of_pic)
 {

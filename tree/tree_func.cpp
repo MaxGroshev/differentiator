@@ -6,7 +6,7 @@ tree_t* constructor (tree_t* pine)
 
     pine->size = 0;
     pine->root = NULL;
-    write_tree_logs (T_TREE_SUC_CREATED);
+    write_extra_logs (T_TREE_SUC_CREATED);
 
     return pine;
 }
@@ -78,7 +78,7 @@ tree_node_t* tree_link_l (tree_node_t* parent, tree_node_t* child)
         write_tree_logs (T_L_EDGE_SUC_CREATED, parent);
         return parent->left;
     }
-    write_tree_logs (T_FAIL_OF_CREATING_EDGE);
+    write_extra_logs (T_FAIL_OF_CREATING_EDGE);
     return NULL;
 }
 
@@ -93,7 +93,7 @@ tree_node_t* tree_link_r (tree_node_t* parent, tree_node_t* child)
         write_tree_logs (T_R_EDGE_SUC_CREATED, parent);
         return parent->right;
     }
-    write_tree_logs (T_FAIL_OF_CREATING_EDGE);
+    write_extra_logs (T_FAIL_OF_CREATING_EDGE);
     return NULL;
 }
 
@@ -175,7 +175,7 @@ tree_node_t* tree_delete (tree_node_t* tree_node)
     write_tree_logs (T_NODE_SUC_DELETED, tree_node);
     // if (tree_node == pine->root)
     // {
-    //     write_tree_logs (T_TREE_WAS_CLEARED);
+    //     write_extra_logs (T_TREE_WAS_CLEARED);
     // }
 
     return NULL;

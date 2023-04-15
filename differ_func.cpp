@@ -132,8 +132,9 @@ tree_node_t* simpl_node (tree_node_t* tree_node, char dif_var)
 {
     MY_ASSERT (tree_node != NULL)
     int change_flag = 1;
-    while (change_flag != 0)
+    for (int i = 1; change_flag != 0; i++)
     {
+        write_extra_logs ("\n<font color = #8DB6CD size=6>It is my %d attempt to simplify in %s\n</font>", i, __FUNCTION__ );
         change_flag = 0;
         tree_node = simpl_func (tree_node, dif_var, &change_flag);
     }

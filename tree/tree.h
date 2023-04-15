@@ -11,11 +11,7 @@
 #include "../logs/log_file.h"
 #include "my_ASSERT.h"
 
-//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-#define TREE_DUMP_SET      graph_dump_set, &parent->value, *graph_dump_set->nodes, &parent->right->value, &parent->left->value
-
-#define CUR_POS_IN_PROG    __FILE__, __PRETTY_FUNCTION__, __LINE__
+//------------------------------------------------MACROS_OF_DIR-----------------------------------------------------------------------------------------------------------------------------------------------
 
 #define TREE_GRAPH_DOT_DIR   "./tree/graph_lib/tree_dump.dot"
 #define TREE_REC_DESCENT_DIR "./test_files/read_descent.txt"
@@ -23,12 +19,23 @@
 #define TREE_LOGS_HTML_DIR   "./logs/log_file.html"
 #define TREE_LOGS_TEX_DIR    "./LaTeX/differ.tex"
 
+//------------------------------------------------MACROS_OF_DUMP_AND_LOGS--------------------------------------------------------------------------------------------------------------------------------------------
+
+#define TREE_DUMP_SET      graph_dump_set, &parent->value, *graph_dump_set->nodes, &parent->right->value, &parent->left->value
+#define CUR_POS_IN_PROG    __FILE__, __PRETTY_FUNCTION__, __LINE__
+
+#define T_TREE_SUC_CREATED      "<font color = #8DB6CD size=6>Tree was successfully created</font>\n\n"
+#define T_FAIL_OF_CREATING_EDGE "<font color = #red size=6>ERROR of in creating edge</font>\n\n"
+#define T_TREE_WAS_CLEARED      "<font color = #8DB6CD size=6>Tree was cleared and deleted </font>\n"
+#define T_INT_POWERED           "<font color = #8DB6CD size=6> Value of the node was int powered </font>\n\n"
+
+
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 struct stat;
 typedef int tree_data_type;
 
-//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------TREE_STRUCT---------------------------------------------------------------------------------------------------------------------------------------------
 
 struct tree_node_t
 {
@@ -45,7 +52,7 @@ struct tree_t
     size_t       size = 0;
 };
 
-//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------CODE_OF_NODES-------------------------------------------------------------------------------------------------------------------------------------------
 
 enum NODE_TYPE
 {
@@ -66,21 +73,17 @@ enum NODE_TYPE
     OP_CTG  = 58,
 };
 
-//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------LOGS_ENUM---------------------------------------------------------------------------------------------------------------------------------------------
 
 enum TREE_CODE_OF_PRINT
 {
-    T_TREE_SUC_CREATED      =  0,
     T_NODE_SUC_CREATED      =  1,
     T_L_EDGE_SUC_CREATED    =  2,
     T_R_EDGE_SUC_CREATED    =  3,
     T_TREE_PRINT            =  4,
     T_NODE_SUC_DELETED      =  5,
-    T_TREE_WAS_CLEARED      =  6,
-    T_INT_POWERED           =  7,
 
     T_FAIL_OF_CREATING_NODE = -1,
-    T_FAIL_OF_CREATING_EDGE = -2,
     T_TYPE_NUM_HAS_CHILD    = -3,
     T_DIVISION_BY_ZERO      = -4,
     T_UNSUPPORTED_OPER      = -5,
@@ -88,10 +91,15 @@ enum TREE_CODE_OF_PRINT
 
 enum TREE_SYNTAX_ERROR
 {
-    T_NO_CLOSED_BRACKETS   = -1,
-    T_NO_NUMBER            = -2,
-    T_NO_MUL_OR_DIV_OP     = -3,
-    T_UNREC_SYNTAX_ERROR   = -100,
+    S_START_OF_BR_SEQ     = 100,
+    S_NUM_READ            = 101,
+    S_ADD_SUB_OP_READ     = 102,
+    S_MUL_DIV_OP_READ     = 103,
+
+    S_NO_CLOSED_BRACKETS   = -100,
+    S_NO_NUMBER            = -101,
+    S_NO_MUL_OR_DIV_OP     = -102,
+    S_UNREC_SYNTAX_ERROR   = -103,
 };
 
 //-------------------------------------------TREE_FUNC-----------------------------------------------------------------------------------------------------------------------------------------------
@@ -121,7 +129,8 @@ tree_node_t* get_p       (const char* buffer);
 
 void         graph_dump         (tree_t* pine);
 int          tree_print         (dump_graph_t* graph_dump_set, tree_node_t* parent);
-void         write_tree_logs    (int code_of_print, tree_node_t* node = NULL);
+void         write_tree_logs    (int code_of_print, tree_node_t* node = NULL, const char* file_name = nullptr, const char* func_name = nullptr, int num_of_line = 0);
+void         write_extra_logs   (const char* fmt,...);
 void         signal_handler     (int signal);
 char*        read_file          (const char* file_dir);
 void         syntax_error       (int num_of_error, const char* buffer, const char* file_name, const char* func_name, int num_of_line);

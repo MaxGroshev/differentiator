@@ -33,7 +33,7 @@ double tree_eval (tree_node_t* tree_node)
         case OP_POW:
         {
             fprintf (stderr, "was made int power\n");
-            write_tree_logs (T_INT_POWERED);
+            write_extra_logs (T_INT_POWERED);
             int bas = tree_eval (tree_node->left);
             int deg = tree_eval (tree_node->right);
             if ((bas == 1) || (deg == 0)) return 1;
@@ -162,14 +162,6 @@ tree_node_t* read_brackets (FILE* br_read, tree_node_t* tmp_node)
 
             return tmp_parent;
         }
-        else
-        {
-            write_brackets_logs (BR_ERROR_OF_INPUT_BRACKETS_SEQ, ftell (br_read));
-        }
-    }
-    else
-    {
-        write_brackets_logs (BR_NO_BRACKET_AT_THE_BEGINNING, ftell (br_read));
     }
     return NULL;
 }
