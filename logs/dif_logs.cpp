@@ -76,6 +76,8 @@ void write_brackets_logs (int code_of_print, int position_in_file)
     }
 }
 
+//void write_sent_logs ();
+
 int pic_log (const char* label, const char* name_of_pic)
 {
     fprintf (LOG_FILE, "\n\n<font color = #8DB6CD size = 6>%s</font>\n\n", label);

@@ -30,7 +30,6 @@ double tree_eval (tree_node_t* tree_node)
             }
             return tree_eval (tree_node->left) / tree_eval (tree_node->right);
         }
-
         case OP_POW:
         {
             fprintf (stderr, "was made int power\n");

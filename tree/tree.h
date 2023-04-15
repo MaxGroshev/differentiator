@@ -15,6 +15,8 @@
 
 #define TREE_DUMP_SET      graph_dump_set, &parent->value, *graph_dump_set->nodes, &parent->right->value, &parent->left->value
 
+#define CUR_POS_IN_PROG    __FILE__, __PRETTY_FUNCTION__, __LINE__
+
 #define TREE_GRAPH_DOT_DIR   "./tree/graph_lib/tree_dump.dot"
 #define TREE_REC_DESCENT_DIR "./test_files/read_descent.txt"
 #define TREE_LOGS_PNG_DIR    "./logs/log_pics"
@@ -31,6 +33,7 @@ typedef int tree_data_type;
 struct tree_node_t
 {
     int            node_type;
+    int            code_of_error = 0;
     tree_data_type value;
     tree_node_t*   right;
     tree_node_t*   left;
@@ -63,6 +66,8 @@ enum NODE_TYPE
     OP_CTG  = 58,
 };
 
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 enum TREE_CODE_OF_PRINT
 {
     T_TREE_SUC_CREATED      =  0,
@@ -79,6 +84,14 @@ enum TREE_CODE_OF_PRINT
     T_TYPE_NUM_HAS_CHILD    = -3,
     T_DIVISION_BY_ZERO      = -4,
     T_UNSUPPORTED_OPER      = -5,
+};
+
+enum TREE_SYNTAX_ERROR
+{
+    T_NO_CLOSED_BRACKETS   = -1,
+    T_NO_NUMBER            = -2,
+    T_NO_MUL_OR_DIV_OP     = -3,
+    T_UNREC_SYNTAX_ERROR   = -100,
 };
 
 //-------------------------------------------TREE_FUNC-----------------------------------------------------------------------------------------------------------------------------------------------
@@ -111,3 +124,4 @@ int          tree_print         (dump_graph_t* graph_dump_set, tree_node_t* pare
 void         write_tree_logs    (int code_of_print, tree_node_t* node = NULL);
 void         signal_handler     (int signal);
 char*        read_file          (const char* file_dir);
+void         syntax_error       (int num_of_error, const char* buffer, const char* file_name, const char* func_name, int num_of_line);
