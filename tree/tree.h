@@ -90,6 +90,16 @@ tree_node_t* tree_link_r        (tree_node_t* parent, tree_node_t* child);
 tree_node_t* tree_remove        (tree_t* pine, tree_node_t* node);
 tree_node_t* tree_search        (tree_node_t* tree_root, tree_node_t* node);
 
+//=================================================================================================
+
+int get_g ();
+int get_n ();
+int get_e ();
+int get_t ();
+int get_p ();
+
+//=================================================================================================
+
 void         graph_dump         (tree_t* pine);
 int          tree_print         (dump_graph_t* graph_dump_set, tree_node_t* parent);
 void         write_tree_logs    (int code_of_print, tree_node_t* node = NULL);
