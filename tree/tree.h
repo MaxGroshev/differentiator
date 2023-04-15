@@ -5,6 +5,8 @@
 #include <string.h>
 #include <signal.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include "./graph_lib/graphviz.h"
 #include "../logs/log_file.h"
 #include "my_ASSERT.h"
@@ -13,13 +15,15 @@
 
 #define TREE_DUMP_SET      graph_dump_set, &parent->value, *graph_dump_set->nodes, &parent->right->value, &parent->left->value
 
-#define TREE_GRAPH_DOT_DIR "./tree/graph_lib/tree_dump.dot"
-#define TREE_LOGS_PNG_DIR  "./logs/log_pics"
-#define TREE_LOGS_HTML_DIR "./logs/log_file.html"
-#define TREE_LOGS_TEX_DIR  "./LaTeX/differ.tex"
+#define TREE_GRAPH_DOT_DIR   "./tree/graph_lib/tree_dump.dot"
+#define TREE_REC_DESCENT_DIR "./test_files/read_descent.txt"
+#define TREE_LOGS_PNG_DIR    "./logs/log_pics"
+#define TREE_LOGS_HTML_DIR   "./logs/log_file.html"
+#define TREE_LOGS_TEX_DIR    "./LaTeX/differ.tex"
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+struct stat;
 typedef int tree_data_type;
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -77,33 +81,33 @@ enum TREE_CODE_OF_PRINT
     T_UNSUPPORTED_OPER      = -5,
 };
 
-//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------TREE_FUNC-----------------------------------------------------------------------------------------------------------------------------------------------
 
 tree_t*      constructor        (tree_t* pine);
 tree_node_t* tree_new_num_node  (tree_data_type value);
 tree_node_t* tree_new_const_node(tree_data_type value);
 tree_node_t* tree_new_var_node  (int node_type, char var_name = 'x');
 tree_node_t* tree_new_op_node   (int node_type, tree_node_t* l_child = NULL, tree_node_t* r_child = NULL);
+tree_node_t* tree_search        (tree_node_t* tree_root, tree_node_t* node);
 
 tree_node_t* tree_link_l        (tree_node_t* parent, tree_node_t* child);
 tree_node_t* tree_link_r        (tree_node_t* parent, tree_node_t* child);
 tree_node_t* tree_remove        (tree_t* pine, tree_node_t* node);
-tree_node_t* tree_search        (tree_node_t* tree_root, tree_node_t* node);
+tree_node_t* tree_delete        (tree_node_t* tree_node);
 
-//=================================================================================================
+//---------------------------------------REC_DESCENT_FUNC-------------------------------------------------------------------------
 
-int get_g ();
-int get_n ();
-int get_e ();
-int get_t ();
-int get_p ();
+tree_node_t* rec_descent (const char* file_dir);
+tree_node_t* get_g       (const char* buffer);
+tree_node_t* get_n       (const char* buffer);
+tree_node_t* get_e       (const char* buffer);
+tree_node_t* get_t       (const char* buffer);
+tree_node_t* get_p       (const char* buffer);
 
-//=================================================================================================
+//------------------------------------------------------------------------------------------------------------------------
 
 void         graph_dump         (tree_t* pine);
 int          tree_print         (dump_graph_t* graph_dump_set, tree_node_t* parent);
 void         write_tree_logs    (int code_of_print, tree_node_t* node = NULL);
-
-tree_node_t* tree_delete        (tree_node_t* tree_node);
-
 void         signal_handler     (int signal);
+char*        read_file          (const char* file_dir);

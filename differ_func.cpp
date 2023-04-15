@@ -162,21 +162,21 @@ tree_node_t* simpl_func (tree_node_t* tree_node, char dif_var, int* change_flag)
                 tree_delete (tree_node);
                 return New_num (0);
             }
-            else if (tree_node->left->node_type == TYPE_NUM  && tree_node->left->value == 1)
+            if (tree_node->left->node_type == TYPE_NUM  && tree_node->left->value == 1)
             {
                 *change_flag = 1;
                 tree_node_t* tmp_node = Copy_r;
                 tree_delete (tree_node);
                 return tmp_node;
             }
-            else if (tree_node->right->node_type == TYPE_NUM  && tree_node->right->value == 1)
+            if (tree_node->right->node_type == TYPE_NUM  && tree_node->right->value == 1)
             {
                 *change_flag = 1;
                 tree_node_t* tmp_node = Copy_l;
                 tree_delete (tree_node);
                 return tmp_node;
             }
-            else if ((tree_node->left->node_type == TYPE_VAR && tree_node->right->node_type == TYPE_VAR) && tree_node->left->value == tree_node->right->value)
+            if ((tree_node->left->node_type == TYPE_VAR && tree_node->right->node_type == TYPE_VAR) && tree_node->left->value == tree_node->right->value)
             {
                 tree_node_t* tmp_node = Pow (New_var (TYPE_VAR, tree_node->right->value), New_num (2));
                 tree_delete (tree_node);
@@ -202,7 +202,7 @@ tree_node_t* simpl_func (tree_node_t* tree_node, char dif_var, int* change_flag)
                     return tree_new_op_node (OP_SUB, tmp_func_node2, tmp_r_side);
                 }
             }
-            else if (tree_node->right->right->value < 0)
+            if (tree_node->right->right->value < 0)
             {
                 *change_flag = 1;
                 tree_node_t* tmp_num_node   = New_num   (-tree_node->right->right->value);
@@ -215,14 +215,14 @@ tree_node_t* simpl_func (tree_node_t* tree_node, char dif_var, int* change_flag)
                 tree_delete (tree_node);
                 return tree_new_op_node (OP_SUB, tmp_func_node2, tmp_r_side);
             }
-            else if (tree_node->left->value == 0)
+            if (tree_node->left->value == 0)
             {
                 *change_flag = 1;
                 tree_node_t* tmp_node = copy_node (tree_node->right);
                 tree_delete (tree_node);
                 return (tmp_node);
             }
-            else if (tree_node->right->value == 0)
+            if (tree_node->right->value == 0)
             {
                 *change_flag = 1;
                 tree_node_t* tmp_node = copy_node (tree_node->left);
