@@ -10,11 +10,16 @@ int main ()
     constructor (&dif_pine);
 
     pine.root = rec_descent (TREE_REC_DESCENT_DIR);
-    //dif_pine.root = dif_node (pine.root, 'x');
-    double res  = tree_eval (pine.root);
-    printf ("res = %lg\n", res);
-    graph_dump  (&pine);
-    //write_latex_log (dif_pine.root, TEX_RES, 'x');
+    write_latex_log (pine.root, TEX_FUNCTION);
+    graph_dump (&pine);
+
+    dif_pine.root = dif_node (pine.root , 'x');
+    write_latex_log (dif_pine.root, TEX_DIF, 'x');
+    graph_dump (&dif_pine);
+    dif_pine.root = simpl_node (dif_pine.root, 'x');
+    write_latex_log (dif_pine.root, TEX_RES, 'x');
+
+    graph_dump (&dif_pine);
 
     tree_delete (pine.root);
     log_distr   ();

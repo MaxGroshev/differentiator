@@ -14,7 +14,8 @@ tree_node_t* rec_descent (const char* file_dir)
 tree_node_t* get_g (const char* buffer)
 {
     tree_node_t* tree_node = get_s (buffer);
-    if (buffer[pos_in_file++] != '$') syntax_error (S_UNREC_SYNTAX_ERROR, buffer, CUR_POS_IN_PROG);
+
+    if (buffer[pos_in_file++] != '\r' || buffer[pos_in_file++] != '\n') syntax_error (S_UNREC_SYNTAX_ERROR, buffer, CUR_POS_IN_PROG);
     return tree_node;
 }
 
