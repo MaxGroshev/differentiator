@@ -8,9 +8,6 @@
 ```
 > git clone https://github.com/MaxGroshev/differentiator.git
 > mkdir obj
-> make
-> ./differ
-> make latex_t (to get your result in beatiful LaTeX format)
 ```
 ---
 
@@ -18,4 +15,14 @@
 - LaTeX-full (if want get result in LaTeX format)
 - graphviz 
 
+---
+#How to use
+```
+> cd test_files
+> nano (or any other text editor) read_descent.txt
+> cd ..
+> make
+> ./differ
+> make latex_t (to get your result in beatiful LaTeX format)
+```
 
