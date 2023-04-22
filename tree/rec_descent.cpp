@@ -35,14 +35,28 @@ tree_node_t* get_e (const char* buffer)
 
 tree_node_t* get_t (const char* buffer)
 {
-    tree_node_t* l_node = get_p (buffer);
+    tree_node_t* l_node = get_d (buffer);
     while (buffer[pos_in_file] == '*' || buffer[pos_in_file] == '/')
     {
         int op = buffer[pos_in_file];
         pos_in_file++;
-        tree_node_t* r_node = get_p (buffer);
+        tree_node_t* r_node = get_d (buffer);
         if      (op == '*')  l_node = tree_new_op_node (OP_MUL, l_node, r_node);
-        else if (op == '/') l_node = tree_new_op_node (OP_DIV, l_node, r_node);
+        else if (op == '/')  l_node = tree_new_op_node (OP_DIV, l_node, r_node);
+        else    syntax_error (S_NO_MUL_OR_DIV_OP, buffer, CUR_POS_IN_PROG);
+    }
+    return l_node;
+}
+
+tree_node_t* get_d (const char* buffer)
+{
+    tree_node_t* l_node = get_p(buffer);
+    while (buffer[pos_in_file] == '^')
+    {
+        int op = buffer[pos_in_file];
+        pos_in_file++;
+        tree_node_t* r_node = get_p (buffer);
+        if      (op == '^')  l_node = tree_new_op_node (OP_POW, l_node, r_node);// make error
         else    syntax_error (S_NO_MUL_OR_DIV_OP, buffer, CUR_POS_IN_PROG);
     }
     return l_node;
@@ -58,6 +72,18 @@ tree_node_t* get_p (const char* buffer)
         if (buffer[pos_in_file] != ')') syntax_error (S_NO_CLOSED_BRACKETS, buffer, CUR_POS_IN_PROG);
         pos_in_file++;
         return tree_node;
+    }
+    else return get_v (buffer);
+}
+
+tree_node_t* get_v (const char* buffer)
+{
+    char var = '0';
+    if (buffer[pos_in_file] >= 'a' && buffer[pos_in_file] <= 'z')
+    {
+        var = buffer[pos_in_file];
+        pos_in_file++;
+        return tree_new_var_node (TYPE_VAR, var);
     }
     else return get_n (buffer);
 }

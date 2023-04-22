@@ -120,10 +120,12 @@ tree_node_t* tree_delete        (tree_node_t* tree_node);
 
 tree_node_t* rec_descent (const char* file_dir);
 tree_node_t* get_g       (const char* buffer);
+tree_node_t* get_v       (const char* buffer);
 tree_node_t* get_n       (const char* buffer);
 tree_node_t* get_e       (const char* buffer);
 tree_node_t* get_t       (const char* buffer);
 tree_node_t* get_p       (const char* buffer);
+tree_node_t* get_d       (const char* buffer);
 
 //------------------------------------------------------------------------------------------------------------------------
 
