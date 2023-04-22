@@ -49,7 +49,7 @@
 - low memory consuption
 - full control of every stage of work (includeing HTML logs + graphics dump)
 - include library for work with graphviz
-- include DSL for comfortable work and easy expantions of abilities
+- include DSL for comfortable work and easy expantions of abilities 
 <h4 align="center">from this stage</h4>  
 <p align="center">
   <img width="460" height="300" src="https://github.com/MaxGroshev/differentiator/blob/master/readme_pic/Screenshot%20from%202023-04-23%2000-06-29.png">
