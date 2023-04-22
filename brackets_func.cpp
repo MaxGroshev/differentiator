@@ -34,7 +34,7 @@ double tree_eval (tree_node_t* tree_node)
         {
             fprintf (stderr, "was made int power\n");
             write_extra_logs (T_INT_POWERED);
-            int bas = tree_eval (tree_node->left);
+            double bas = tree_eval (tree_node->left);
             int deg = tree_eval (tree_node->right);
             if ((bas == 1) || (deg == 0)) return 1;
             else if (deg > 0)
@@ -46,10 +46,15 @@ double tree_eval (tree_node_t* tree_node)
             }
             else if (deg < 0)
             {
-                for (int i = 0; i < deg; i--)
+                printf ("%lg\n", bas);
+                double div_bas = 1 / bas;
+                printf ("%lg\n", deg);
+                for (int i = 0; i > deg + 1; i--)
                 {
-                    bas = bas / bas;
+                    div_bas = div_bas / bas;
+                    printf ("%lg\n", div_bas);
                 }
+                return div_bas;
             }
             return bas;
         }

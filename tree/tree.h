@@ -89,12 +89,13 @@ enum TREE_CODE_OF_PRINT
     T_UNSUPPORTED_OPER      = -5,
 };
 
-enum TREE_SYNTAX_ERROR
+enum TREE_SYNTAX_MES
 {
     S_START_OF_BR_SEQ     = 100,
     S_NUM_READ            = 101,
     S_ADD_SUB_OP_READ     = 102,
     S_MUL_DIV_OP_READ     = 103,
+    S_START_OF_NEG_SEQ    = 104,
 
     S_NO_CLOSED_BRACKETS   = -100,
     S_NO_NUMBER            = -101,
@@ -120,6 +121,7 @@ tree_node_t* tree_delete        (tree_node_t* tree_node);
 
 tree_node_t* rec_descent (const char* file_dir);
 tree_node_t* get_g       (const char* buffer);
+tree_node_t* get_s       (const char* buffer);
 tree_node_t* get_v       (const char* buffer);
 tree_node_t* get_n       (const char* buffer);
 tree_node_t* get_e       (const char* buffer);

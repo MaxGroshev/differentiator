@@ -3,6 +3,20 @@ digraph
 rankdir = ""
 splines = "true"
 
-node_stat [margin = "0.3*0.3", style = "filled", shape = "record", fillcolor = "#8DB6CD" label = " size = 0 | root point = 0x8"]
+node_stat [margin = "0.3*0.3", style = "filled", shape = "record", fillcolor = "#8DB6CD" label = " size = 0 | root point = 0x55d3291e1998"]
 {rank = source; node_stat}
 
+node0x55d3291e1998 [shape = "Mrecord", fillcolor = "#77DD77", style = "filled", fontcolor = "#31032A", fontname = "Calibri", color = "white", label = "{TYPE_OP\n (0x55d3291e1998)| {^ |left = 0x55d3291e1878 |right = 0x55d3291e1968}}"]
+node0x55d3291e1998 -> node0x55d3291e1878 [color = "#8DB6CD", style = "", constraint = true, fillcolor = "#8DB6CD",   fontcolor = "", fontname = "Calibri", label = ""];
+node0x55d3291e1878 [shape = "Mrecord", fillcolor = "#7FC7FF", style = "filled", fontcolor = "#31032A", fontname = "Calibri", color = "white", label = "{TYPE_VAR\n (0x55d3291e1878)| {x |left = 0x8 |right = 0x8}}"]
+node0x55d3291e1998 -> node0x55d3291e1968 [color = "#8DB6CD", style = "", constraint = true, fillcolor = "#8DB6CD",   fontcolor = "", fontname = "Calibri", label = ""];
+node0x55d3291e1968 [shape = "Mrecord", fillcolor = "#77DD77", style = "filled", fontcolor = "#31032A", fontname = "Calibri", color = "white", label = "{TYPE_OP\n (0x55d3291e1968)| {* |left = 0x55d3291e1938 |right = 0x55d3291e1908}}"]
+node0x55d3291e1968 -> node0x55d3291e1938 [color = "#8DB6CD", style = "", constraint = true, fillcolor = "#8DB6CD",   fontcolor = "", fontname = "Calibri", label = ""];
+node0x55d3291e1938 [shape = "Mrecord", fillcolor = "#FF8C69", style = "filled", fontcolor = "#31032A", fontname = "Calibri", color = "white", label = "{TYPE_NUM\n (0x55d3291e1938)| {-1 |left = 0x8 |right = 0x8}}"]
+node0x55d3291e1968 -> node0x55d3291e1908 [color = "#8DB6CD", style = "", constraint = true, fillcolor = "#8DB6CD",   fontcolor = "", fontname = "Calibri", label = ""];
+node0x55d3291e1908 [shape = "Mrecord", fillcolor = "#77DD77", style = "filled", fontcolor = "#31032A", fontname = "Calibri", color = "white", label = "{TYPE_OP\n (0x55d3291e1908)| {^ |left = 0x55d3291e18a8 |right = 0x55d3291e18d8}}"]
+node0x55d3291e1908 -> node0x55d3291e18a8 [color = "#8DB6CD", style = "", constraint = true, fillcolor = "#8DB6CD",   fontcolor = "", fontname = "Calibri", label = ""];
+node0x55d3291e18a8 [shape = "Mrecord", fillcolor = "#7FC7FF", style = "filled", fontcolor = "#31032A", fontname = "Calibri", color = "white", label = "{TYPE_VAR\n (0x55d3291e18a8)| {x |left = 0x8 |right = 0x8}}"]
+node0x55d3291e1908 -> node0x55d3291e18d8 [color = "#8DB6CD", style = "", constraint = true, fillcolor = "#8DB6CD",   fontcolor = "", fontname = "Calibri", label = ""];
+node0x55d3291e18d8 [shape = "Mrecord", fillcolor = "#FF8C69", style = "filled", fontcolor = "#31032A", fontname = "Calibri", color = "white", label = "{TYPE_NUM\n (0x55d3291e18d8)| {3 |left = 0x8 |right = 0x8}}"]
+}

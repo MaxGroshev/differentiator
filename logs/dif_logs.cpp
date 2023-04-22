@@ -56,6 +56,10 @@ void write_tree_logs (int code_of_print, tree_node_t* node, const char* file_nam
 
         case S_START_OF_BR_SEQ:
             fprintf (LOG_FILE, "<font color = #e9ff70 size=5>I have found opening bracket in %s: %s: %d </font>\n", file_name, func_name, num_of_line);
+
+        case S_START_OF_NEG_SEQ:
+            fprintf (LOG_FILE, "<font color = #e9ff70 size=5>I have found beginnig of negative seq in %s: %s: %d </font>\n", file_name, func_name, num_of_line);
+
     }
 }
 

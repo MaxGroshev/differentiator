@@ -13,9 +13,22 @@ tree_node_t* rec_descent (const char* file_dir)
 
 tree_node_t* get_g (const char* buffer)
 {
-    tree_node_t* tree_node = get_e (buffer);
+    tree_node_t* tree_node = get_s (buffer);
     if (buffer[pos_in_file++] != '$') syntax_error (S_UNREC_SYNTAX_ERROR, buffer, CUR_POS_IN_PROG);
     return tree_node;
+}
+
+tree_node_t* get_s (const char* buffer)
+{
+    int is_neg_val = 0;
+    if (buffer[pos_in_file] == '-')
+    {
+        is_neg_val = 1;
+        pos_in_file++;
+    }
+    tree_node_t* r_node = get_e (buffer);
+    if (is_neg_val == 1) return tree_new_op_node (OP_MUL, tree_new_num_node (-1), r_node);
+    return r_node;
 }
 
 tree_node_t* get_e (const char* buffer)
@@ -68,7 +81,7 @@ tree_node_t* get_p (const char* buffer)
     {
         write_tree_logs (S_START_OF_BR_SEQ, NULL, CUR_POS_IN_PROG);
         pos_in_file++;
-        tree_node_t* tree_node = get_e (buffer);
+        tree_node_t* tree_node = get_s (buffer);
         if (buffer[pos_in_file] != ')') syntax_error (S_NO_CLOSED_BRACKETS, buffer, CUR_POS_IN_PROG);
         pos_in_file++;
         return tree_node;

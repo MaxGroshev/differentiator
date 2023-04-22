@@ -11,9 +11,9 @@ int main ()
 
     pine.root = rec_descent (TREE_REC_DESCENT_DIR);
     //dif_pine.root = dif_node (pine.root, 'x');
-    //int res  = tree_eval (pine.root);
-    printf ("res =\n");
-    //graph_dump  (&dif_pine);
+    double res  = tree_eval (pine.root);
+    printf ("res = %lg\n", res);
+    graph_dump  (&pine);
     //write_latex_log (dif_pine.root, TEX_RES, 'x');
 
     tree_delete (pine.root);
