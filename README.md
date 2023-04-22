@@ -48,12 +48,12 @@
 # Why I should choose this differentiator
 - low memory consuption
 - full control of every stage of work (includeing HTML logs + graphics dump)
-from this
+<h4 align="center">from this stage</h4>  
 <p align="center">
   <img width="460" height="300" src="https://github.com/MaxGroshev/differentiator/blob/master/readme_pic/Screenshot%20from%202023-04-23%2000-06-29.png">
 </p>
 
-to this 
+<h4 align="center">till this stage</h4>  
 <p align="center">
   <img width="700" height="300" src="https://github.com/MaxGroshev/differentiator/blob/master/readme_pic/Screenshot%20from%202023-04-23%2000-07-01.png">
 </p>
