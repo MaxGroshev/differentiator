@@ -55,5 +55,5 @@ from this
 
 to this 
 <p align="center">
-  <img width="460" height="300" src="https://github.com/MaxGroshev/differentiator/blob/master/readme_pic/Screenshot%20from%202023-04-23%2000-07-01.png">
+  <img width="700" height="300" src="https://github.com/MaxGroshev/differentiator/blob/master/readme_pic/Screenshot%20from%202023-04-23%2000-07-01.png">
 </p>
