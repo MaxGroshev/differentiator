@@ -37,10 +37,14 @@
   * `cosx`
   * `tgx`
   * `ctgx`
-  * `lnx'
+  * `lnx`
   * `f(x)^g(x)`
 - search partial derivatives
   * `df/dx`
   * `df/dy`
   * `etc`
 - to simplify the result  
+---
+# Why I should choose this differentiator
+- low memory consuption
+- full control of every stage of work (includeing HTML logs + graphics dump)
