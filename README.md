@@ -10,7 +10,12 @@
 > mkdir obj
 > make
 > ./differ
+> make latex_t (to get your result in beatiful LaTeX format)
 ```
 ---
+
+#### Required programs
+- LaTeX-full (if want get result in LaTeX format)
+- graphviz 
 
 
