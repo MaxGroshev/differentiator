@@ -28,5 +28,19 @@
 ```
 # What it can?
 - to differentiate functions such as:
-  * 'const'
-
+  * `const`
+  * `U+V`
+  * `U*V`
+  * `U/V`
+  * `U(V)`
+  * `sinx`
+  * `cosx`
+  * `tgx`
+  * `ctgx`
+  * `lnx'
+  * `f(x)^g(x)`
+- search partial derivatives
+  * `df/dx`
+  * `df/dy`
+  * `etc`
+- to simplify the result  
