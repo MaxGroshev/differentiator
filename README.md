@@ -16,10 +16,11 @@
 - graphviz 
 
 ---
-#How to use
+# How to use
 ```
 > cd test_files
 > nano (or any other text editor) read_descent.txt
+> input your func (without any extra symbols)
 > cd ..
 > make
 > ./differ
