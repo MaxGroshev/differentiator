@@ -26,4 +26,7 @@
 > ./differ
 > make latex_t (to get your result in beatiful LaTeX format)
 ```
+# What it can?
+- to differentiate functions such as:
+  * 'const'
 
