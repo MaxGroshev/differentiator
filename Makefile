@@ -6,6 +6,7 @@ CFLAGS = -c -std=c++17
 GR_DIR    = ./tree/graph_lib/
 LOGS_DIR  = ./logs/
 LATEX_DIR = ./LaTeX/
+PY_GR_DIR = ./py_graph/
 TREE_DIR  = ./tree/
 PREF_OBJ  = ./obj/
 PREF_STAT = ./logs/log_pics/
@@ -26,12 +27,15 @@ OBJ_LOGS = $(patsubst $(PREF_OBJ)%.cpp, %.o, $(LOGS_SRC))
 #LaTeX files
 LATEX_SRC = $(wildcard $(LATEX_DIR)*.cpp)
 OBJ_LATEX = $(patsubst $(PREF_OBJ)%.cpp, %.o, $(LATEX_SRC))
+#Py_graph files
+PY_GR_SRC = $(wildcard $(PY_GR_DIR)*.cpp)
+OBJ_PY_GR = $(patsubst $(PREF_OBJ)%.cpp, %.o, $(PY_GR_SRC))
 
 
 all:     $(TARGET)
 
-$(TARGET):  $(OBJ) $(OBJ_TREE) $(OBJ_LIB) $(OBJ_LOGS) $(OBJ_LATEX)
-	$(CC) -o $(TARGET) $(OBJ) $(OBJ_TREE) $(OBJ_LIB) $(OBJ_LOGS) $(OBJ_LATEX)
+$(TARGET):  $(OBJ) $(OBJ_TREE) $(OBJ_LIB) $(OBJ_LOGS) $(OBJ_LATEX) $(OBJ_PY_GR)
+	$(CC) -o $(TARGET) $(OBJ) $(OBJ_TREE) $(OBJ_LIB) $(OBJ_LOGS) $(OBJ_LATEX) $(OBJ_PY_GR)
 
 $(PREF_OBJ)%.o : %.cpp
 	$(CC) $(CFLAGS) $< -o $@

@@ -75,19 +75,19 @@ int write_brackets (FILE* br_write, tree_node_t* tree_node)
     }
 
     if      (tree_node->node_type == TYPE_NUM) fprintf (br_write, "%d", tree_node->value);
-    else if (tree_node->node_type == CONST_EXP)fprintf (br_write, "e");
+    else if (tree_node->node_type == CONST_EXP)fprintf (br_write, "np.exp");
     else if (tree_node->node_type == TYPE_VAR) fprintf (br_write, "%c", tree_node->value);
     else if (tree_node->node_type == OP_ADD)   fprintf (br_write, "+");
     else if (tree_node->node_type == OP_SUB)   fprintf (br_write, "-");
     else if (tree_node->node_type == OP_MUL)   fprintf (br_write, "*");
     else if (tree_node->node_type == OP_DIV)   fprintf (br_write, "/");
-    else if (tree_node->node_type == OP_POW)   fprintf (br_write, "^");
-    else if (tree_node->node_type == OP_LN)    fprintf (br_write, "ln");
-    else if (tree_node->node_type == OP_LOG)   fprintf (br_write, "log");
-    else if (tree_node->node_type == OP_SIN)   fprintf (br_write, "sin");
-    else if (tree_node->node_type == OP_COS)   fprintf (br_write, "cos");
-    else if (tree_node->node_type == OP_TG)    fprintf (br_write, "tg");
-    else if (tree_node->node_type == OP_CTG)   fprintf (br_write, "ctg");
+    else if (tree_node->node_type == OP_POW)   fprintf (br_write, "**");
+    else if (tree_node->node_type == OP_LN)    fprintf (br_write, "np.log");
+    else if (tree_node->node_type == OP_LOG)   fprintf (br_write, "np.log");
+    else if (tree_node->node_type == OP_SIN)   fprintf (br_write, "np.sin");
+    else if (tree_node->node_type == OP_COS)   fprintf (br_write, "np.cos");
+    else if (tree_node->node_type == OP_TG)    fprintf (br_write, "np.tg");
+    else if (tree_node->node_type == OP_CTG)   fprintf (br_write, "np.ctg");
 
     if (tree_node->right != NULL)
     {
