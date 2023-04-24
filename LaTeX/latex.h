@@ -4,6 +4,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include "../tree/tree.h"
+#include "../py_graph/write_graph_data.h"
 #include "TEX_DSL.h"
 #include "my_ASSERT.h"
 
@@ -33,7 +34,8 @@ struct stat;
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------
 
-int latex_init      (const char* tex_dir, int pattern);
-int read_pattern    (const char* pat_dir);
-int write_latex_log (tree_node_t* tree_node, int equ_type = 0, char dif_var = '-', const char* text = NULL);
-int latex_distr     ();
+int latex_init        (const char* tex_dir, int pattern);
+int read_pattern      (const char* pat_dir);
+int write_latex_log   (tree_node_t* tree_node, int equ_type = 0, char dif_var = 'x', const char* text = NULL);
+int write_func_in_tex (const tree_node_t* tree_node, int* is_one_arg_func, char dif_var = 'x');
+int latex_distr       ();

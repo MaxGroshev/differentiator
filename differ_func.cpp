@@ -137,6 +137,7 @@ tree_node_t* simpl_node (tree_node_t* tree_node, char dif_var)
         write_extra_logs ("\n<font color = #8DB6CD size=6>It is my %d attempt to simplify in %s\n</font>", i, __FUNCTION__ );
         change_flag = 0;
         tree_node = simpl_func (tree_node, dif_var, &change_flag);
+        //graph_dump      (tree_node);
     }
     return tree_node;
 }
@@ -202,28 +203,28 @@ tree_node_t* simpl_func (tree_node_t* tree_node, char dif_var, int* change_flag)
                     tree_delete (tree_node);
                     return tree_new_op_node (OP_SUB, tmp_func_node2, tmp_r_side);
                 }
-            }
-            if (tree_node->right->right->value < 0)
-            {
-                *change_flag = 1;
-                tree_node_t* tmp_num_node   = New_num   (-tree_node->right->right->value);
-                tree_node_t* tmp_func_node1 = copy_node (tree_node->right->left);
-                tree_node_t* tmp_r_side     = tree_new_op_node (tree_node->right->node_type, tmp_num_node, tmp_func_node1);
-                tree_delete (tree_node->right);
-                tree_node->right = NULL;
+                if (tree_node->right->right->value < 0) // was seg fault
+                {
+                    *change_flag = 1;
+                    tree_node_t* tmp_num_node   = New_num   (-tree_node->right->right->value);
+                    tree_node_t* tmp_func_node1 = copy_node (tree_node->right->left);
+                    tree_node_t* tmp_r_side     = tree_new_op_node (tree_node->right->node_type, tmp_num_node, tmp_func_node1);
+                    tree_delete (tree_node->right);
+                    tree_node->right = NULL;
 
-                tree_node_t* tmp_func_node2 = copy_node (tree_node->left);
-                tree_delete (tree_node);
-                return tree_new_op_node (OP_SUB, tmp_func_node2, tmp_r_side);
+                    tree_node_t* tmp_func_node2 = copy_node (tree_node->left);
+                    tree_delete (tree_node);
+                    return tree_new_op_node (OP_SUB, tmp_func_node2, tmp_r_side);
+                }
             }
-            if (tree_node->left->value == 0)
+            if (tree_node->left->node_type == TYPE_NUM && tree_node->left->value == 0)
             {
                 *change_flag = 1;
                 tree_node_t* tmp_node = copy_node (tree_node->right);
                 tree_delete (tree_node);
                 return (tmp_node);
             }
-            if (tree_node->right->value == 0)
+            if (tree_node->right->node_type == TYPE_NUM && tree_node->right->value == 0)
             {
                 *change_flag = 1;
                 tree_node_t* tmp_node = copy_node (tree_node->left);

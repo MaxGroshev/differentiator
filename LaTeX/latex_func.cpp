@@ -36,42 +36,61 @@ int read_pattern (const char* pat_dir)
 int write_latex_log (tree_node_t* tree_node, int equ_type, char dif_var, const char* text)
 {
     MY_ASSERT (tree_node != NULL)
+    int is_one_arg_func = 1;
+    if (text != NULL) fprintf (LATEX_FILE, "%s", text);
+    switch (equ_type)
+    {
+        case TEX_FUNCTION:
+            fprintf (LATEX_FILE, "\\section{I am here to find you and I will...}");
+            fprintf (LATEX_FILE, TEX_START_EQU);
+            fprintf (LATEX_FILE, "f = ");
+            write_func_in_tex (tree_node, &is_one_arg_func, dif_var);
+            if (is_one_arg_func == 1)
+            {
+                py_build_graph (tree_node, "./LaTeX/tex_pics/func.png", PY_ONE_VAR_GRAPH);
+                fprintf (LATEX_FILE, TEX_INSERT_PNG, "./LaTeX/tex_pics/func.png");
+            }
+            break;
+
+        case TEX_DIF:
+            fprintf (LATEX_FILE, "\\section{I did it... But at what cost}");
+            fprintf (LATEX_FILE, TEX_START_DIF);
+            write_func_in_tex (tree_node, &is_one_arg_func, dif_var);
+            break;
+
+        case TEX_DIF_IN_POINT:
+            fprintf (LATEX_FILE, "\\section{I found you exactly here}");
+            fprintf (LATEX_FILE, TEX_START_DIF);
+            write_func_in_tex (tree_node, &is_one_arg_func, dif_var);
+            break;
+
+        case TEX_SIMPLIFIED:
+            fprintf (LATEX_FILE, "\\section{So, Turbo-Mega ochev}");
+            fprintf (LATEX_FILE, TEX_START_DIF);
+            write_func_in_tex (tree_node, &is_one_arg_func, dif_var);
+
+            break;
+
+        case TEX_RES:
+            fprintf (LATEX_FILE, "\\section{The final trivial transition}");
+            fprintf (LATEX_FILE, TEX_START_DIF);
+
+            write_func_in_tex (tree_node, &is_one_arg_func, dif_var);
+            if (is_one_arg_func == 1)
+            {
+                py_build_graph (tree_node, "./LaTeX/tex_pics/differ.png", PY_ONE_VAR_GRAPH);
+                fprintf (LATEX_FILE, TEX_INSERT_PNG, "./LaTeX/tex_pics/differ.png");
+            }
+            break;
+    }
+    return 0;
+}
+
+int write_func_in_tex (const tree_node_t* tree_node, int* is_one_arg_func, char dif_var)
+{
+    MY_ASSERT (tree_node != NULL)
 
     static int rec_level = 0;
-    if (rec_level == 0)
-    {
-        if (text != NULL) fprintf (LATEX_FILE, "%s", text);
-        switch (equ_type)
-        {
-            case TEX_FUNCTION:
-                fprintf (LATEX_FILE, "\\section{I am here to find you and I will...}");
-                fprintf (LATEX_FILE, TEX_START_EQU);
-                fprintf (LATEX_FILE, "f = ");
-                break;
-
-            case TEX_DIF:
-                fprintf (LATEX_FILE, "\\section{I did it... But at what cost}");
-                fprintf (LATEX_FILE, TEX_START_DIF);
-                break;
-
-            case TEX_DIF_IN_POINT:
-                fprintf (LATEX_FILE, "\\section{I found you exactly here}");
-                fprintf (LATEX_FILE, TEX_START_DIF);
-                break;
-
-            case TEX_SIMPLIFIED:
-                fprintf (LATEX_FILE, "\\section{So, Turbo-Mega ochev}");
-                fprintf (LATEX_FILE, TEX_START_DIF);
-                break;
-
-            case TEX_RES:
-                fprintf (LATEX_FILE, "\\section{The final trivial transition}");
-                fprintf (LATEX_FILE, TEX_START_DIF);
-                break;
-
-        }
-    }
-
     switch (tree_node->node_type)
     {
         case TYPE_NUM:
@@ -88,6 +107,7 @@ int write_latex_log (tree_node_t* tree_node, int equ_type, char dif_var, const c
 
         case TYPE_VAR:
             fprintf (LATEX_FILE, "{");
+            if (dif_var != tree_node->value) *is_one_arg_func = 0;
             fprintf (LATEX_FILE, "%c", tree_node->value);
             fprintf (LATEX_FILE, "}");
             break;
@@ -169,7 +189,11 @@ int write_latex_log (tree_node_t* tree_node, int equ_type, char dif_var, const c
             break;
     }
 
-    if (rec_level == 0) fprintf (LATEX_FILE, TEX_ENDEQU);
+    if (rec_level == 0)
+    {
+        fprintf (LATEX_FILE, TEX_ENDEQU);
+    }
+
     return 0;
 }
 

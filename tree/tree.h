@@ -131,7 +131,7 @@ tree_node_t* get_d       (const char* buffer);
 
 //------------------------------------------------------------------------------------------------------------------------
 
-void         graph_dump         (tree_t* pine);
+void         graph_dump         (tree_node_t* tree_node);
 int          tree_print         (dump_graph_t* graph_dump_set, tree_node_t* parent);
 void         write_tree_logs    (int code_of_print, tree_node_t* node = NULL, const char* file_name = nullptr, const char* func_name = nullptr, int num_of_line = 0);
 void         write_extra_logs   (const char* fmt,...);

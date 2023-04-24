@@ -8,6 +8,6 @@ ax.grid ()
 
 ax.set_title  ('Graph of function')
 x = np.linspace (-5, 5, 100)
-y = ((-1)*(np.sin((-1)*(x))))
+y = (((-1)*(np.sin(np.log(x))))*((1)/(x)))
 ax.plot (x, y)
-plt.savefig('./py_graph/first_pic.png')
+plt.savefig('./LaTeX/tex_pics/differ.png')

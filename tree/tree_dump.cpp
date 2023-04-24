@@ -1,14 +1,12 @@
 #include "tree.h"
 
-void graph_dump (tree_t* pine)
+void graph_dump (tree_node_t* tree_node)
 {
-    MY_ASSERT (pine != NULL);
+    MY_ASSERT (tree_node != NULL);
 
     dump_graph_t graph_dump_set = {};
-    graph_dump_set.info.size = pine->size;
-    graph_dump_set.info.head = &pine->root->value;
     init_graph (&graph_dump_set, TREE_GRAPH_DOT_DIR);
-    tree_print (&graph_dump_set, pine->root);
+    tree_print (&graph_dump_set, tree_node);
 
     run_graphviz (&graph_dump_set, TREE_GRAPH_DOT_DIR, TREE_LOGS_PNG_DIR);
 }
