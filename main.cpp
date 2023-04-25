@@ -11,8 +11,8 @@ int main ()
     constructor (&pine);
     constructor (&dif_pine);
 
-    pine.root = Add (New_num (TYPE_VAR), Cos (Ln (New_var (TYPE_VAR, 'x'))));
-    //pine.root = rec_descent (TREE_REC_DESCENT_DIR);
+    //pine.root = Add (New_num (TYPE_VAR), Cos (Ln (New_var (TYPE_VAR, 'x'))));
+    pine.root = rec_descent (TREE_REC_DESCENT_DIR);
 
     write_latex_log (pine.root, TEX_FUNCTION);
     graph_dump (pine.root);

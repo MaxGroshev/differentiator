@@ -8,7 +8,7 @@ tree_node_t* dif_node (const tree_node_t* tree_node, char dif_var)
             return New_num (0);
 
         case CONST_EXP:
-            return New_num (0);
+            return New_const (0);
 
         case TYPE_VAR:
             if (dif_var == tree_node->value) return New_num (1);
@@ -66,6 +66,10 @@ tree_node_t* dif_node (const tree_node_t* tree_node, char dif_var)
                 tree_node_t* power = Pow (Copy_l, Sub (Copy_r, New_num (1)));
                 return Mul (Copy_r, Mul (Dif_l, power));
             }
+            else if (tree_node->left->node_type == CONST_EXP)
+            {
+                return Mul (Pow (New_const (CONST_EXP), Copy_r), Dif_r);
+            }
             else
             {
                 tree_node_t* exp    = Pow (New_const (CONST_EXP), Mul (Copy_r, Ln (Copy_l)));
@@ -88,7 +92,7 @@ tree_node_t* copy_node (const tree_node_t* tree_node)
             return New_num (tree_node->value);
 
         case CONST_EXP:
-            return New_num (tree_node->value);
+            return New_const (tree_node->value);
 
         case TYPE_VAR:
             return New_var (tree_node->node_type, tree_node->value);
@@ -137,7 +141,7 @@ tree_node_t* simpl_node (tree_node_t* tree_node, char dif_var)
         write_extra_logs ("\n<font color = #8DB6CD size=6>It is my %d attempt to simplify in %s\n</font>", i, __FUNCTION__ );
         change_flag = 0;
         tree_node = simpl_func (tree_node, dif_var, &change_flag);
-        //graph_dump      (tree_node);
+        graph_dump      (tree_node);
     }
     return tree_node;
 }
@@ -235,14 +239,14 @@ tree_node_t* simpl_func (tree_node_t* tree_node, char dif_var, int* change_flag)
 
         if (tree_node->node_type == OP_SUB)
         {
-            if (tree_node->left->value == 0)
+            if (tree_node->left->node_type == TYPE_NUM && tree_node->left->value == 0)
             {
                 *change_flag = 1;
                 tree_node_t* tmp_node = copy_node (tree_node->right);
                 tree_delete (tree_node);
                 return (tmp_node);
             }
-            else if (tree_node->right->value == 0)
+            else if (tree_node->right->node_type == TYPE_NUM && tree_node->right->value == 0)
             {
                 *change_flag = 1;
                 tree_node_t* tmp_node = copy_node (tree_node->left);

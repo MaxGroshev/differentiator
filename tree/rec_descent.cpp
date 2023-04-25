@@ -4,22 +4,22 @@ static int pos_in_file = 0;
 tree_node_t* rec_descent (const char* file_dir)
 {
     char* buffer = read_file (file_dir);
-    tree_node_t* ret_node = get_g (buffer);
+    tree_node_t* ret_node = get_end (buffer);
     free (buffer);
     return ret_node;
 }
 
 //------------------------------------REC_DESCENT_REALIZATION--------------------------------------------------------------
 
-tree_node_t* get_g (const char* buffer)
+tree_node_t* get_end (const char* buffer)
 {
-    tree_node_t* tree_node = get_s (buffer);
+    tree_node_t* tree_node = get_sign (buffer);
 
     if (buffer[pos_in_file++] != '\r' || buffer[pos_in_file++] != '\n') syntax_error (S_UNREC_SYNTAX_ERROR, buffer, CUR_POS_IN_PROG);
     return tree_node;
 }
 
-tree_node_t* get_s (const char* buffer)
+tree_node_t* get_sign (const char* buffer)
 {
     int is_neg_val = 0;
     if (buffer[pos_in_file] == '-')
@@ -27,34 +27,34 @@ tree_node_t* get_s (const char* buffer)
         is_neg_val = 1;
         pos_in_file++;
     }
-    tree_node_t* r_node = get_e (buffer);
+    tree_node_t* r_node = get_pm_sign (buffer);
     if (is_neg_val == 1) return tree_new_op_node (OP_MUL, tree_new_num_node (-1), r_node);
     return r_node;
 }
 
-tree_node_t* get_e (const char* buffer)
+tree_node_t* get_pm_sign (const char* buffer)
 {
-    tree_node_t* l_node = get_t (buffer);
+    tree_node_t* l_node = get_md_sign (buffer);
 
     while (buffer[pos_in_file] == '+' || buffer[pos_in_file] == '-')
     {
         int op = buffer[pos_in_file];
         pos_in_file++;
-        tree_node_t* r_node = get_t (buffer);
+        tree_node_t* r_node = get_md_sign (buffer);
         if   (op == '+') l_node = tree_new_op_node (OP_ADD, l_node, r_node);
         else             l_node = tree_new_op_node (OP_SUB, l_node, r_node);
     }
     return l_node;
 }
 
-tree_node_t* get_t (const char* buffer)
+tree_node_t* get_md_sign (const char* buffer)
 {
-    tree_node_t* l_node = get_d (buffer);
+    tree_node_t* l_node = get_deg (buffer);
     while (buffer[pos_in_file] == '*' || buffer[pos_in_file] == '/')
     {
         int op = buffer[pos_in_file];
         pos_in_file++;
-        tree_node_t* r_node = get_d (buffer);
+        tree_node_t* r_node = get_deg (buffer);
         if      (op == '*')  l_node = tree_new_op_node (OP_MUL, l_node, r_node);
         else if (op == '/')  l_node = tree_new_op_node (OP_DIV, l_node, r_node);
         else    syntax_error (S_NO_MUL_OR_DIV_OP, buffer, CUR_POS_IN_PROG);
@@ -62,47 +62,92 @@ tree_node_t* get_t (const char* buffer)
     return l_node;
 }
 
-tree_node_t* get_d (const char* buffer)
+tree_node_t* get_deg (const char* buffer)
 {
-    tree_node_t* l_node = get_p(buffer);
+    tree_node_t* l_node = get_func(buffer);
     while (buffer[pos_in_file] == '^')
     {
         int op = buffer[pos_in_file];
         pos_in_file++;
-        tree_node_t* r_node = get_p (buffer);
+        tree_node_t* r_node = get_func (buffer);
         if      (op == '^')  l_node = tree_new_op_node (OP_POW, l_node, r_node);// make error
         else    syntax_error (S_NO_MUL_OR_DIV_OP, buffer, CUR_POS_IN_PROG);
     }
     return l_node;
 }
 
-tree_node_t* get_p (const char* buffer)
+tree_node_t* get_func (const char* buffer)
 {
-    if (buffer[pos_in_file] == '(')
+    const char* pos_in_func = NULL;
+    if (strncomp (buffer + pos_in_file, "sin", strlen ("sin")))
+    {
+        pos_in_file += strlen ("sin") ;
+        tree_node_t* parent = tree_new_op_node (OP_SIN, NULL, get_brac (buffer));
+        return parent;
+    }
+    else if (strncomp (buffer + pos_in_file, "cos", strlen ("cos")))
+    {
+        pos_in_file += strlen ("cos") ;
+        tree_node_t* parent = tree_new_op_node (OP_COS, NULL, get_brac (buffer));
+        return parent;
+    }
+    else if (strncomp (buffer + pos_in_file, "ln", strlen ("ln")))
+    {
+        pos_in_file += strlen ("ln") ;
+        tree_node_t* parent = tree_new_op_node (OP_LN, NULL, get_brac (buffer));
+        return parent;
+    }
+    else if (strncomp (buffer + pos_in_file, "tg", strlen ("tg")))
+    {
+        pos_in_file += strlen ("tg") ;
+        tree_node_t* parent = tree_new_op_node (OP_TG, NULL, get_brac (buffer));
+        return parent;
+    }
+    else if (strncomp (buffer + pos_in_file, "ctg", strlen ("ctg")))
+    {
+        pos_in_file += strlen ("ctg") ;
+        tree_node_t* parent = tree_new_op_node (OP_CTG, NULL, get_brac (buffer));
+        return parent;
+    }
+    return get_brac (buffer);
+}
+
+tree_node_t* get_brac (const char* buffer)
+{
+    if ((buffer[pos_in_file] == '(') || (buffer[pos_in_file] == '['))
     {
         write_tree_logs (S_START_OF_BR_SEQ, NULL, CUR_POS_IN_PROG);
         pos_in_file++;
-        tree_node_t* tree_node = get_s (buffer);
-        if (buffer[pos_in_file] != ')') syntax_error (S_NO_CLOSED_BRACKETS, buffer, CUR_POS_IN_PROG);
+        tree_node_t* tree_node = get_sign (buffer);
+        if ((buffer[pos_in_file] != ')') && (buffer[pos_in_file] != ']')) syntax_error (S_NO_CLOSED_BRACKETS, buffer, CUR_POS_IN_PROG);
         pos_in_file++;
         return tree_node;
     }
-    else return get_v (buffer);
+    else return get_var (buffer);
 }
 
-tree_node_t* get_v (const char* buffer)
+tree_node_t* get_var (const char* buffer)
 {
-    char var = '0';
-    if (buffer[pos_in_file] >= 'a' && buffer[pos_in_file] <= 'z')
+    if ((buffer[pos_in_file] >= 'a' && buffer[pos_in_file] <= 'z') && buffer[pos_in_file] != 'e')
     {
-        var = buffer[pos_in_file];
+        char var = buffer[pos_in_file];
         pos_in_file++;
         return tree_new_var_node (TYPE_VAR, var);
     }
-    else return get_n (buffer);
+    else return get_exp (buffer);
 }
 
-tree_node_t* get_n (const char* buffer)
+tree_node_t* get_exp (const char* buffer)
+{
+    if (buffer[pos_in_file] == 'e')
+    {
+        pos_in_file++;
+        return tree_new_const_node (CONST_EXP);
+    }
+    else return get_num (buffer);
+}
+
+tree_node_t* get_num (const char* buffer)
 {
     int val = 0;
     int start_pos = pos_in_file;
@@ -159,4 +204,18 @@ void syntax_error (int num_of_error, const char* buffer, const char* file_name, 
     }
     fprintf (stderr, "\n");
     exit (-1);
+}
+
+//-------------------------------STRING FUNC: compare num_of_elem of str1 and str2---------------------------------------------------------------------------------
+
+int strncomp (const char* str1, const char* str2, size_t num_of_elem)
+{
+    for (int i = 0; i < num_of_elem; i++)
+    {
+        if ((str1 + i == NULL) || (str2 + i == NULL) || (*(str1 + i) != *(str2 + i)))
+        {
+            return 0;
+        }
+    }
+    return 1;
 }

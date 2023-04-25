@@ -120,14 +120,16 @@ tree_node_t* tree_delete        (tree_node_t* tree_node);
 //---------------------------------------REC_DESCENT_FUNC-------------------------------------------------------------------------
 
 tree_node_t* rec_descent (const char* file_dir);
-tree_node_t* get_g       (const char* buffer);
-tree_node_t* get_s       (const char* buffer);
-tree_node_t* get_v       (const char* buffer);
-tree_node_t* get_n       (const char* buffer);
-tree_node_t* get_e       (const char* buffer);
-tree_node_t* get_t       (const char* buffer);
-tree_node_t* get_p       (const char* buffer);
-tree_node_t* get_d       (const char* buffer);
+tree_node_t* get_end     (const char* buffer);
+tree_node_t* get_sign    (const char* buffer);
+tree_node_t* get_func    (const char* buffer);
+tree_node_t* get_pm_sign (const char* buffer);
+tree_node_t* get_var     (const char* buffer);
+tree_node_t* get_num     (const char* buffer);
+tree_node_t* get_exp     (const char* buffer);
+tree_node_t* get_md_sign (const char* buffer);
+tree_node_t* get_brac    (const char* buffer);
+tree_node_t* get_deg     (const char* buffer);
 
 //------------------------------------------------------------------------------------------------------------------------
 
@@ -138,3 +140,5 @@ void         write_extra_logs   (const char* fmt,...);
 void         signal_handler     (int signal);
 char*        read_file          (const char* file_dir);
 void         syntax_error       (int num_of_error, const char* buffer, const char* file_name, const char* func_name, int num_of_line);
+
+int strncomp (const char* str1, const char* str2, size_t num_of_elem);

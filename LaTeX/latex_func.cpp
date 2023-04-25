@@ -44,6 +44,7 @@ int write_latex_log (tree_node_t* tree_node, int equ_type, char dif_var, const c
             fprintf (LATEX_FILE, "\\section{I am here to find you and I will...}");
             fprintf (LATEX_FILE, TEX_START_EQU);
             fprintf (LATEX_FILE, "f = ");
+
             write_func_in_tex (tree_node, &is_one_arg_func, dif_var);
             if (is_one_arg_func == 1)
             {

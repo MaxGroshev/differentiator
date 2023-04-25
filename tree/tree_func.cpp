@@ -32,7 +32,10 @@ tree_node_t* tree_new_const_node (tree_data_type value)
 
     tmp_node->value     = value;
     tmp_node->node_type = TYPE_NUM;
-    if (tmp_node->value == CONST_EXP) tmp_node->node_type = CONST_EXP;
+    if (tmp_node->value == CONST_EXP)
+    {
+        tmp_node->node_type = CONST_EXP;
+    }
     write_tree_logs (T_NODE_SUC_CREATED, tmp_node);
 
     return  tmp_node;

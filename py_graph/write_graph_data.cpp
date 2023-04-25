@@ -36,7 +36,7 @@ int py_write_equ (const tree_node_t* tree_node)
     }
 
     if      (tree_node->node_type == TYPE_NUM) fprintf (PYTHON_FILE, "%d", tree_node->value);
-    else if (tree_node->node_type == CONST_EXP)fprintf (PYTHON_FILE, "np.exp");
+    else if (tree_node->node_type == CONST_EXP)fprintf (PYTHON_FILE, "2.7182");
     else if (tree_node->node_type == TYPE_VAR) fprintf (PYTHON_FILE, "%c", tree_node->value);
     else if (tree_node->node_type == OP_ADD)   fprintf (PYTHON_FILE, "+");
     else if (tree_node->node_type == OP_SUB)   fprintf (PYTHON_FILE, "-");
