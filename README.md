@@ -1,7 +1,7 @@
 # differentiator
 - 📏 Finally, the days when the Department of Higher Mathematics was forced to calculate derivatives have passed. Now it is time for my differentiator
 <p align="center">
-  <img width="460" height="300" src="https://github.com/MaxGroshev/differentiator/blob/master/readme_pic/Screenshot%20from%202023-04-23%2000-04-43.png">
+  <img width="600" height="800" src="https://github.com/MaxGroshev/differentiator/blob/master/readme_pic/Screenshot%20from%202023-04-25%2015-15-09.png">
 </p>
 
 # Do you want the same way?
