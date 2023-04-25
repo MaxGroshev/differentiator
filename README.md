@@ -44,6 +44,10 @@
   * `df/dy`
   * `etc`
 - to simplify the result
+- to build graphics in python style (if you have Matplotlib)
+<p align="center">
+  <img width="460" height="300" src="https://github.com/MaxGroshev/differentiator/blob/master/readme_pic/Screenshot%20from%202023-04-25%2015-14-32.png">
+</p>
 ---
 # Why I should choose this differentiator
 - low memory consuption
