@@ -2,10 +2,10 @@
 #define TEX_ENDEQU     "\n\\end{equation*}\n\n"
 #define TEX_START_DIF  "\\begin{equation*}\n    \\frac{d}{d%c} = ", dif_var
 
-#define TEX_INSERT_PNG "\\begin{figure}[h!]\n"                           \
-                        "        \\centering\n"                         \
-                        "         \\includegraphics[scale=0.5]{%s}\n"    \
-                        "\\end{figure}\n\n"                                \
+#define TEX_INSERT_PNG "\\begin{figure}[h!]\n"                            \
+                        "        \\centering\n"                           \
+                        "         \\includegraphics[scale=0.5]{%s}\n"     \
+                        "\\end{figure}\n\n"                               \
 
 
 //----------------------------------------------------------------------------------------------------------------------------------------
