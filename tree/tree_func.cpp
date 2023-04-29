@@ -141,27 +141,6 @@ tree_node_t* tree_search (tree_node_t* tree_root, tree_node_t* node)
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-// tree_node_t* tree_remove  (tree_node_t* node)
-// {
-//     MY_ASSERT (node != NULL);
-//     tree_node_t* ret_node = tree_search (pine->root, node);
-//     MY_ASSERT (ret_node != NULL);
-//
-//     if (ret_node->right == node)
-//     {
-//         free (ret_node->right);
-//         ret_node->right = NULL;
-//     }
-//     else if (ret_node->left == node)
-//     {
-//         free (ret_node->left);
-//         ret_node->left = NULL;
-//     }
-//     pine->size--;
-//     write_tree_logs (T_NODE_SUC_DELETED, node);
-//     return node;
-// }
-
 tree_node_t* tree_delete (tree_node_t* tree_node)
 {
     if (tree_node == NULL) return NULL;
@@ -176,10 +155,6 @@ tree_node_t* tree_delete (tree_node_t* tree_node)
     free (tree_node);
 
     write_tree_logs (T_NODE_SUC_DELETED, tree_node);
-    // if (tree_node == pine->root)
-    // {
-    //     write_extra_logs (T_TREE_WAS_CLEARED);
-    // }
 
     return NULL;
 }

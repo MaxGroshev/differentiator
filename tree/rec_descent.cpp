@@ -15,7 +15,7 @@ tree_node_t* get_end (const char* buffer)
 {
     tree_node_t* tree_node = get_sign (buffer);
 
-    if (buffer[pos_in_file++] != '\r' || buffer[pos_in_file++] != '\n') syntax_error (S_UNREC_SYNTAX_ERROR, buffer, CUR_POS_IN_PROG);
+    if (buffer[pos_in_file] != '\r' && buffer[pos_in_file] != '\n') syntax_error (S_UNREC_SYNTAX_ERROR, buffer, CUR_POS_IN_PROG);
     return tree_node;
 }
 
